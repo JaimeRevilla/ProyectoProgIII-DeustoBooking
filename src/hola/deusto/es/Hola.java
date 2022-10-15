@@ -6,6 +6,7 @@ public class Hola {
 		System.out.println("Hola Mundo!");
 		System.out.println("Segunda prueba");
 		System.out.println("Tercera prueba");
+		System.out.println("Cuarta prueba");
 	}
 
 }
