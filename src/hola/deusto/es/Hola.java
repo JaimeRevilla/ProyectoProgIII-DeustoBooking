@@ -7,6 +7,7 @@ public class Hola {
 		System.out.println("Segunda prueba");
 		System.out.println("Tercera prueba");
 		System.out.println("Cuarta prueba");
+		System.out.println("adios");
 	}
 
 }
