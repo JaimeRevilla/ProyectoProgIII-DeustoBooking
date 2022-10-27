@@ -9,18 +9,7 @@ public class Armarios extends Producto {
 			TipoArmario tipoArmario, int numEstanterias) {
 		super(cod, nombre, tipo, marca, tamanyo, precio, stock);
 		this.numEstanterias = numEstanterias;
-		if (tipo.contains("ROBLE")) {
-			this.tipoArmario = TipoArmario.ROBLE;
-		} else if (tipo.contains("ABEDUL")) {
-			this.tipoArmario = TipoArmario.ABEDUL;
-		} else if (tipo.contains("PINO")) {
-			this.tipoArmario = TipoArmario.PINO;
-		} else if (tipo.contains("EUCALIPTO")) {
-			this.tipoArmario = TipoArmario.EUCALIPTO;
-		} else if (tipo.contains("HAYA")) {
-			this.tipoArmario = TipoArmario.HAYA;
-		}
-			
+		this.tipoArmario = tipoArmario;
 	}
 
 	public TipoArmario getTipoArmario() {
