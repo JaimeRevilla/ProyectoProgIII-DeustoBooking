@@ -14,14 +14,14 @@ public class UsuarioTest {
 	private String email = "email";
 	private String domicilio = "domicilio";
 	private String contrasenia = "contrasenia";
-	private boolean permisos = false;
+	private int permisos = 0;
 	
 	private String newNombre = "newNombre";
 	private String newDni = "newDni";
 	private String newEmail = "newEmail";
 	private String newDomicilio = "newDomicilio";
 	private String newContrasenia = "newContrasenia";
-	private boolean newPermisos = true;
+	private int newPermisos = 1;
 	
 	@Before
 	public void setUp() throws Exception {

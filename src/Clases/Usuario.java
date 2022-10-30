@@ -8,17 +8,17 @@ public class Usuario {
 	private String email;
 	private String domicilio;
 	private String contrasenia;
-	private boolean permisos;
+	private int permisos;
 	
 	
-	public Usuario(String nombre, String dni, String email, String domicilio, String contrasenia, boolean permisos) {
+	public Usuario(String nombre, String dni, String email, String domicilio, String contrasenia, int permisos) {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
 		this.email = email; //FALTA :metodo para autorellenar el email insertado
 		this.domicilio = domicilio;
 		this.contrasenia = contrasenia;
-		this.permisos = false;
+		this.permisos = permisos;
 	}
 	
 	
@@ -64,10 +64,10 @@ public class Usuario {
 	public void setContrasenia(String contrasenia) {
 		this.contrasenia = contrasenia;
 	}
-	public boolean isPermisos() {
+	public int isPermisos() {
 		return permisos;
 	}
-	public void setPermisos(boolean permisos) {
+	public void setPermisos(int permisos) {
 		this.permisos = permisos;
 	}
 	
