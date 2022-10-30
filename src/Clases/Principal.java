@@ -26,6 +26,11 @@ public class Principal {
 		System.out.println("Carrito insertado");
 		BaseDatos.insertarCarrito(con, "111A", 0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50);
 		BaseDatos.insertarCarrito(con, "222B", 1, "Cama1", "LITERA", "IKEA", "200x200", 100.50);
+		
+		//
+		System.out.println("borrar usuario");
+		BaseDatos.eleminarUsuario(con, "111A");
+		System.out.println("usuario borrado");
 	}
 
 }

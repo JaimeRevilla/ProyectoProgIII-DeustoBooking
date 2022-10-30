@@ -84,5 +84,77 @@ public class BaseDatos {
 			e.printStackTrace();
 		}
 	}
+	
+	//Metodo de borrar Usuario
+	public static void eleminarUsuario(Connection con, String dni) {
+		String sent = "DELETE FROM Usuario WHERE dni ='"+dni+"'";
+		Statement stmt = null;
+		
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	//Metodo de borrar Producto
+	public static void eleminarProducto(Connection con, int cod) {
+		String sent = "DELETE FROM Producto WHERE cod ='"+cod+"'";
+		Statement stmt = null;
+		
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	//Metodo de borrar Carrito
+	public static void eleminarCarrito(Connection con, String dni) {
+		String sent = "DELETE FROM Carrito WHERE dni ='"+dni+"'";
+		Statement stmt = null;
+		
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 }
