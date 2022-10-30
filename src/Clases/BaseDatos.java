@@ -51,7 +51,7 @@ public class BaseDatos {
 			e.printStackTrace();
 		}
 	}
-	
+	//Metodo de insertar Usuario
 	public static void insertarUsuario(Connection con,  String nombre,  String dni,  String email,  String domicilio,  String contrasenia,  int permisos) {
 		String sql = "INSERT INTO Usuario VALUES('"+nombre+"','"+dni+"','"+email+"','"+domicilio+"','"+contrasenia+"','"+permisos+"')";
 		try {
@@ -62,7 +62,7 @@ public class BaseDatos {
 			e.printStackTrace();
 		}
 	}
-	
+	//Metodo de insertar Producto
 	public static void insertarProducto(Connection con,   int cod,  String nombre,  String tipo,  String marca,  String tamanyo,  double precio,  int stock) {
 		String sql = "INSERT INTO Producto VALUES('"+cod+"','"+nombre+"','"+tipo+"','"+marca+"','"+tamanyo+"',"+precio+",'"+stock+"')";
 		try {
@@ -73,7 +73,16 @@ public class BaseDatos {
 			e.printStackTrace();
 		}
 	}
-	
-	
+	//Metodo de insertar Carrito
+	public static void insertarCarrito(Connection con,   String dniUsu , int codProd, String nomProd, String tipoProd, String marcaProd, String tamanyoProd,double precioProd) {
+		String sql = "INSERT INTO Carrito VALUES('"+dniUsu+"','"+codProd+"','"+nomProd+"','"+tipoProd+"','"+marcaProd+"','"+tamanyoProd+"',"+precioProd+")";
+		try {
+			Statement st = con.createStatement();
+			st.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
