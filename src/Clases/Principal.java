@@ -29,11 +29,20 @@ public class Principal {
 		BaseDatos.insertarCarrito(con, "111A", 0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50);
 		BaseDatos.insertarCarrito(con, "222B", 1, "Cama1", "LITERA", "IKEA", "200x200", 100.50);
 		
-		//
+		//ELIMINACION DE TUPLAS
 		System.out.println("borrar usuario");
-		BaseDatos.eleminarUsuario(con, "111A");
+		//BaseDatos.eleminarUsuario(con, "111A");
 		System.out.println("usuario borrado");
-
+		
+		//OBTENCION TUPLA USUARIO
+		System.out.println("obtener Usuario");
+		BaseDatos.obtenerUsuario(con, "111A");
+		System.out.println("usuario obtenido");
+		
+		//MODIFICACION ATRIBUTO CONTRASEÑA
+		System.out.println("modificar contr");
+		BaseDatos.modificarConUsuario(con, "111A", "111B");
+		System.out.println("contr modificada");
 	}
 
 }

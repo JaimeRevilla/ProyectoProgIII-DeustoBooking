@@ -2,6 +2,7 @@ package Clases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -156,6 +157,58 @@ public class BaseDatos {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	public static Usuario obtenerUsuario(Connection con, String DNI) {
+		String sent = "SELECT * FROM Usuario WHERE dni = '"+DNI+"'";
+		Statement stmt = null;
+		Usuario u = null;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String dni = rs.getString("dni");
+				String email = rs.getString("email");
+				String domicilio = rs.getString("domicilio");
+				String contrasenia = rs.getString("contrasenia");
+				int permisos = rs.getInt("permisos");
+				u = new Usuario(nombre, dni, email, domicilio, contrasenia, permisos);
+			}
+			rs.close();
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}return u;	
+	}
+	
+	public static void modificarConUsuario(Connection con, String DNI, String contr){
+		String sent = "UPDATE Usuario SET contrasenia='"+contr+"' where dni = '"+DNI+"'";
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			stmt.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
