@@ -7,6 +7,8 @@ import java.sql.Statement;
 
 public class BaseDatos {
 
+
+
 	public static Connection initBD(String BBDDCliente) {
 		Connection con = null;
 		try {
@@ -156,5 +158,9 @@ public class BaseDatos {
 			}
 		}
 	}
+	
+	
+	
+	
 
 }

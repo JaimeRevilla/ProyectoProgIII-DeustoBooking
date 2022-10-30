@@ -1,6 +1,8 @@
 package Clases;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Principal {
 
@@ -31,6 +33,7 @@ public class Principal {
 		System.out.println("borrar usuario");
 		BaseDatos.eleminarUsuario(con, "111A");
 		System.out.println("usuario borrado");
+
 	}
 
 }
