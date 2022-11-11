@@ -36,6 +36,9 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txtMenuPrincipal;
 	private JTextField txtReloj;
 	public VentanaPrincipal() {
+		
+		setBounds(450, 125, 800, 408);
+		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -55,8 +58,8 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(txtMenuPrincipal);
 		txtMenuPrincipal.setColumns(10);
 		
-		JButton btnNewButton = new JButton("IMAGEN CARRITO");
-		panel.add(btnNewButton);
+		JButton btnimgcarrito = new JButton("IMAGEN CARRITO");
+		panel.add(btnimgcarrito);
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
@@ -103,6 +106,17 @@ public class VentanaPrincipal extends JFrame {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		panel_1.add(comboBox_1);
+		
+		setVisible(true);
+		
+		btnimgcarrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
+
 	}
 
 	public static void main(String[] args) {

@@ -31,6 +31,9 @@ public class VentanaREGIS extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	public VentanaREGIS() {
+		
+		setBounds(450, 125, 800, 408);
+		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -60,7 +63,7 @@ public class VentanaREGIS extends JFrame {
 		JButton btnNewButton = new JButton("SALIR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				dispose();
 			}
 			
 		});
@@ -130,6 +133,8 @@ public class VentanaREGIS extends JFrame {
 		textField = new JTextField();
 		panelDatos.add(textField);
 		textField.setColumns(10);
+		
+		setVisible(true);
 	}
 
 	public static void main(String[] args) {

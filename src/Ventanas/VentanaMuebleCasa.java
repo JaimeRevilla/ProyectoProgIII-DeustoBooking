@@ -37,6 +37,9 @@ public class VentanaMuebleCasa extends JFrame {
 	private JTextField txtReloj;
 	private JButton btnNewButton_2;
 	public VentanaMuebleCasa() {
+		
+		setBounds(450, 125, 800, 408);
+		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -108,6 +111,9 @@ public class VentanaMuebleCasa extends JFrame {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		panel_1.add(comboBox_1);
+		
+		setVisible(true);
+
 	}
 
 	public static void main(String[] args) {

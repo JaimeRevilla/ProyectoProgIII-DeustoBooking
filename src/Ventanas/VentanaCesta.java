@@ -27,6 +27,9 @@ import java.awt.event.ActionEvent;
 public class VentanaCesta extends JFrame {
 	private JTextField txtListaDeLa;
 	public VentanaCesta() {
+		
+		setBounds(450, 125, 800, 408);
+		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -56,8 +59,19 @@ public class VentanaCesta extends JFrame {
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_2 = new JButton("ATRAS");
-		panel_2.add(btnNewButton_2);
+		JButton btnatras = new JButton("ATRAS");
+		panel_2.add(btnatras);
+		
+		setVisible(true);
+		
+		btnatras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+
 	}
 
 	public static void main(String[] args) {

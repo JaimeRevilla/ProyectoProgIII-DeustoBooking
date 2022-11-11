@@ -28,6 +28,9 @@ public class VentanaInicio extends JFrame {
 	private JTextField fieldId;
 	private JPasswordField fieldContr;
 	public VentanaInicio() {
+		
+		setBounds(450, 125, 800, 408);
+		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -57,7 +60,7 @@ public class VentanaInicio extends JFrame {
 		JButton btnNewButton = new JButton("SALIR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				dispose();
 			}
 			
 		});
@@ -106,6 +109,9 @@ public class VentanaInicio extends JFrame {
 		
 		fieldContr = new JPasswordField();
 		panelDatos.add(fieldContr);
+		
+		setVisible(true);
+
 	}
 
 	public static void main(String[] args) {

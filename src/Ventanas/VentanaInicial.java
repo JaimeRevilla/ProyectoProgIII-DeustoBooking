@@ -27,6 +27,9 @@ import java.awt.event.ActionEvent;
 public class VentanaInicial extends JFrame {
 	private JTextField txtBienvenidoPulsaLo;
 	public VentanaInicial() {
+		
+		setBounds(450, 125, 800, 408);
+		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -41,13 +44,31 @@ public class VentanaInicial extends JFrame {
 		panel.add(txtBienvenidoPulsaLo);
 		txtBienvenidoPulsaLo.setColumns(10);
 		
-		JButton btnNewButton_1 = new JButton("SIGN UP");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panel.add(btnNewButton_1);
+		JButton btnsignup = new JButton("SIGN UP");
+		btnsignup.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panel.add(btnsignup);
 		
-		JButton btnNewButton = new JButton("LOG IN");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panel.add(btnNewButton);
+		JButton btnlogin = new JButton("LOG IN");
+		btnlogin.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panel.add(btnlogin);
+				
+		setVisible(true);
+		
+		btnsignup.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaREGIS v1 = new VentanaREGIS();
+			}
+		});
+		
+		btnlogin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaInicio v1 = new VentanaInicio();
+			}
+		});
 	}
 
 	public static void main(String[] args) {
