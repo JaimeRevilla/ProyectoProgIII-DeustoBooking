@@ -19,7 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+
+import Clases.BaseDatos;
+
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
@@ -27,6 +33,7 @@ import java.awt.event.ActionEvent;
 public class VentanaInicio extends JFrame {
 	private JTextField fieldId;
 	private JPasswordField fieldContr;
+	private Connection connection;
 	public VentanaInicio() {
 		
 		setBounds(450, 125, 800, 408);
@@ -61,6 +68,7 @@ public class VentanaInicio extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				BaseDatos.closeBD(connection);
 			}
 			
 		});
@@ -76,9 +84,17 @@ public class VentanaInicio extends JFrame {
 				
 				String refexContrasenia = "[A-Z][a-z]{0,20}[0-9][^A-Za-z0-9]";
 				String contrasenia = fieldContr.getText();
-				
+				/*
 				if(Pattern.matches(refexContrasenia, contrasenia)) {
 					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}*/
+				if(contrasenia.equals(BaseDatos.obtenerContrasena(connection, fieldId.getText()))) {
+					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+					
+					new VentanaPrincipal();
 					
 				}else {
 					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -111,8 +127,15 @@ public class VentanaInicio extends JFrame {
 		panelDatos.add(fieldContr);
 		
 		setVisible(true);
+		
+		connection= BaseDatos.initBD("Base de datos.db");
+		BaseDatos.crearTablas(connection);
+		BaseDatos.insertarUsuario(connection, "Admin","111A","admin@gmail.com","casa", "Aa00Za", 1 );
+		
 
 	}
+	
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

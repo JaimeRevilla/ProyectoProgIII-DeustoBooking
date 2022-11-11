@@ -223,6 +223,29 @@ public class BaseDatos {
 		return encontrada;
 	}
 	
+	/**
+	 * Método para buscar los datos de un usuario si el dni recibido es el mismo que buscamos en la BBDD
+	 * @param Connection con, el dni de un usuario : recibimos la conexion con la base de datos y el dni del usuario
+	 * @return Devuelve el usuario buscado
+	 */
+	
+	
+	
+	//recibe le dni de un usuario y devuelve la contraseña que esta almacenada en la bd junto ese dni
+	public static String obtenerContrasena(Connection con, String DNI) {
+		String ret = "";
+		String sent = "SELECT contrasenia FROM Usuario WHERE dni = '"+DNI+"'";
+		try (Statement st = con.createStatement();){
+			ResultSet rs = st.executeQuery(sent);
+			ret = rs.getString("contrasenia");
+			rs.close();
+		} catch (SQLException e) {
+			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 //	public static Usuario obtenerUsuario(Connection con, String DNI) {
 //		String sent = "SELECT * FROM Usuario WHERE dni = '"+DNI+"'";
 //		Statement stmt = null;

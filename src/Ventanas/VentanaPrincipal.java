@@ -35,7 +35,9 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txtCamas;
 	private JTextField txtMenuPrincipal;
 	private JTextField txtReloj;
+	private JFrame vent;
 	public VentanaPrincipal() {
+		vent = this;
 		
 		setBounds(450, 125, 800, 408);
 		
@@ -64,8 +66,8 @@ public class VentanaPrincipal extends JFrame {
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_1 = new JButton("SALIR");
-		panel_2.add(btnNewButton_1);
+		JButton btnsalir = new JButton("SALIR");
+		panel_2.add(btnsalir);
 		
 		JPanel panel_4 = new JPanel();
 		getContentPane().add(panel_4, BorderLayout.CENTER);
@@ -114,6 +116,15 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
+		
+		btnsalir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaInicial v1 = new VentanaInicial();
+				vent.dispose();
 			}
 		});
 
