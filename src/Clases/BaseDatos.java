@@ -52,14 +52,10 @@ public class BaseDatos {
 	 * @param Connection con: recibimos la conexion con la base de datos
 	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
 	 */
-	public static boolean crearTablas(Connection con) {
+	public static boolean crearTablasUsuario(Connection con) {
 		String sql = "CREATE TABLE IF NOT EXISTS Usuario (nombre String, dni String, email String, domicilio String, contrasenia String, permisos int)";
 		try {
 			Statement st = con.createStatement();
-			st.executeUpdate(sql);
-			sql = "CREATE TABLE IF NOT EXISTS Producto (cod int, nombre String, tipo String, marca String, tamanyo String, precio double, stock int)";
-			st.executeUpdate(sql);
-			sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, precioProd double)";
 			st.executeUpdate(sql);
 			st.close();
 			return true;
@@ -69,6 +65,40 @@ public class BaseDatos {
 			return false;
 		}
 	}
+	
+	
+	
+	public static boolean crearTablasProducto(Connection con) {
+		String sql = "CREATE TABLE IF NOT EXISTS Producto (cod int, nombre String, tipo String, marca String, tamanyo String, precio double, stock int)";
+		try {
+			Statement st = con.createStatement();
+			st.executeUpdate(sql);
+			st.close();
+			return true;
+		} catch (SQLException e) {
+			System.err.println(String.format("ERROR AL CREAR LAS TABLAS: Usuario, Producto y Carrito", e.getMessage()));
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
+	
+	public static boolean crearTablasCarrito(Connection con) {
+		String sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, precioProd double)";
+		try {
+			Statement st = con.createStatement();
+			st.executeUpdate(sql);
+			st.close();
+			return true;
+		} catch (SQLException e) {
+			System.err.println(String.format("ERROR AL CREAR LAS TABLAS: Usuario, Producto y Carrito", e.getMessage()));
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 	/**
 	 * Método para insertar los datos del usuario en la tabla usuario de la BBDD
@@ -203,13 +233,14 @@ public class BaseDatos {
 	}
 	
 	/**
+	 * BUSCAR
 	 * Método para buscar los datos de un usuario si el dni recibido es el mismo que buscamos en la BBDD
 	 * @param Connection con, el dni de un usuario : recibimos la conexion con la base de datos y el dni del usuario
 	 * @return Devuelve el usuario buscado
 	 */
-	public static boolean obtenerUsuario(Connection con, String DNI) {
+	public static boolean buscarUsuario(Connection con, String dni) {
 		boolean encontrada = false;
-		String sent = "SELECT nombre FROM Usuario WHERE dni = '"+DNI+"'";
+		String sent = "SELECT nombre FROM Usuario WHERE dni = '"+dni+"'";
 		try (Statement st = con.createStatement();){
 			ResultSet rs = st.executeQuery(sent);
 			if(rs.next()) {
@@ -246,40 +277,32 @@ public class BaseDatos {
 		return ret;
 	}
 	
-//	public static Usuario obtenerUsuario(Connection con, String DNI) {
-//		String sent = "SELECT * FROM Usuario WHERE dni = '"+DNI+"'";
-//		Statement stmt = null;
-//		Usuario u = null;
-//		try {
-//			stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery(sent);
-//			if (rs.next()) {
-//				String nombre = rs.getString("nombre");
-//				String dni = rs.getString("dni");
-//				String email = rs.getString("email");
-//				String domicilio = rs.getString("domicilio");
-//				String contrasenia = rs.getString("contrasenia");
-//				int permisos = rs.getInt("permisos");
-//				u = new Usuario(nombre, dni, email, domicilio, contrasenia, permisos);
-//			}
-//			rs.close();
-//			
-//			
-//			
-//		} catch (SQLException e) {
-//			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
-//			e.printStackTrace();
-//		}finally {
-//			if (stmt != null) {
-//				try {
-//					stmt.close();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}return u;	
-//	}
+	
+	/*
+	 *Obtener el usuario que estamos introduciendo los datos en la ventana 
+	 */
+	public static Usuario obtenerUsuario(Connection con, String dni) {
+		String sent = "SELECT * FROM Usuario WHERE dni = '"+dni+"'";
+		Statement stmt = null;
+		Usuario u = null;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String dnI = rs.getString("dni");
+				String email = rs.getString("email");
+				String domicilio = rs.getString("domicilio");
+				String contrasenia = rs.getString("contrasenia");
+				int permisos = rs.getInt("permisos");
+				u = new Usuario(nombre, dnI, email, domicilio, contrasenia, permisos);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
+			e.printStackTrace();
+		}return u;	
+	}
 	
 	/**
 	 * Método para modificar los datos de un usuario si el dni recibido y la contrasenia son los mismos que buscamos en la BBDD
@@ -302,6 +325,8 @@ public class BaseDatos {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	
 	

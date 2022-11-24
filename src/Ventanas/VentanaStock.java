@@ -7,11 +7,11 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 
-public class VentanaProducto extends JFrame{
+public class VentanaStock extends JFrame{
 
 	private JFrame vent;
 	
-	public VentanaProducto() {
+	public VentanaStock() {
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.NORTH);

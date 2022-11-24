@@ -6,11 +6,11 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class VentanaVentas extends JFrame{
+public class VentanaContabilidad extends JFrame{
 	
 	private JFrame vent;
 	
-	public VentanaVentas() {
+	public VentanaContabilidad() {
 		
 		JPanel panel = new JPanel();	
 		getContentPane().add(panel, BorderLayout.NORTH);

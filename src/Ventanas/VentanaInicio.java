@@ -21,6 +21,7 @@ import java.awt.Component;
 import javax.swing.border.LineBorder;
 
 import Clases.BaseDatos;
+import Clases.Usuario;
 
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -31,11 +32,14 @@ import java.awt.event.ActionEvent;
 
 
 public class VentanaInicio extends JFrame {
-	private JTextField fieldId;
-	private JPasswordField fieldContr;
+	private JTextField txtDni;
+	private JPasswordField txtContr;
 	private Connection connection;
+	
 	public VentanaInicio() {
+		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
 		
+		BaseDatos.crearTablasUsuario(con);
 		setBounds(450, 125, 800, 408);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
@@ -67,7 +71,7 @@ public class VentanaInicio extends JFrame {
 		JButton btnNewButton = new JButton("SALIR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				System.exit(0);
 				BaseDatos.closeBD(connection);
 			}
 			
@@ -82,23 +86,46 @@ public class VentanaInicio extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String refexContrasenia = "[A-Z][a-z]{0,20}[0-9][^A-Za-z0-9]";
-				String contrasenia = fieldContr.getText();
-				/*
-				if(Pattern.matches(refexContrasenia, contrasenia)) {
-					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
-					
+				String dni = txtDni.getText();
+				String erDni = "[0-9]{3}[A-Z]";
+				String contrasenia = txtContr.getText();
+				String erContr = "[0-9]{3}";
+				
+				if(Pattern.matches(erDni, dni) && Pattern.matches(erContr, contrasenia)) {
+					//Comprobamos si el usuario esta registrado
+					Usuario u = new Usuario();
+					u = BaseDatos.obtenerUsuario(con, dni);
+					if(u != null) {
+						if(u.getContrasenia().equals(contrasenia)) {
+							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "No existe un requisito asociado a ese Dni", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}else {
-					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
-				}*/
-				if(contrasenia.equals(BaseDatos.obtenerContrasena(connection, fieldId.getText()))) {
-					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Los datos no cumplen los requisitos", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 					
-					new VentanaPrincipal();
-					
-				}else {
-					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
+				txtDni.setText("");
+				txtContr.setText("");
+				
+//				/*
+//				if(Pattern.matches(refexContrasenia, contrasenia)) {
+//					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+//					
+//				}else {
+//					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
+//				}*/
+//				if(contrasenia.equals(BaseDatos.obtenerContrasena(connection, txtDni.getText()))) {
+//					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+//					
+//					new VentanaPrincipal();
+//					
+//				}else {
+//					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
+//				}
 			}
 		});
 		
@@ -116,20 +143,22 @@ public class VentanaInicio extends JFrame {
 		JLabel labelDni = new JLabel("Dni:");
 		panelDatos.add(labelDni);
 		
-		fieldId = new JTextField();
-		panelDatos.add(fieldId);
-		fieldId.setColumns(10);
+		txtDni = new JTextField();
+		panelDatos.add(txtDni);
+		txtDni.setColumns(10);
 		
 		JLabel labelContr = new JLabel("Contraseña:");
 		panelDatos.add(labelContr);
 		
-		fieldContr = new JPasswordField();
-		panelDatos.add(fieldContr);
+		txtContr = new JPasswordField();
+		panelDatos.add(txtContr);
 		
 		setVisible(true);
 		
-		connection= BaseDatos.initBD("Base de datos.db");
-		BaseDatos.crearTablas(connection);
+		connection= BaseDatos.initBD("data/DeustoIkea");
+		BaseDatos.crearTablasUsuario(connection);
+		BaseDatos.crearTablasProducto(connection);
+		BaseDatos.crearTablasCarrito(connection);
 		BaseDatos.insertarUsuario(connection, "Admin","111A","admin@gmail.com","casa", "Aa00Za", 1 );
 		
 

@@ -10,6 +10,9 @@ public class Usuario {
 	private String contrasenia;
 	private int permisos;
 	
+	public Usuario() {
+		
+	}
 	
 	public Usuario(String nombre, String dni, String email, String domicilio, String contrasenia, int permisos) {
 		super();

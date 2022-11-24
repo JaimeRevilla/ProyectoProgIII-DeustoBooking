@@ -19,20 +19,30 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+
+import Clases.BaseDatos;
+
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 
 public class VentanaREGIS extends JFrame {
-	private JTextField fieldId;
-	private JPasswordField fieldContr;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtNombre;
+	private JPasswordField txtContr;
+	private JTextField txtDni;
+	private JTextField txtCodigoPostal;
+	private JTextField txtCiudad;
 	private JFrame vent;
 	public VentanaREGIS() {
 		vent = this;
+		
+		//Conexion  con la base de datos y  creamos la tabla 
+		
+		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
+		
+		BaseDatos.crearTablasUsuario(con);
 
 		
 		setBounds(450, 125, 800, 408);
@@ -67,7 +77,7 @@ public class VentanaREGIS extends JFrame {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vent.dispose();
+				System.exit(0);
 			}
 			
 		});
@@ -82,15 +92,50 @@ public class VentanaREGIS extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String refexContrasenia = "[A-Z][a-z]{0,20}[0-9][^A-Za-z0-9]";
-				String contrasenia = fieldContr.getText();
+				String nombre = txtNombre.getText();
+				String contrasenia = txtContr.getText();
+				String erContr = "[0-9]{3}";
+				boolean contraseniaCorrecta = Pattern.matches(erContr, contrasenia);
+				String ciudad = txtCiudad.getText();
+				String codigoPostal = txtCodigoPostal.getText();
+				String dni = txtDni.getText();
+				String erDni = "[0-9]{3}[A-Z]";
+				boolean dniCorrecta = Pattern.matches(erDni, dni);
 				
-				if(Pattern.matches(refexContrasenia, contrasenia)) {
-					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
-					
+				if(!contraseniaCorrecta) {
+					JOptionPane.showInputDialog(null,"La contrasenia introducida es incorrecta!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}else if(!dniCorrecta) {
+					JOptionPane.showInputDialog(null,"El dni introducido es incorrecto!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else {
-					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
+					boolean encontrada = BaseDatos.buscarUsuario(con, dni);
+					if(!encontrada) {
+						BaseDatos.insertarUsuario(con, nombre, contrasenia, ciudad, codigoPostal, dni, 0);
+						JOptionPane.showInputDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.ERROR_MESSAGE);
+						System.out.println("El usuario ha sido registrado correctamente!");
+					}else {
+						JOptionPane.showInputDialog(null,"Registro realizado es incorrecta! Existe ya un usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+						System.out.println("El usuario no ha sido registrado correctamente! Existe un usuario con el mismo dni");
+					}
+					txtNombre.setText("");
+					txtContr.setText("");
+					txtCiudad.setText("");
+					txtCodigoPostal.setText("");
+					txtDni.setText("");
+					
 				}
+				
+				
+				
+				
+//				String refexContrasenia = "[A-Z][a-z]{0,20}[0-9][^A-Za-z0-9]";
+//				String contrasenia = txtContr.getText();
+//				
+//				if(Pattern.matches(refexContrasenia, contrasenia)) {
+//					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+//					
+//				}else {
+//					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
+//				}
 			}
 		});
 		
@@ -108,36 +153,36 @@ public class VentanaREGIS extends JFrame {
 		JLabel labelNom = new JLabel("Nombre:");
 		panelDatos.add(labelNom);
 		
-		fieldId = new JTextField();
-		panelDatos.add(fieldId);
-		fieldId.setColumns(10);
+		txtNombre = new JTextField();
+		panelDatos.add(txtNombre);
+		txtNombre.setColumns(10);
 		
 		JLabel labelContr = new JLabel("Contraseña:");
 		panelDatos.add(labelContr);
 		
-		fieldContr = new JPasswordField();
-		panelDatos.add(fieldContr);
+		txtContr = new JPasswordField();
+		panelDatos.add(txtContr);
 		
 		JLabel labelCiudad = new JLabel("Ciudad");
 		panelDatos.add(labelCiudad);
 		
-		textField_2 = new JTextField();
-		panelDatos.add(textField_2);
-		textField_2.setColumns(10);
+		txtCiudad = new JTextField();
+		panelDatos.add(txtCiudad);
+		txtCiudad.setColumns(10);
 		
 		JLabel labelCodPost = new JLabel("Codigo Postal");
 		panelDatos.add(labelCodPost);
 		
-		textField_1 = new JTextField();
-		panelDatos.add(textField_1);
-		textField_1.setColumns(10);
+		txtCodigoPostal = new JTextField();
+		panelDatos.add(txtCodigoPostal);
+		txtCodigoPostal.setColumns(10);
 		
 		JLabel labelDni = new JLabel("Dni");
 		panelDatos.add(labelDni);
 		
-		textField = new JTextField();
-		panelDatos.add(textField);
-		textField.setColumns(10);
+		txtDni = new JTextField();
+		panelDatos.add(txtDni);
+		txtDni.setColumns(10);
 		
 		setVisible(true);
 	}

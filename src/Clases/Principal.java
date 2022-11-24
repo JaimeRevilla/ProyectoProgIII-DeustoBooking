@@ -10,7 +10,9 @@ public class Principal {
 		
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
 		
-		BaseDatos.crearTablas(con);
+		BaseDatos.crearTablasUsuario(con);
+		BaseDatos.crearTablasProducto(con);
+		BaseDatos.crearTablasCarrito(con);
 		
 		
 		//Perimsos --> 0 = Usuario / 1 = Admin
