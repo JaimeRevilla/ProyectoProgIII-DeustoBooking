@@ -21,30 +21,25 @@ import java.awt.Component;
 import javax.swing.border.LineBorder;
 
 import Clases.BaseDatos;
+import Clases.Usuario;
 
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 
-public class VentanaREGIS extends JFrame {
-	private JTextField txtNombre;
-	private JPasswordField txtContr;
+public class VentanaInicioSesion extends JFrame {
 	private JTextField txtDni;
-	private JTextField txtCodigoPostal;
-	private JTextField txtCiudad;
-	private JFrame vent;
-	public VentanaREGIS() {
-		vent = this;
-		
-		//Conexion  con la base de datos y  creamos la tabla 
-		
+	private JPasswordField txtContr;
+	private Connection connection;
+	
+	public VentanaInicioSesion() {
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
 		
 		BaseDatos.crearTablasUsuario(con);
-
-		
 		setBounds(450, 125, 800, 408);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
@@ -74,64 +69,59 @@ public class VentanaREGIS extends JFrame {
 		panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton = new JButton("SALIR");
-		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
+				BaseDatos.closeBD(connection);
 			}
 			
 		});
-		
 		
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setForeground(Color.BLACK);
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
 		panelBotones.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("SIGN UP");
+		JButton btnNewButton_1 = new JButton("LOG IN");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String nombre = txtNombre.getText();
-				String contrasenia = txtContr.getText();
-				String erContr = "[0-9]{3}";
-				boolean contraseniaCorrecta = Pattern.matches(erContr, contrasenia);
-				String ciudad = txtCiudad.getText();
-				String codigoPostal = txtCodigoPostal.getText();
 				String dni = txtDni.getText();
 				String erDni = "[0-9]{3}[A-Z]";
-				boolean dniCorrecta = Pattern.matches(erDni, dni);
+				String contrasenia = txtContr.getText();
+				String erContr = "[0-9]{3}";
 				
-				if(!contraseniaCorrecta) {
-					JOptionPane.showInputDialog(null,"La contrasenia introducida es incorrecta!", "ERROR", JOptionPane.ERROR_MESSAGE);
-				}else if(!dniCorrecta) {
-					JOptionPane.showInputDialog(null,"El dni introducido es incorrecto!", "ERROR", JOptionPane.ERROR_MESSAGE);
-				}else {
-					boolean encontrada = BaseDatos.buscarUsuario(con, dni);
-					if(!encontrada) {
-						BaseDatos.insertarUsuario(con, nombre, contrasenia, ciudad, codigoPostal, dni, 0);
-						JOptionPane.showInputDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.ERROR_MESSAGE);
-						System.out.println("El usuario ha sido registrado correctamente!");
+				if(Pattern.matches(erDni, dni) && Pattern.matches(erContr, contrasenia)) {
+					//Comprobamos si el usuario esta registrado
+					Usuario u = new Usuario();
+					u = BaseDatos.obtenerUsuario(con, dni);
+					if(u != null) {
+						if(u.getContrasenia().equals(contrasenia)) {
+							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}else {
-						JOptionPane.showInputDialog(null,"Registro realizado es incorrecta! Existe ya un usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
-						System.out.println("El usuario no ha sido registrado correctamente! Existe un usuario con el mismo dni");
+						JOptionPane.showMessageDialog(null, "No existe un requisito asociado a ese Dni", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 					}
-					txtNombre.setText("");
-					txtContr.setText("");
-					txtCiudad.setText("");
-					txtCodigoPostal.setText("");
-					txtDni.setText("");
+				}else {
+					JOptionPane.showMessageDialog(null, "Los datos no cumplen los requisitos", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 					
 				}
+				txtDni.setText("");
+				txtContr.setText("");
 				
-				
-				
-				
-//				String refexContrasenia = "[A-Z][a-z]{0,20}[0-9][^A-Za-z0-9]";
-//				String contrasenia = txtContr.getText();
-//				
+//				/*
 //				if(Pattern.matches(refexContrasenia, contrasenia)) {
 //					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+//					
+//				}else {
+//					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
+//				}*/
+//				if(contrasenia.equals(BaseDatos.obtenerContrasena(connection, txtDni.getText()))) {
+//					JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+//					
+//					new VentanaPrincipal();
 //					
 //				}else {
 //					JOptionPane.showMessageDialog(null, "La contraseña es erronea", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -148,14 +138,14 @@ public class VentanaREGIS extends JFrame {
 		panelDatos.setBackground(new Color(128, 255, 255));
 		panelDatos.setForeground(new Color(128, 255, 255));
 		getContentPane().add(panelDatos, BorderLayout.CENTER);
-		panelDatos.setLayout(new GridLayout(5, 2, 0, 0));
+		panelDatos.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JLabel labelNom = new JLabel("Nombre:");
-		panelDatos.add(labelNom);
+		JLabel labelDni = new JLabel("Dni:");
+		panelDatos.add(labelDni);
 		
-		txtNombre = new JTextField();
-		panelDatos.add(txtNombre);
-		txtNombre.setColumns(10);
+		txtDni = new JTextField();
+		panelDatos.add(txtDni);
+		txtDni.setColumns(10);
 		
 		JLabel labelContr = new JLabel("Contraseña:");
 		panelDatos.add(labelContr);
@@ -163,35 +153,24 @@ public class VentanaREGIS extends JFrame {
 		txtContr = new JPasswordField();
 		panelDatos.add(txtContr);
 		
-		JLabel labelCiudad = new JLabel("Ciudad");
-		panelDatos.add(labelCiudad);
-		
-		txtCiudad = new JTextField();
-		panelDatos.add(txtCiudad);
-		txtCiudad.setColumns(10);
-		
-		JLabel labelCodPost = new JLabel("Codigo Postal");
-		panelDatos.add(labelCodPost);
-		
-		txtCodigoPostal = new JTextField();
-		panelDatos.add(txtCodigoPostal);
-		txtCodigoPostal.setColumns(10);
-		
-		JLabel labelDni = new JLabel("Dni");
-		panelDatos.add(labelDni);
-		
-		txtDni = new JTextField();
-		panelDatos.add(txtDni);
-		txtDni.setColumns(10);
-		
 		setVisible(true);
+		
+		connection= BaseDatos.initBD("data/DeustoIkea");
+		BaseDatos.crearTablasUsuario(connection);
+		BaseDatos.crearTablasProducto(connection);
+		BaseDatos.crearTablasCarrito(connection);
+		BaseDatos.insertarUsuario(connection, "Admin","111A","admin@gmail.com","casa", "Aa00Za", 1 );
+		
+
 	}
+	
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaREGIS frame = new VentanaREGIS();
+					VentanaInicioSesion frame = new VentanaInicioSesion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

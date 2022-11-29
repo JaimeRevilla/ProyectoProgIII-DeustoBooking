@@ -58,7 +58,7 @@ public class VentanaInicial extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaREGIS v1 = new VentanaREGIS();
+				VentanaRegis v1 = new VentanaRegis();
 			}
 		});
 		
@@ -66,7 +66,7 @@ public class VentanaInicial extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaInicio v1 = new VentanaInicio();
+				VentanaInicioSesion v1 = new VentanaInicioSesion();
 			}
 		});
 	}
