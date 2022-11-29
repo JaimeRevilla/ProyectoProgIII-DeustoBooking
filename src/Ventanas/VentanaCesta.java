@@ -47,14 +47,15 @@ public class VentanaCesta extends JFrame {
 		getContentPane().add(panel_1, BorderLayout.EAST);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnNewButton = new JButton("realizar compra");
+		JButton btnNewButton = new JButton("REALIZAR COMPRA");
 		panel_1.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("precio total");
 		panel_1.add(lblNewLabel);
 		
-		JButton btnNewButton_1 = new JButton("factura");
-		panel_1.add(btnNewButton_1);
+		JButton btnFactura = new JButton("FACTURA");
+		
+		panel_1.add(btnFactura);
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
@@ -62,7 +63,11 @@ public class VentanaCesta extends JFrame {
 		JButton btnatras = new JButton("ATRAS");
 		panel_2.add(btnatras);
 		
-		setVisible(true);
+		btnFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaFactura v1 = new VentanaFactura();
+			}
+		});
 		
 		btnatras.addActionListener(new ActionListener() {
 			
@@ -71,6 +76,8 @@ public class VentanaCesta extends JFrame {
 				dispose();
 			}
 		});
+		
+		setVisible(true);
 
 	}
 

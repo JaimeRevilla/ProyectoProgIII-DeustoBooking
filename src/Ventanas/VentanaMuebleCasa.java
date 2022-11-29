@@ -33,9 +33,9 @@ public class VentanaMuebleCasa extends JFrame {
 	private JTextField txtTelevisiones;
 	private JTextField txtSofas;
 	private JTextField txtCamas;
-	private JTextField txtMenuPrincipal;
-	private JTextField txtReloj;
-	private JButton btnNewButton_2;
+	private JButton btnAgregar;
+	private JLabel lblMenucasa;
+	private JLabel lblFecha;
 	public VentanaMuebleCasa() {
 		
 		setBounds(450, 125, 800, 408);
@@ -48,28 +48,24 @@ public class VentanaMuebleCasa extends JFrame {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		txtReloj = new JTextField();
-		txtReloj.setText("FECHA");
-		panel.add(txtReloj);
-		txtReloj.setColumns(10);
+		lblFecha = new JLabel("FECHA");
+		panel.add(lblFecha);
 		
-		txtMenuPrincipal = new JTextField();
-		txtMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtMenuPrincipal.setText("MENU MUEBLES CASA");
-		panel.add(txtMenuPrincipal);
-		txtMenuPrincipal.setColumns(10);
+		lblMenucasa = new JLabel("MENU MUEBLES DE CASA");
+		panel.add(lblMenucasa);
 		
-		JButton btnNewButton = new JButton("IMAGEN CARRITO");
-		panel.add(btnNewButton);
+		JButton btnCarrito = new JButton("IMAGEN CARRITO");
+		panel.add(btnCarrito);
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_1 = new JButton("ATRAS");
-		panel_2.add(btnNewButton_1);
+		JButton btnAtras = new JButton("ATRAS");
 		
-		btnNewButton_2 = new JButton("AGREGAR A CARRITO");
-		panel_2.add(btnNewButton_2);
+		panel_2.add(btnAtras);
+		
+		btnAgregar = new JButton("AGREGAR A CARRITO");
+		panel_2.add(btnAgregar);
 		
 		JPanel panel_4 = new JPanel();
 		getContentPane().add(panel_4, BorderLayout.CENTER);
@@ -111,6 +107,28 @@ public class VentanaMuebleCasa extends JFrame {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		panel_1.add(comboBox_1);
+		
+		
+		btnCarrito.addActionListener(new ActionListener() {
+					
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
+		
+		
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		setVisible(true);
 

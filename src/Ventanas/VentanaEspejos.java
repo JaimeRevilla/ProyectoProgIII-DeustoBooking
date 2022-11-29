@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,7 +25,7 @@ public class VentanaEspejos extends JFrame{
 	private JTextField txtCamas;
 	private JTextField txtMenuPrincipal;
 	private JTextField txtReloj;
-	private JButton btnNewButton_2;
+	private JButton btnAgregar;
 	public VentanaEspejos() {
 		
 		setBounds(450, 125, 800, 408);
@@ -47,17 +49,17 @@ public class VentanaEspejos extends JFrame{
 		panel.add(txtMenuPrincipal);
 		txtMenuPrincipal.setColumns(10);
 		
-		JButton btnNewButton = new JButton("IMAGEN CARRITO");
-		panel.add(btnNewButton);
+		JButton btnCarrito = new JButton("IMAGEN CARRITO");
+		panel.add(btnCarrito);
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_1 = new JButton("ATRAS");
-		panel_2.add(btnNewButton_1);
+		JButton btnAtras = new JButton("ATRAS");
+		panel_2.add(btnAtras);
 		
-		btnNewButton_2 = new JButton("AGREGAR A CARRITO");
-		panel_2.add(btnNewButton_2);
+		btnAgregar = new JButton("AGREGAR A CARRITO");
+		panel_2.add(btnAgregar);
 		
 		JPanel panel_4 = new JPanel();
 		getContentPane().add(panel_4, BorderLayout.CENTER);
@@ -99,6 +101,27 @@ public class VentanaEspejos extends JFrame{
 		
 		JComboBox comboBox_1 = new JComboBox();
 		panel_1.add(comboBox_1);
+		
+		btnCarrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
+		
+		
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		setVisible(true);
 

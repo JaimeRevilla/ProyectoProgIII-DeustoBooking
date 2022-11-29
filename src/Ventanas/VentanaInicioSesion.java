@@ -71,7 +71,7 @@ public class VentanaInicioSesion extends JFrame {
 		JButton btnNewButton = new JButton("SALIR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				dispose();
 				BaseDatos.closeBD(connection);
 			}
 			

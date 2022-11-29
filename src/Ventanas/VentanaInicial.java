@@ -25,7 +25,6 @@ import java.awt.event.ActionEvent;
 
 
 public class VentanaInicial extends JFrame {
-	private JTextField txtBienvenidoPulsaLo;
 	public VentanaInicial() {
 		
 		setBounds(450, 125, 800, 408);
@@ -38,11 +37,8 @@ public class VentanaInicial extends JFrame {
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(4, 4, 0, 0));
 		
-		txtBienvenidoPulsaLo = new JTextField();
-		txtBienvenidoPulsaLo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtBienvenidoPulsaLo.setText("BIENVENIDO PULSA LO QUE DESEA REALIZAR");
-		panel.add(txtBienvenidoPulsaLo);
-		txtBienvenidoPulsaLo.setColumns(10);
+		JLabel lblNewLabel = new JLabel("BIENVENIDO PULSA LO QUE DESEA REALIZAR");
+		panel.add(lblNewLabel);
 		
 		JButton btnsignup = new JButton("SIGN UP");
 		btnsignup.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -51,6 +47,14 @@ public class VentanaInicial extends JFrame {
 		JButton btnlogin = new JButton("LOG IN");
 		btnlogin.setFont(new Font("Tahoma", Font.BOLD, 10));
 		panel.add(btnlogin);
+		
+		JButton btnMenuPrincipal = new JButton("MENU PRINCIPAL");
+		btnMenuPrincipal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panel.add(btnMenuPrincipal);
 				
 		setVisible(true);
 		
