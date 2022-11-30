@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -37,6 +39,9 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnTv;
 	private JButton btnSofas;
 	private JButton btnCamas;
+	private JPanel panel_3;
+	private JPanel panel_5;
+	private JPanel panel_6;
 	public VentanaPrincipal() {
 		vent = this;
 		
@@ -50,17 +55,42 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		lblMenu = new JLabel("MENU PRINCIPAL");
-		panel.add(lblMenu);
+		panel_3 = new JPanel();
+		panel.add(panel_3);
 		
-		JButton btnimgcarrito = new JButton("IMAGEN CARRITO");
-		panel.add(btnimgcarrito);
+		lblFecha = new JLabel("");
+		panel_3.add(lblFecha);
+		
+		panel_5 = new JPanel();
+		panel.add(panel_5);
+		
+		lblMenu = new JLabel("MENU PRINCIPAL");
+		panel_5.add(lblMenu);
+		
+		panel_6 = new JPanel();
+		panel.add(panel_6);
+		
+		JButton btnimgcarrito = new JButton("CARRITO");
+		panel_6.add(btnimgcarrito);
 		
 		btnLog = new JButton("Log");
-		panel.add(btnLog);
+		panel_6.add(btnLog);
 		
-		lblFecha = new JLabel("FECHA");
-		panel.add(lblFecha);
+		btnLog.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaInicial v1 = new VentanaInicial();
+			}
+		});
+		
+		btnimgcarrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
@@ -95,24 +125,6 @@ public class VentanaPrincipal extends JFrame {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		panel_1.add(comboBox_1);
-		
-		setVisible(true);
-		
-		btnimgcarrito.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
-		
-		btnLog.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaInicial v1 = new VentanaInicial();
-			}
-		});
 		
 		btnMuebleCasa.addActionListener(new ActionListener() {
 					
@@ -169,7 +181,36 @@ public class VentanaPrincipal extends JFrame {
 				System.exit(0);;
 			}
 		});
+		
+		/*HILO DE FECHA*/
+		
+		Runnable r1 = new Runnable() {
 
+			@Override
+			public void run() {
+				while (true) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+					long milis = System.currentTimeMillis();
+					Date fecha = new Date(milis);
+					String f = sdf.format(fecha);
+					lblFecha.setText("Fecha Actual: " + f);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					lblFecha.setText("");
+				}
+				
+				
+			}
+		};
+		Thread t1 = new Thread(r1);
+		t1.start();
+		
+
+		setVisible(true);
 	}
 
 	public static void main(String[] args) {

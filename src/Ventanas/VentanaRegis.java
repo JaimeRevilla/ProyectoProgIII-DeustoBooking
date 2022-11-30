@@ -103,18 +103,18 @@ public class VentanaRegis extends JFrame {
 				boolean contraseniaCorrecta = Pattern.matches(erContr, contrasenia);
 				
 				if(!contraseniaCorrecta) {
-					JOptionPane.showInputDialog(null,"La contrasenia introducida es incorrecta!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"La contrasenia introducida es incorrecta!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else if(!dniCorrecta) {
-					JOptionPane.showInputDialog(null,"El dni introducido es incorrecto!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"El dni introducido es incorrecto!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else {
 					System.out.println();
 					boolean encontrada = BaseDatos.buscarUsuario(con, dni);
 					if(!encontrada) {
 						BaseDatos.insertarUsuario(con, nombre, dni, mail, domicilio, contrasenia, 0);
-						JOptionPane.showInputDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.DEFAULT_OPTION);
 						System.out.println("El usuario ha sido registrado correctamente!");
 					}else {
-						JOptionPane.showInputDialog(null,"Registro realizado es incorrecta! Existe ya un usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Registro realizado es incorrecta! \n Existe ya un usuario", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 						System.out.println("El usuario no ha sido registrado correctamente! Existe un usuario con el mismo dni");
 					}
 					txtNombre.setText("");

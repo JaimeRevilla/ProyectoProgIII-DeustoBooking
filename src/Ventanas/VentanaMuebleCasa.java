@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -36,6 +38,9 @@ public class VentanaMuebleCasa extends JFrame {
 	private JButton btnAgregar;
 	private JLabel lblMenucasa;
 	private JLabel lblFecha;
+	private JPanel panel_3;
+	private JPanel panel_5;
+	private JPanel panel_7;
 	public VentanaMuebleCasa() {
 		
 		setBounds(450, 125, 800, 408);
@@ -48,14 +53,32 @@ public class VentanaMuebleCasa extends JFrame {
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
+		panel_3 = new JPanel();
+		panel.add(panel_3);
+		
 		lblFecha = new JLabel("FECHA");
-		panel.add(lblFecha);
+		panel_3.add(lblFecha);
+		
+		panel_5 = new JPanel();
+		panel.add(panel_5);
 		
 		lblMenucasa = new JLabel("MENU MUEBLES DE CASA");
-		panel.add(lblMenucasa);
+		panel_5.add(lblMenucasa);
+		
+		panel_7 = new JPanel();
+		panel.add(panel_7);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panel.add(btnCarrito);
+		panel_7.add(btnCarrito);
+		
+		
+		btnCarrito.addActionListener(new ActionListener() {
+					
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
@@ -109,15 +132,6 @@ public class VentanaMuebleCasa extends JFrame {
 		panel_1.add(comboBox_1);
 		
 		
-		btnCarrito.addActionListener(new ActionListener() {
-					
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
-		
-		
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -129,6 +143,32 @@ public class VentanaMuebleCasa extends JFrame {
 				dispose();
 			}
 		});
+		
+		/*HILO DE FECHA*/
+		Runnable r1 = new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+					long milis = System.currentTimeMillis();
+					Date fecha = new Date(milis);
+					String f = sdf.format(fecha);
+					lblFecha.setText("Fecha Actual: " + f);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					lblFecha.setText("");
+				}
+				
+				
+			}
+		};
+		Thread t1 = new Thread(r1);
+		t1.start();
 		
 		setVisible(true);
 
