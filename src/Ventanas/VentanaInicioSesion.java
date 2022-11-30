@@ -43,7 +43,7 @@ public class VentanaInicioSesion extends JFrame {
 		setBounds(450, 125, 800, 408);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
-		getContentPane().setForeground(new Color(128, 255, 255));
+		getContentPane().setForeground(new Color(255, 255, 255));//
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelHora = new JPanel();
@@ -97,12 +97,12 @@ public class VentanaInicioSesion extends JFrame {
 					u = BaseDatos.obtenerUsuario(con, dni);
 					if(u != null) {
 						if(u.getContrasenia().equals(contrasenia)) {
-							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
 						}else {
-							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
 					}else {
-						JOptionPane.showMessageDialog(null, "No existe un requisito asociado a ese Dni", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "No existe un usuario para ese DNI! \n Vuelve a introducirlo ó deberas de registrar! ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "Los datos no cumplen los requisitos", "ERROR", JOptionPane.INFORMATION_MESSAGE);
@@ -135,12 +135,13 @@ public class VentanaInicioSesion extends JFrame {
 		panelBotones.add(btnNewButton_1);
 		
 		JPanel panelDatos = new JPanel();
-		panelDatos.setBackground(new Color(128, 255, 255));
-		panelDatos.setForeground(new Color(128, 255, 255));
+		panelDatos.setBackground(new Color(255, 220, 220));
+		panelDatos.setForeground(new Color(255, 220, 220));
 		getContentPane().add(panelDatos, BorderLayout.CENTER);
 		panelDatos.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JLabel labelDni = new JLabel("Dni:");
+		labelDni.setBackground(new Color(255, 255, 255));
 		panelDatos.add(labelDni);
 		
 		txtDni = new JTextField();

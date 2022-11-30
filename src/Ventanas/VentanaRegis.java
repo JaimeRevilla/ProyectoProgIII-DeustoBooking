@@ -1,4 +1,4 @@
-package Ventanas;
+ package Ventanas;
 
 import java.awt.EventQueue;
 
@@ -10,14 +10,10 @@ import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.awt.Component;
 import javax.swing.border.LineBorder;
 
 import Clases.BaseDatos;
@@ -31,11 +27,13 @@ import java.awt.event.ActionEvent;
 public class VentanaRegis extends JFrame {
 	
 	private JTextField txtNombre;
-	private JPasswordField txtContr;
 	private JTextField txtDni;
-	private JTextField txtCodigoPostal;
-	private JTextField txtCiudad;
 	private JFrame vent;
+	private JTextField txtMail;
+	private JTextField txtDomicilio;
+	private JTextField textContr;
+	private JTextField txtContr;
+	private JPasswordField passwordField;
 	
 	public VentanaRegis() {
 		vent = this;
@@ -75,43 +73,44 @@ public class VentanaRegis extends JFrame {
 		getContentPane().add(panelBotones, BorderLayout.SOUTH);
 		panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("SALIR");
+		JButton btnSalir = new JButton("SALIR");
 		
-		btnNewButton.addActionListener(new ActionListener() {
+		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 			
 		});
 		
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setForeground(Color.BLACK);
+		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panelBotones.add(btnSalir);
 		
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setForeground(Color.BLACK);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelBotones.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("SIGN UP");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnSignUp = new JButton("SIGN UP");
+		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//nombre String, dni String, email String, domicilio String, contrasenia String, permisos int
 				String nombre = txtNombre.getText();
-				String contrasenia = txtContr.getText();
-				String erContr = "[0-9]{3}";
-				boolean contraseniaCorrecta = Pattern.matches(erContr, contrasenia);
-				String ciudad = txtCiudad.getText();
-				String codigoPostal = txtCodigoPostal.getText();
 				String dni = txtDni.getText();
 				String erDni = "[0-9]{3}[A-Z]";
 				boolean dniCorrecta = Pattern.matches(erDni, dni);
+				String mail = txtMail.getText();
+				String domicilio = txtDomicilio.getText();
+				String contrasenia = passwordField.getText();
+				String erContr = "[0-9]{3}";
+				boolean contraseniaCorrecta = Pattern.matches(erContr, contrasenia);
 				
 				if(!contraseniaCorrecta) {
 					JOptionPane.showInputDialog(null,"La contrasenia introducida es incorrecta!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else if(!dniCorrecta) {
 					JOptionPane.showInputDialog(null,"El dni introducido es incorrecto!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else {
+					System.out.println();
 					boolean encontrada = BaseDatos.buscarUsuario(con, dni);
 					if(!encontrada) {
-						BaseDatos.insertarUsuario(con, nombre, contrasenia, ciudad, codigoPostal, dni, 0);
+						BaseDatos.insertarUsuario(con, nombre, dni, mail, domicilio, contrasenia, 0);
 						JOptionPane.showInputDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.ERROR_MESSAGE);
 						System.out.println("El usuario ha sido registrado correctamente!");
 					}else {
@@ -119,15 +118,13 @@ public class VentanaRegis extends JFrame {
 						System.out.println("El usuario no ha sido registrado correctamente! Existe un usuario con el mismo dni");
 					}
 					txtNombre.setText("");
-					txtContr.setText("");
-					txtCiudad.setText("");
-					txtCodigoPostal.setText("");
 					txtDni.setText("");
+					txtMail.setText("");
+					txtDomicilio.setText("");
+					passwordField.setText("");
+					
 					
 				}
-				
-				
-				
 				
 //				String refexContrasenia = "[A-Z][a-z]{0,20}[0-9][^A-Za-z0-9]";
 //				String contrasenia = txtContr.getText();
@@ -141,10 +138,10 @@ public class VentanaRegis extends JFrame {
 			}
 		});
 		
-		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setForeground(Color.BLACK);
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelBotones.add(btnNewButton_1);
+		btnSignUp.setBackground(Color.WHITE);
+		btnSignUp.setForeground(Color.BLACK);
+		btnSignUp.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panelBotones.add(btnSignUp);
 		
 		JPanel panelDatos = new JPanel();
 		panelDatos.setBackground(new Color(128, 255, 255));
@@ -159,32 +156,32 @@ public class VentanaRegis extends JFrame {
 		panelDatos.add(txtNombre);
 		txtNombre.setColumns(10);
 		
-		JLabel labelContr = new JLabel("Contraseña:");
-		panelDatos.add(labelContr);
-		
-		txtContr = new JPasswordField();
-		panelDatos.add(txtContr);
-		
-		JLabel labelCiudad = new JLabel("Ciudad");
-		panelDatos.add(labelCiudad);
-		
-		txtCiudad = new JTextField();
-		panelDatos.add(txtCiudad);
-		txtCiudad.setColumns(10);
-		
-		JLabel labelCodPost = new JLabel("Codigo Postal");
-		panelDatos.add(labelCodPost);
-		
-		txtCodigoPostal = new JTextField();
-		panelDatos.add(txtCodigoPostal);
-		txtCodigoPostal.setColumns(10);
-		
 		JLabel labelDni = new JLabel("Dni");
 		panelDatos.add(labelDni);
 		
 		txtDni = new JTextField();
 		panelDatos.add(txtDni);
 		txtDni.setColumns(10);
+		
+		JLabel lblMail = new JLabel("Email");
+		panelDatos.add(lblMail);
+		
+		txtMail = new JTextField();
+		panelDatos.add(txtMail);
+		txtMail.setColumns(10);
+		
+		JLabel lblDomicilio = new JLabel("Ciudad");
+		panelDatos.add(lblDomicilio);
+		
+		txtDomicilio = new JTextField();
+		panelDatos.add(txtDomicilio);
+		txtDomicilio.setColumns(10);
+		
+		JLabel lblContrasenia = new JLabel("Contraseña");
+		panelDatos.add(lblContrasenia);
+		
+		passwordField = new JPasswordField();
+		panelDatos.add(passwordField);
 		
 		setVisible(true);
 	}
