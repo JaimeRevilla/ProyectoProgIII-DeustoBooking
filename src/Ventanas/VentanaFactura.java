@@ -20,12 +20,12 @@ public class VentanaFactura extends JFrame{
 		
 		setBounds(450, 125, 800, 408);
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.SOUTH);
+		JPanel panelSur = new JPanel();
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
 		
-		panel.add(btnAtras);
+		panelSur.add(btnAtras);
 		
 		JPanel panelCentro = new JPanel();
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
@@ -33,11 +33,11 @@ public class VentanaFactura extends JFrame{
 		tablaFactura = new JTable();
 		panelCentro.add(tablaFactura);
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.NORTH);
+		JPanel panelNorte = new JPanel();
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblFactura_1 = new JLabel("FACTURA");
-		panel_1.add(lblFactura_1);
+		panelNorte.add(lblFactura_1);
 		
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

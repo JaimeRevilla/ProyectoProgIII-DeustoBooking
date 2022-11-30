@@ -33,73 +33,73 @@ public class VentanaSillas extends JFrame{
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.NORTH);
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel panelNorte = new JPanel();
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
+		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		txtReloj = new JTextField();
 		txtReloj.setText("FECHA");
-		panel.add(txtReloj);
+		panelNorte.add(txtReloj);
 		txtReloj.setColumns(10);
 		
 		txtMenuPrincipal = new JTextField();
 		txtMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 12));
 		txtMenuPrincipal.setText("MENU SILLAS");
-		panel.add(txtMenuPrincipal);
+		panelNorte.add(txtMenuPrincipal);
 		txtMenuPrincipal.setColumns(10);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panel.add(btnCarrito);
+		panelNorte.add(btnCarrito);
 		
-		JPanel panel_2 = new JPanel();
-		getContentPane().add(panel_2, BorderLayout.SOUTH);
+		JPanel panelSur = new JPanel();
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
-		panel_2.add(btnAtras);
+		panelSur.add(btnAtras);
 		
 		btnAgregar = new JButton("AGREGAR A CARRITO");
-		panel_2.add(btnAgregar);
+		panelSur.add(btnAgregar);
 		
-		JPanel panel_4 = new JPanel();
-		getContentPane().add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new GridLayout(2, 3, 0, 0));
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
 		
 		txtMuebleCasa = new JTextField();
 		txtMuebleCasa.setText("\"\"");
-		panel_4.add(txtMuebleCasa);
+		panelCentro.add(txtMuebleCasa);
 		txtMuebleCasa.setColumns(10);
 		
 		txtEspejos = new JTextField();
 		txtEspejos.setText("\"\"");
-		panel_4.add(txtEspejos);
+		panelCentro.add(txtEspejos);
 		txtEspejos.setColumns(10);
 		
 		txtSillas = new JTextField();
 		txtSillas.setText("\"\"");
-		panel_4.add(txtSillas);
+		panelCentro.add(txtSillas);
 		txtSillas.setColumns(10);
 		
 		txtTelevisiones = new JTextField();
 		txtTelevisiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTelevisiones.setText("\"\"");
-		panel_4.add(txtTelevisiones);
+		panelCentro.add(txtTelevisiones);
 		txtTelevisiones.setColumns(10);
 		
 		txtSofas = new JTextField();
 		txtSofas.setText("\"\"");
-		panel_4.add(txtSofas);
+		panelCentro.add(txtSofas);
 		txtSofas.setColumns(10);
 		
 		txtCamas = new JTextField();
 		txtCamas.setText("\"\"");
-		panel_4.add(txtCamas);
+		panelCentro.add(txtCamas);
 		txtCamas.setColumns(10);
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.WEST);
+		JPanel panelCentroOeste = new JPanel();
+		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		panel_1.add(comboBox_1);
+		panelCentroOeste.add(comboBox_1);
 		
 		btnCarrito.addActionListener(new ActionListener() {
 			

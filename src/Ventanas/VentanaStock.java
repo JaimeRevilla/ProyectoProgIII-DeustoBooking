@@ -3,9 +3,13 @@ package Ventanas;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaStock extends JFrame{
 
@@ -13,31 +17,51 @@ public class VentanaStock extends JFrame{
 	
 	public VentanaStock() {
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.NORTH);
+		setBounds(450, 125, 800, 408);
+		
+		JPanel panelNorte = new JPanel();
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblNewLabel = new JLabel("LISTA PRODUCTO CON INFORMACION");
-		panel.add(lblNewLabel);
+		panelNorte.add(lblNewLabel);
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new GridLayout(1, 4, 0, 0));
+		JPanel panelSur = new JPanel();
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
+		panelSur.setLayout(new GridLayout(1, 4, 0, 0));
 		
 		JButton btnEliminar = new JButton("Eliminar");
-		panel_1.add(btnEliminar);
+		panelSur.add(btnEliminar);
 		
 		JButton btnAnadir = new JButton("Añadir");
-		panel_1.add(btnAnadir);
+		panelSur.add(btnAnadir);
 		
 		JButton btnActualizar = new JButton("Actualizar");
-		panel_1.add(btnActualizar);
+		panelSur.add(btnActualizar);
 		
 		JButton btnSalir = new JButton("Salir");
-		panel_1.add(btnSalir);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panelSur.add(btnSalir);
 
 		
-		JPanel panel_2 = new JPanel();
-		getContentPane().add(panel_2, BorderLayout.CENTER);
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
 
+	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaStock frame = new VentanaStock();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

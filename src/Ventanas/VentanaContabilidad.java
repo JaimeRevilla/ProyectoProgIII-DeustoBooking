@@ -3,8 +3,12 @@ package Ventanas;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaContabilidad extends JFrame{
 	
@@ -12,21 +16,43 @@ public class VentanaContabilidad extends JFrame{
 	
 	public VentanaContabilidad() {
 		
-		JPanel panel = new JPanel();	
-		getContentPane().add(panel, BorderLayout.NORTH);
+		setBounds(450, 125, 800, 408);
+		
+		JPanel panelNorte = new JPanel();	
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblVentas = new JLabel("VENTAS");
-		panel.add(lblVentas);
+		panelNorte.add(lblVentas);
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		JPanel panelSur = new JPanel();
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("Atras");
-		panel_1.add(btnAtras);
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panelSur.add(btnAtras);
 		
-		JPanel panel_2 = new JPanel();
-		getContentPane().add(panel_2, BorderLayout.CENTER);
+		JButton btnCalculadora = new JButton("CALCULADORA");
+		panelSur.add(btnCalculadora);
+		
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		
 
+	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaContabilidad frame = new VentanaContabilidad();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

@@ -46,27 +46,27 @@ public class VentanaInicioSesion extends JFrame {
 		getContentPane().setForeground(new Color(255, 255, 255));//
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelHora = new JPanel();
-		panelHora.setBackground(Color.BLACK);
-		panelHora.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		getContentPane().add(panelHora, BorderLayout.NORTH);
-		panelHora.setLayout(new GridLayout(0, 2, 0, 0));
+		JPanel panelNorte = new JPanel();
+		panelNorte.setBackground(new Color(202, 206, 207));
+		panelNorte.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
+		panelNorte.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("OPCIONES");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelHora.add(lblNewLabel);
+		panelNorte.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("DATOS");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelHora.add(lblNewLabel_1);
+		panelNorte.add(lblNewLabel_1);
 		
-		JPanel panelBotones = new JPanel();
-		panelBotones.setBackground(Color.BLACK);
-		panelBotones.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		getContentPane().add(panelBotones, BorderLayout.SOUTH);
-		panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(202, 206, 207));
+		panelSur.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
+		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton = new JButton("SALIR");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -80,7 +80,7 @@ public class VentanaInicioSesion extends JFrame {
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setForeground(Color.BLACK);
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelBotones.add(btnNewButton);
+		panelSur.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("LOG IN");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -132,27 +132,27 @@ public class VentanaInicioSesion extends JFrame {
 		btnNewButton_1.setBackground(Color.WHITE);
 		btnNewButton_1.setForeground(Color.BLACK);
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelBotones.add(btnNewButton_1);
+		panelSur.add(btnNewButton_1);
 		
-		JPanel panelDatos = new JPanel();
-		panelDatos.setBackground(new Color(255, 220, 220));
-		panelDatos.setForeground(new Color(255, 220, 220));
-		getContentPane().add(panelDatos, BorderLayout.CENTER);
-		panelDatos.setLayout(new GridLayout(2, 2, 0, 0));
+		JPanel panelCentro = new JPanel();
+		panelCentro.setBackground(new Color(100, 144, 213));
+		panelCentro.setForeground(new Color(255, 220, 220));
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JLabel labelDni = new JLabel("Dni:");
 		labelDni.setBackground(new Color(255, 255, 255));
-		panelDatos.add(labelDni);
+		panelCentro.add(labelDni);
 		
 		txtDni = new JTextField();
-		panelDatos.add(txtDni);
+		panelCentro.add(txtDni);
 		txtDni.setColumns(10);
 		
 		JLabel labelContr = new JLabel("Contraseña:");
-		panelDatos.add(labelContr);
+		panelCentro.add(labelContr);
 		
 		txtContr = new JPasswordField();
-		panelDatos.add(txtContr);
+		panelCentro.add(txtContr);
 		
 		setVisible(true);
 		

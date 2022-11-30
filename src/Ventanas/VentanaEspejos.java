@@ -7,13 +7,20 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import Clases.BaseDatos;
+import Clases.Principal;
+import Clases.Producto;
 
 public class VentanaEspejos extends JFrame{
 
@@ -26,46 +33,55 @@ public class VentanaEspejos extends JFrame{
 	private JTextField txtMenuPrincipal;
 	private JTextField txtReloj;
 	private JButton btnAgregar;
-	public VentanaEspejos() {
+	public VentanaEspejos(String nombreProducto) {
 		
 		setBounds(450, 125, 800, 408);
+		
+		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
+		
+		BaseDatos.crearTablasUsuario(con);
+
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.NORTH);
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel panelNorte = new JPanel();
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
+		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		txtReloj = new JTextField();
 		txtReloj.setText("FECHA");
-		panel.add(txtReloj);
+		panelNorte.add(txtReloj);
 		txtReloj.setColumns(10);
 		
 		txtMenuPrincipal = new JTextField();
 		txtMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtMenuPrincipal.setText("MENU ESPEJOS");
-		panel.add(txtMenuPrincipal);
+		txtMenuPrincipal.setText("MENU "+nombreProducto);
+		panelNorte.add(txtMenuPrincipal);
 		txtMenuPrincipal.setColumns(10);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panel.add(btnCarrito);
+		panelNorte.add(btnCarrito);
 		
-		JPanel panel_2 = new JPanel();
-		getContentPane().add(panel_2, BorderLayout.SOUTH);
+		JPanel panelSur = new JPanel();
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
-		panel_2.add(btnAtras);
+		panelSur.add(btnAtras);
 		
 		btnAgregar = new JButton("AGREGAR A CARRITO");
-		panel_2.add(btnAgregar);
+		panelSur.add(btnAgregar);
 		
-		JPanel panel_4 = new JPanel();
-		getContentPane().add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new GridLayout(2, 3, 0, 0));
-		
-		txtMuebleCasa = new JTextField();
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
+		ArrayList<Producto> a = BaseDatos.obtenerProductoTipo(con,"ESPEJO");
+		for(Producto p: a) {
+			JLabel l = new JLabel(p.getNombre());
+			panelCentro.add(l);
+		}
+		/*txtMuebleCasa = new JTextField();
 		txtMuebleCasa.setText("\"\"");
 		panel_4.add(txtMuebleCasa);
 		txtMuebleCasa.setColumns(10);
@@ -95,12 +111,12 @@ public class VentanaEspejos extends JFrame{
 		txtCamas.setText("\"\"");
 		panel_4.add(txtCamas);
 		txtCamas.setColumns(10);
-		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.WEST);
+		*/
+		JPanel panelCentroOeste = new JPanel();
+		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		panel_1.add(comboBox_1);
+		panelCentroOeste.add(comboBox_1);
 		
 		btnCarrito.addActionListener(new ActionListener() {
 			
@@ -131,7 +147,7 @@ public class VentanaEspejos extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaEspejos frame = new VentanaEspejos();
+					VentanaEspejos frame = new VentanaEspejos("ESPEJO");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

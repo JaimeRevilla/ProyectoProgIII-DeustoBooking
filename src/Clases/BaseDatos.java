@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class BaseDatos {
 
@@ -324,6 +325,32 @@ public class BaseDatos {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static ArrayList<Producto> obtenerProductoTipo(Connection con, String tipo){
+		ArrayList<Producto> a = new ArrayList<>();
+		String sent = "SELECT * FROM Producto WHERE nombre like '" + tipo + "%'";
+		Statement stmt = null;
+		Producto p = null;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String marca = rs.getString("marca");
+				double precio = rs.getDouble("precio");
+				String tam = rs.getString("tamanyo");
+				int stock = rs.getInt("stock");
+				int cod = rs.getInt("cod");
+				p = new Producto(cod, nombre, tipo, marca, tam, precio, stock);
+				a.add(p);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
+			e.printStackTrace();
+		}
+		return a;	
 	}
 	
 	

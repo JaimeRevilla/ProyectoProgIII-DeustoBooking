@@ -39,9 +39,9 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnTv;
 	private JButton btnSofas;
 	private JButton btnCamas;
-	private JPanel panel_3;
-	private JPanel panel_5;
-	private JPanel panel_6;
+	private JPanel panelNorteFecha;
+	private JPanel panelNorteCentro;
+	private JPanel panelNorteCarrito;
 	public VentanaPrincipal() {
 		vent = this;
 		
@@ -51,30 +51,30 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.NORTH);
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel panelNorte = new JPanel();
+		getContentPane().add(panelNorte, BorderLayout.NORTH);
+		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		panel_3 = new JPanel();
-		panel.add(panel_3);
+		panelNorteFecha = new JPanel();
+		panelNorte.add(panelNorteFecha);
 		
 		lblFecha = new JLabel("");
-		panel_3.add(lblFecha);
+		panelNorteFecha.add(lblFecha);
 		
-		panel_5 = new JPanel();
-		panel.add(panel_5);
+		panelNorteCentro = new JPanel();
+		panelNorte.add(panelNorteCentro);
 		
 		lblMenu = new JLabel("MENU PRINCIPAL");
-		panel_5.add(lblMenu);
+		panelNorteCentro.add(lblMenu);
 		
-		panel_6 = new JPanel();
-		panel.add(panel_6);
+		panelNorteCarrito = new JPanel();
+		panelNorte.add(panelNorteCarrito);
 		
 		JButton btnimgcarrito = new JButton("CARRITO");
-		panel_6.add(btnimgcarrito);
+		panelNorteCarrito.add(btnimgcarrito);
 		
 		btnLog = new JButton("Log");
-		panel_6.add(btnLog);
+		panelNorteCarrito.add(btnLog);
 		
 		btnLog.addActionListener(new ActionListener() {
 			
@@ -92,39 +92,39 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		
-		JPanel panel_2 = new JPanel();
-		getContentPane().add(panel_2, BorderLayout.SOUTH);
+		JPanel panelSur = new JPanel();
+		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnsalir = new JButton("SALIR");
-		panel_2.add(btnsalir);
+		panelSur.add(btnsalir);
 		
-		JPanel panel_4 = new JPanel();
-		getContentPane().add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new GridLayout(2, 3, 0, 0));
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
 		
 		btnMuebleCasa = new JButton("MUEBLE CASA");
-		panel_4.add(btnMuebleCasa);
+		panelCentro.add(btnMuebleCasa);
 		
 		btnEspejos = new JButton("ESPEJOS");
-		panel_4.add(btnEspejos);
+		panelCentro.add(btnEspejos);
 		
 		btnSillas = new JButton("SILLAS");
-		panel_4.add(btnSillas);
+		panelCentro.add(btnSillas);
 		
 		btnTv = new JButton("TV");
-		panel_4.add(btnTv);
+		panelCentro.add(btnTv);
 		
 		btnSofas = new JButton("SOFAS");
-		panel_4.add(btnSofas);
+		panelCentro.add(btnSofas);
 		
 		btnCamas = new JButton("CAMAS");
-		panel_4.add(btnCamas);
+		panelCentro.add(btnCamas);
 		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.WEST);
+		JPanel panelCentroOeste = new JPanel();
+		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		panel_1.add(comboBox_1);
+		panelCentroOeste.add(comboBox_1);
 		
 		btnMuebleCasa.addActionListener(new ActionListener() {
 					
@@ -138,7 +138,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos();
+				VentanaEspejos v1 = new VentanaEspejos("ESPEJO");
 			}
 		});
 		

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Principal {
-
+	public static Connection con;
 	public static void main(String[] args) {
 		
-		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
+		con = BaseDatos.initBD("data/DeustoIkea.db");
 		
 		BaseDatos.crearTablasUsuario(con);
 		BaseDatos.crearTablasProducto(con);

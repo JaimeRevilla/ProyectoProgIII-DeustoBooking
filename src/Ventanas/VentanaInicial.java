@@ -33,20 +33,20 @@ public class VentanaInicial extends JFrame {
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(4, 4, 0, 0));
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(4, 4, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("BIENVENIDO PULSA LO QUE DESEA REALIZAR");
-		panel.add(lblNewLabel);
+		panelCentro.add(lblNewLabel);
 		
 		JButton btnsignup = new JButton("SIGN UP");
 		btnsignup.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panel.add(btnsignup);
+		panelCentro.add(btnsignup);
 		
 		JButton btnlogin = new JButton("LOG IN");
 		btnlogin.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panel.add(btnlogin);
+		panelCentro.add(btnlogin);
 		
 		JButton btnMenuPrincipal = new JButton("MENU PRINCIPAL");
 		btnMenuPrincipal.addActionListener(new ActionListener() {
@@ -54,7 +54,7 @@ public class VentanaInicial extends JFrame {
 				dispose();
 			}
 		});
-		panel.add(btnMenuPrincipal);
+		panelCentro.add(btnMenuPrincipal);
 				
 		setVisible(true);
 		
