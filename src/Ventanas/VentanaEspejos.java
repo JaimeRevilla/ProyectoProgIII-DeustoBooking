@@ -33,6 +33,7 @@ public class VentanaEspejos extends JFrame{
 	private JTextField txtMenuPrincipal;
 	private JTextField txtReloj;
 	private JButton btnAgregar;
+	private JButton btnEspejoCircular;
 	public VentanaEspejos(String nombreProducto) {
 		
 		setBounds(450, 125, 800, 408);
@@ -75,43 +76,120 @@ public class VentanaEspejos extends JFrame{
 		
 		JPanel panelCentro = new JPanel();
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
-		ArrayList<Producto> a = BaseDatos.obtenerProductoTipo(con,"ESPEJO");
-		for(Producto p: a) {
-			JLabel l = new JLabel(p.getNombre());
-			panelCentro.add(l);
+		panelCentro.setLayout(new GridLayout(1, 3, 1,3));
+		
+		JPanel panelCentroIzquierda = new JPanel();
+		panelCentro.add(panelCentroIzquierda);
+		panelCentroIzquierda.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel = new JPanel();
+		panelCentroIzquierda.add(panel);
+		
+		JPanel panel_2 = new JPanel();
+		panel.add(panel_2);
+		
+		JButton btnEspejoRectangular = new JButton("EspejoRectangular");
+		panel_2.add(btnEspejoRectangular);
+		
+		JPanel panel_3 = new JPanel();
+		panel.add(panel_3);
+		
+		JLabel lblEspejoRectangular = new JLabel("EspejoRectangular:");
+		panel_3.add(lblEspejoRectangular);
+		
+		JPanel panel_1 = new JPanel();
+		panelCentroIzquierda.add(panel_1);
+		
+		JPanel panel_6 = new JPanel();
+		panel_1.add(panel_6);
+		
+		JButton btnEspejoCuadrado = new JButton("EspejoCuadrado");
+		panel_6.add(btnEspejoCuadrado);
+		
+		JPanel panel_7 = new JPanel();
+		panel_1.add(panel_7);
+		
+		JLabel lblEspejoCuadrado = new JLabel("EspejoCuadrado:");
+		panel_7.add(lblEspejoCuadrado);
+		
+		int stock1 = BaseDatos.obtenerStockProducto(con, "Rectangular");
+		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Rectangular");
+		if (stock1 == 0) {
+			lblEspejoRectangular.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+		}else {
+			lblEspejoRectangular.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock1 + " unidades    " + "Precio: " + precio1 + " euros");
+			
 		}
-		/*txtMuebleCasa = new JTextField();
-		txtMuebleCasa.setText("\"\"");
-		panel_4.add(txtMuebleCasa);
-		txtMuebleCasa.setColumns(10);
+		int stock2 = BaseDatos.obtenerStockProducto(con, "Rectangular");
+		double precio2 = BaseDatos.obtenerPrecioProducto(con,"Rectangular");
+		if (stock1 == 0) {
+			lblEspejoCuadrado.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+		}else {
+			lblEspejoCuadrado.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock2 + " unidades    " + "Precio: " + precio2 + " euros");
+			
+		}
 		
-		txtEspejos = new JTextField();
-		txtEspejos.setText("\"\"");
-		panel_4.add(txtEspejos);
-		txtEspejos.setColumns(10);
+		/**
+		 * ESPEJOS CIRCULARES
+		 */
+		JPanel panelCentroCentroDerecha = new JPanel();
+		panelCentro.add(panelCentroCentroDerecha);
+		panelCentroCentroDerecha.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		txtSillas = new JTextField();
-		txtSillas.setText("\"\"");
-		panel_4.add(txtSillas);
-		txtSillas.setColumns(10);
+		JPanel panel_4 = new JPanel();
+		panelCentroCentroDerecha.add(panel_4);
 		
-		txtTelevisiones = new JTextField();
-		txtTelevisiones.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTelevisiones.setText("\"\"");
-		panel_4.add(txtTelevisiones);
-		txtTelevisiones.setColumns(10);
+		JPanel panel_8 = new JPanel();
+		panel_4.add(panel_8);
 		
-		txtSofas = new JTextField();
-		txtSofas.setText("\"\"");
-		panel_4.add(txtSofas);
-		txtSofas.setColumns(10);
+		btnEspejoCircular = new JButton("EspejoCircular");
+		panel_8.add(btnEspejoCircular);
 		
-		txtCamas = new JTextField();
-		txtCamas.setText("\"\"");
-		panel_4.add(txtCamas);
-		txtCamas.setColumns(10);
-		*/
+		JPanel panel_9 = new JPanel();
+		panel_4.add(panel_9);
+		
+		JLabel lblEspejoCircular = new JLabel("EspejoCircular:");
+		panel_9.add(lblEspejoCircular);
+		
+		JPanel panel_5 = new JPanel();
+		panelCentroCentroDerecha.add(panel_5);
+		
+		JPanel panel_10 = new JPanel();
+		panel_5.add(panel_10);
+		
+		JButton btnOvalado = new JButton("EspejoOvalado");
+		panel_10.add(btnOvalado);
+		
+		JPanel panel_11 = new JPanel();
+		panel_5.add(panel_11);
+		
+		JLabel lblEspejoOvalado = new JLabel("EspejoOvalado:");
+		panel_11.add(lblEspejoOvalado);
+		
+		int stock3 = BaseDatos.obtenerStockProducto(con, "Circular");
+		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Circular");
+		if (stock3 == 0) {
+			lblEspejoCircular.setText("Espejos circulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+		}else {
+			lblEspejoCircular.setText("Espejos ciculares" + ": " + "Unidades restantes: " + stock3 + " unidades    " + "Precio: " + precio3 + " euros");
+			
+		}
+		
+		int stock4 = BaseDatos.obtenerStockProducto(con, "Ovalado");
+		double precio4 = BaseDatos.obtenerPrecioProducto(con,"Ovalado");
+		if (stock4 == 0) {
+			lblEspejoOvalado.setText("Espejos ovalado" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+		}else {
+			lblEspejoOvalado.setText("Espejos ovalado" + ": " + "Unidades restantes: " + stock4 + " unidades    " + "Precio: " + precio4 + " euros");
+			
+		}
+		
+		
+//		ArrayList<Producto> a = BaseDatos.obtenerProductoTipo(con,"ESPEJO");
+//		for(Producto p: a) {
+//			JLabel l = new JLabel(p.toString());
+//			panelCentro.add(l);
+//		}
 		JPanel panelCentroOeste = new JPanel();
 		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		

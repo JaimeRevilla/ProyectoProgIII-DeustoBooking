@@ -49,7 +49,7 @@ public class BaseDatos {
 	}
 	
 	/**
-	 * Método para crear las tablas en la BBDD 
+	 * Método para crear la tabla Usuario en la BBDD 
 	 * @param Connection con: recibimos la conexion con la base de datos
 	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
 	 */
@@ -67,8 +67,11 @@ public class BaseDatos {
 		}
 	}
 	
-	
-	
+	/**
+	 * Método para crear la tbala Producto en la BBDD 
+	 * @param Connection con: recibimos la conexion con la base de datos
+	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
+	 */
 	public static boolean crearTablasProducto(Connection con) {
 		String sql = "CREATE TABLE IF NOT EXISTS Producto (cod int, nombre String, tipo String, marca String, tamanyo String, precio double, stock int)";
 		try {
@@ -84,8 +87,11 @@ public class BaseDatos {
 	}
 	
 	
-	
-	
+	/**
+	 * Método para crear la tabla Carrito en la BBDD 
+	 * @param Connection con: recibimos la conexion con la base de datos
+	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
+	 */
 	public static boolean crearTablasCarrito(Connection con) {
 		String sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, precioProd double)";
 		try {
@@ -260,9 +266,6 @@ public class BaseDatos {
 	 * @param Connection con, el dni de un usuario : recibimos la conexion con la base de datos y el dni del usuario
 	 * @return Devuelve el usuario buscado
 	 */
-	
-	
-	
 	//recibe le dni de un usuario y devuelve la contraseña que esta almacenada en la bd junto ese dni
 	public static String obtenerContrasena(Connection con, String DNI) {
 		String ret = "";
@@ -278,7 +281,11 @@ public class BaseDatos {
 		return ret;
 	}
 	
-	
+	/**
+	 * Método para buscar los datos de un usuario si el dni recibido es el mismo que buscamos en la BBDD
+	 * @param Connection con, el dni de un usuario : recibimos la conexion con la base de datos y el dni del usuario
+	 * @return Devuelve el usuario buscado
+	 */
 	/*
 	 *Obtener el usuario que estamos introduciendo los datos en la ventana 
 	 */
@@ -327,6 +334,11 @@ public class BaseDatos {
 		}
 	}
 	
+	/**
+	 * Método para buscar los datos de un tipo de Producto si el tipo recibido es el mismo que buscamos en la BBDD
+	 * @param Connection con, el tipo de tipo String : recibimos la conexion con la base de datos y el tipo de tipo String
+	 * @return Devuelve la lista de productos
+	 */
 	public static ArrayList<Producto> obtenerProductoTipo(Connection con, String tipo){
 		ArrayList<Producto> a = new ArrayList<>();
 		String sent = "SELECT * FROM Producto WHERE nombre like '" + tipo + "%'";
@@ -353,9 +365,86 @@ public class BaseDatos {
 		return a;	
 	}
 	
+	/**
+	 * Método para restar el stock dadas por parametro al producto de productocuto cuyo nombre es el dado por parametro
+	 * @param con, nom, unidades: coneixion con la BaseDatos, el nombre del producto y el unidades a restar
+	 * @throws SQLException, Propaga la excepción
+	 */
+	public static void restarUnidadesAProducto(Connection con, String nom, int unidades) throws SQLException {
+		String sent = "UPDATE Producto SET stock = stock - "+unidades+ " where nombre = '"+nom+"'";
+		Statement stmt = null;
+		stmt = con.createStatement();
+		stmt.executeUpdate(sent);
+	}
 	
+	/**
+	 * METODO PARA OBTENER EL STOCK RESTANTE DE UN PRODUCTO DE LA tienda CUYO NOMBRE ES EL DADO POR P�RAMETRO
+	 * @param con --> Conexi�n con la BD
+	 * @param nom --> Nombre del producto
+	 * @return --> El stock restante (Unidades restantes)
+	 */
+	public static int obtenerStockProducto(Connection con, String nom) {
+		String sent = "SELECT * FROM Producto WHERE nombre = '"+nom+"'";
+		Statement stmt = null;
+		int stock = 0;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if (rs.next()) {
+				stock = rs.getInt("stock");
+			}
+			rs.close();
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}return stock;	
+	}
 	
-	
+	/**
+	 * Método para buscar el precio de un producto cuyo nombre es el dado por parametro
+	 * @param con, nom: Conexión con la BD y el nombre del producto
+	 * @return double, el precio del producto
+	 */
+	public static double obtenerPrecioProducto(Connection con, String nom) {
+		String sent = "SELECT * FROM Producto WHERE nombre = '"+nom+"'";
+		Statement stmt = null;
+		double precio = 0;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if (rs.next()) {
+				precio = rs.getDouble("precio");
+			}
+			rs.close();
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}return precio;	
+	}
 	
 	
 
