@@ -49,7 +49,8 @@ public class VentanaRegis extends JFrame {
 		BaseDatos.crearTablasUsuario(con);
 
 		
-		setBounds(450, 125, 800, 420);
+		setBounds(450, 125, 850, 450);
+		setResizable(false);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -57,7 +58,6 @@ public class VentanaRegis extends JFrame {
 		
 		JPanel panelNorte = new JPanel();
 		panelNorte.setBackground(new Color(100, 149, 237));
-		panelNorte.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -68,7 +68,6 @@ public class VentanaRegis extends JFrame {
 		
 		JPanel panelSur = new JPanel();
 		panelSur.setBackground(new Color(100, 149, 237));
-		panelSur.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -154,7 +153,7 @@ public class VentanaRegis extends JFrame {
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("/Users/IsmaelAlcaide/Desktop/Deusto/workspace/zzz/imagenes/Cronograma_02registroEmpresas.png"));	
+		imagen.setIcon(new ImageIcon("imagenes/Cronograma_02registroEmpresas.png"));	
 		panel_1.add(imagen);
 		
 		JPanel panel = new JPanel();

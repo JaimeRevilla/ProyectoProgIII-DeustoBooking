@@ -29,6 +29,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 
 public class VentanaInicioSesion extends JFrame {
@@ -47,40 +48,19 @@ public class VentanaInicioSesion extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
-		panelNorte.setBackground(new Color(202, 206, 207));
-		panelNorte.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		panelNorte.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
-		panelNorte.setLayout(new GridLayout(0, 2, 0, 0));
+		panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("OPCIONES");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		JLabel lblNewLabel = new JLabel("LOG IN");
+		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelNorte.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("DATOS");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelNorte.add(lblNewLabel_1);
-		
 		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(202, 206, 207));
-		panelSur.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton btnNewButton = new JButton("SALIR");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				BaseDatos.closeBD(connection);
-			}
-			
-		});
-		
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setForeground(Color.BLACK);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelSur.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("LOG IN");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -134,25 +114,70 @@ public class VentanaInicioSesion extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		panelSur.add(btnNewButton_1);
 		
+		JButton btnNewButton = new JButton("SALIR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				BaseDatos.closeBD(connection);
+			}
+			
+		});
+		
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panelSur.add(btnNewButton);
+		
 		JPanel panelCentro = new JPanel();
 		panelCentro.setBackground(new Color(100, 144, 213));
 		panelCentro.setForeground(new Color(255, 220, 220));
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(2, 2, 0, 0));
+		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel labelDni = new JLabel("Dni:");
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(100, 149, 237));
+		panelCentro.add(panel_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("/Users/IsmaelAlcaide/Downloads/kisspng-computer-icons-user-user-icon-5b27870a870209.962036551529317130553.png"));
+		panel_2.add(lblNewLabel_1);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(100, 149, 237));
+		panelCentro.add(panel_3);
+		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(100, 149, 237));
+		panel_3.add(panel);
+		panel.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		JPanel panel_1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_1.setBackground(new Color(100, 149, 237));
+		panel_3.add(panel_1);
+		
+		JLabel labelDni = new JLabel("Dni:            ");
+		panel_1.add(labelDni);
 		labelDni.setBackground(new Color(255, 255, 255));
-		panelCentro.add(labelDni);
 		
 		txtDni = new JTextField();
-		panelCentro.add(txtDni);
+		panel_1.add(txtDni);
 		txtDni.setColumns(10);
 		
+		JPanel panel_4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_4.setBackground(new Color(100, 149, 237));
+		panel_3.add(panel_4);
+		
 		JLabel labelContr = new JLabel("Contraseña:");
-		panelCentro.add(labelContr);
+		panel_4.add(labelContr);
 		
 		txtContr = new JPasswordField();
-		panelCentro.add(txtContr);
+		panel_4.add(txtContr);
+		txtContr.setColumns(10);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(new Color(100, 149, 237));
+		panel_3.add(panel_5);
 		
 		setVisible(true);
 		
