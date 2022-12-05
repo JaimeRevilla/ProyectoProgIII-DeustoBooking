@@ -158,6 +158,7 @@ public class VentanaRegis extends JFrame {
 		panel_1.add(imagen);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(100, 149, 237));
 		panelCentro.add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
