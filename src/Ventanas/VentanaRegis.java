@@ -9,11 +9,14 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import Clases.BaseDatos;
@@ -33,6 +36,7 @@ public class VentanaRegis extends JFrame {
 	private JTextField txtDomicilio;
 	private JTextField textContr;
 	private JTextField txtContr;
+	private JLabel imagen;
 	private JPasswordField passwordField;
 	
 	public VentanaRegis() {
@@ -45,47 +49,28 @@ public class VentanaRegis extends JFrame {
 		BaseDatos.crearTablasUsuario(con);
 
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(450, 125, 800, 420);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
-		panelNorte.setBackground(new Color(202, 206, 207));
+		panelNorte.setBackground(new Color(100, 149, 237));
 		panelNorte.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
-		panelNorte.setLayout(new GridLayout(0, 2, 0, 0));
+		panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("OPCIONES");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelNorte.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("DATOS");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		JLabel lblNewLabel_1 = new JLabel("REGISTRO DE DATOS");
+		lblNewLabel_1.setForeground(new Color(0, 0, 0));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelNorte.add(lblNewLabel_1);
 		
 		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(202, 206, 207));
+		panelSur.setBackground(new Color(100, 149, 237));
 		panelSur.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton btnSalir = new JButton("SALIR");
-		
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-			
-		});
-		
-		btnSalir.setBackground(Color.WHITE);
-		btnSalir.setForeground(Color.BLACK);
-		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 10));
-		panelSur.add(btnSalir);
 		
 		
 		JButton btnSignUp = new JButton("SIGN UP");
@@ -143,45 +128,93 @@ public class VentanaRegis extends JFrame {
 		btnSignUp.setFont(new Font("Tahoma", Font.BOLD, 10));
 		panelSur.add(btnSignUp);
 		
+		JButton btnSalir = new JButton("SALIR");
+		
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+			
+		});
+		
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setForeground(Color.BLACK);
+		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panelSur.add(btnSalir);
+		
 		JPanel panelCentro = new JPanel();
 		panelCentro.setBackground(new Color(100, 144, 213));
 		panelCentro.setForeground(new Color(128, 255, 255));
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(5, 2, 0, 0));
+		panelCentro.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		JLabel labelNom = new JLabel("Nombre:");
-		panelCentro.add(labelNom);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(100, 149, 237));
+		panelCentro.add(panel_1);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		imagen = new JLabel("");
+		imagen.setIcon(new ImageIcon("/Users/IsmaelAlcaide/Desktop/Deusto/workspace/zzz/imagenes/Cronograma_02registroEmpresas.png"));	
+		panel_1.add(imagen);
+		
+		JPanel panel = new JPanel();
+		panelCentro.add(panel);
+		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_2.setBackground(new Color(100, 149, 237));
+		panel.add(panel_2);
+		
+		JLabel labelNom = new JLabel("Nombre:     ");
+		panel_2.add(labelNom);
 		
 		txtNombre = new JTextField();
-		panelCentro.add(txtNombre);
+		panel_2.add(txtNombre);
 		txtNombre.setColumns(10);
 		
-		JLabel labelDni = new JLabel("Dni");
-		panelCentro.add(labelDni);
+		JPanel panel_3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_3.setBackground(new Color(100, 149, 237));
+		panel.add(panel_3);
+		
+		JLabel labelDni = new JLabel("Dni:            ");
+		panel_3.add(labelDni);
 		
 		txtDni = new JTextField();
-		panelCentro.add(txtDni);
+		panel_3.add(txtDni);
 		txtDni.setColumns(10);
 		
-		JLabel lblMail = new JLabel("Email");
-		panelCentro.add(lblMail);
+		JPanel panel_4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_4.setBackground(new Color(100, 149, 237));
+		panel.add(panel_4);
+		
+		JLabel lblMail = new JLabel("Email:         ");
+		panel_4.add(lblMail);
 		
 		txtMail = new JTextField();
-		panelCentro.add(txtMail);
+		panel_4.add(txtMail);
 		txtMail.setColumns(10);
 		
-		JLabel lblDomicilio = new JLabel("Ciudad");
-		panelCentro.add(lblDomicilio);
+		JPanel panel_5 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_5.setBackground(new Color(100, 149, 237));
+		panel.add(panel_5);
+		
+		JLabel lblDomicilio = new JLabel("Ciudad:       ");
+		panel_5.add(lblDomicilio);
 		
 		txtDomicilio = new JTextField();
-		panelCentro.add(txtDomicilio);
+		panel_5.add(txtDomicilio);
 		txtDomicilio.setColumns(10);
 		
-		JLabel lblContrasenia = new JLabel("Contraseña");
-		panelCentro.add(lblContrasenia);
+		JPanel panel_6 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel_6.setBackground(new Color(100, 149, 237));
+		panel.add(panel_6);
+		
+		JLabel lblContrasenia = new JLabel("Contraseña:");
+		panel_6.add(lblContrasenia);
 		
 		passwordField = new JPasswordField();
-		panelCentro.add(passwordField);
+		panel_6.add(passwordField);
+		passwordField.setColumns(10);
 		
 		setVisible(true);
 	}
