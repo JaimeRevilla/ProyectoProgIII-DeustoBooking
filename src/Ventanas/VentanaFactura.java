@@ -18,7 +18,7 @@ public class VentanaFactura extends JFrame{
 	
 	public VentanaFactura() {
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);

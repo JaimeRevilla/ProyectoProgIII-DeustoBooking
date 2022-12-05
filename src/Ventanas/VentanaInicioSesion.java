@@ -35,6 +35,7 @@ import javax.swing.ImageIcon;
 public class VentanaInicioSesion extends JFrame {
 	private JTextField txtDni;
 	private JPasswordField txtContr;
+	public static String dni;
 	private Connection connection;
 	
 	public VentanaInicioSesion() {

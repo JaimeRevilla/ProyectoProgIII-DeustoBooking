@@ -7,13 +7,18 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -36,7 +41,7 @@ public class VentanaEspejos extends JFrame{
 	private JButton btnEspejoCircular;
 	public VentanaEspejos(String nombreProducto) {
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
 		
@@ -112,20 +117,20 @@ public class VentanaEspejos extends JFrame{
 		JLabel lblEspejoCuadrado = new JLabel("EspejoCuadrado:");
 		panel_7.add(lblEspejoCuadrado);
 		
-		int stock1 = BaseDatos.obtenerStockProducto(con, "Rectangular");
-		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Rectangular");
+		int stock1 = BaseDatos.obtenerStockProducto(con, "Espejo4");
+		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Espejo4");
 		if (stock1 == 0) {
 			lblEspejoRectangular.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
 			lblEspejoRectangular.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock1 + " unidades    " + "Precio: " + precio1 + " euros");
 			
 		}
-		int stock2 = BaseDatos.obtenerStockProducto(con, "Rectangular");
-		double precio2 = BaseDatos.obtenerPrecioProducto(con,"Rectangular");
+		int stock2 = BaseDatos.obtenerStockProducto(con, "Espejo2");
+		double precio2 = BaseDatos.obtenerPrecioProducto(con,"Espejo2");
 		if (stock1 == 0) {
-			lblEspejoCuadrado.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+			lblEspejoCuadrado.setText("Espejos cuadrados" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
-			lblEspejoCuadrado.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock2 + " unidades    " + "Precio: " + precio2 + " euros");
+			lblEspejoCuadrado.setText("Espejos cuadrados" + ": " + "Unidades restantes: " + stock2 + " unidades    " + "Precio: " + precio2 + " euros");
 			
 		}
 		
@@ -166,8 +171,8 @@ public class VentanaEspejos extends JFrame{
 		JLabel lblEspejoOvalado = new JLabel("EspejoOvalado:");
 		panel_11.add(lblEspejoOvalado);
 		
-		int stock3 = BaseDatos.obtenerStockProducto(con, "Circular");
-		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Circular");
+		int stock3 = BaseDatos.obtenerStockProducto(con, "Espejo1");
+		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Espejo1");
 		if (stock3 == 0) {
 			lblEspejoCircular.setText("Espejos circulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
@@ -175,8 +180,8 @@ public class VentanaEspejos extends JFrame{
 			
 		}
 		
-		int stock4 = BaseDatos.obtenerStockProducto(con, "Ovalado");
-		double precio4 = BaseDatos.obtenerPrecioProducto(con,"Ovalado");
+		int stock4 = BaseDatos.obtenerStockProducto(con, "Espejo3");
+		double precio4 = BaseDatos.obtenerPrecioProducto(con,"Espejo3");
 		if (stock4 == 0) {
 			lblEspejoOvalado.setText("Espejos ovalado" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
@@ -204,9 +209,40 @@ public class VentanaEspejos extends JFrame{
 			}
 		});
 		
-		
+		//Este boton debe recibir las peticiones de los otros botones para que pueda funcionar, no se si me explico
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Cliente c = listaClientes.getSelectedValue();
+				Vehiculo v = listaVehiculos.getSelectedValue();
+				if(c == null || v == null) {
+					JOptionPane.showMessageDialog(null, "Primero tienes que seleccionar un cliente y un vehículo");
+				}else {
+					Date d = new Date(System.currentTimeMillis());
+					String [] fila = {c.getDni(),v.getMatricula(),sdf.format(d)};
+					modeloTablaAlquileres.addRow(fila);
+				}
+				
+				
+				try {
+					PrintWriter pw = new PrintWriter(new FileOutputStream("ficheros/Personas.txt", true));
+					Date fechaSistema = new Date(System.currentTimeMillis());
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					pw.println(sdf.format(fechaSistema));
+					
+					for(int i = 0; i</*lista de productos elegidos*/; i++) {
+						String nombre = listaProductos.getText();
+						String tipo = listaProductos.getText();
+						String marca = listaProductos.getText();
+						double precio = listaProductos.getText();
+						pw.println(nombre+""+tipo+""+marca+""+precio);
+					}
+					pw.flush();
+					pw.close();
+				}catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 
@@ -221,6 +257,8 @@ public class VentanaEspejos extends JFrame{
 
 	}
 
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

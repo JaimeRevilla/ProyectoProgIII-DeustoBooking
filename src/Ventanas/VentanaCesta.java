@@ -19,7 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+
+import Clases.Producto;
+
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
@@ -28,7 +34,7 @@ public class VentanaCesta extends JFrame {
 	private JTextField txtListaDeLa;
 	public VentanaCesta() {
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -80,7 +86,9 @@ public class VentanaCesta extends JFrame {
 		setVisible(true);
 
 	}
-
+	
+	
+	//Crear un metodo de cargar csv para que se pueda añadir a la Jlist de la cesta del usuario que se haya registrado
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

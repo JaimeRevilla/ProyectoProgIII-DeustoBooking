@@ -45,7 +45,7 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal() {
 		vent = this;
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));

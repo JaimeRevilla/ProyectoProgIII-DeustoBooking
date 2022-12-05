@@ -17,7 +17,7 @@ public class VentanaStock extends JFrame{
 	
 	public VentanaStock() {
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		JPanel panelNorte = new JPanel();
 		getContentPane().add(panelNorte, BorderLayout.NORTH);

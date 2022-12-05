@@ -16,7 +16,7 @@ public class VentanaContabilidad extends JFrame{
 	
 	public VentanaContabilidad() {
 		
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		JPanel panelNorte = new JPanel();	
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
