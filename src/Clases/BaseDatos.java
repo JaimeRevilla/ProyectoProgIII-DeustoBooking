@@ -341,7 +341,8 @@ public class BaseDatos {
 	 */
 	public static ArrayList<Producto> obtenerProductoTipo(Connection con, String tipo){
 		ArrayList<Producto> a = new ArrayList<>();
-		String sent = "SELECT * FROM Producto WHERE nombre like '" + tipo + "%'";
+		String sent = "SELECT * FROM Producto WHERE tipo = '" + tipo + "'";
+		System.out.println(sent);
 		Statement stmt = null;
 		Producto p = null;
 		try {
@@ -370,11 +371,17 @@ public class BaseDatos {
 	 * @param con, nom, unidades: coneixion con la BaseDatos, el nombre del producto y el unidades a restar
 	 * @throws SQLException, Propaga la excepción
 	 */
-	public static void restarUnidadesAProducto(Connection con, String nom, int unidades) throws SQLException {
+	public static void restarUnidadesAProducto(Connection con, String nom, int unidades)  {
 		String sent = "UPDATE Producto SET stock = stock - "+unidades+ " where nombre = '"+nom+"'";
 		Statement stmt = null;
-		stmt = con.createStatement();
-		stmt.executeUpdate(sent);
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
