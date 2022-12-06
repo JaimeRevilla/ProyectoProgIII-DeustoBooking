@@ -21,12 +21,14 @@ import java.awt.Component;
 import javax.swing.border.LineBorder;
 
 import Clases.BaseDatos;
+import Clases.Producto;
 import Clases.Usuario;
 
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -37,12 +39,14 @@ public class VentanaInicioSesion extends JFrame {
 	private JPasswordField txtContr;
 	public static String dni;
 	private Connection connection;
+	public static  ArrayList<Producto> carrito ;
 	
 	public VentanaInicioSesion() {
+		carrito = new ArrayList<>();
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
 		
 		BaseDatos.crearTablasUsuario(con);
-		setBounds(450, 125, 800, 408);
+		setBounds(250, 225, 1000, 508);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(255, 255, 255));//
@@ -79,6 +83,7 @@ public class VentanaInicioSesion extends JFrame {
 					if(u != null) {
 						if(u.getContrasenia().equals(contrasenia)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
+							VentanaInicioSesion.dni = dni;
 						}else {
 							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
