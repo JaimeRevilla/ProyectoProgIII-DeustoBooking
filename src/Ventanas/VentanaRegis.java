@@ -49,7 +49,7 @@ public class VentanaRegis extends JFrame {
 		BaseDatos.crearTablasUsuario(con);
 
 		
-		setBounds(450, 125, 850, 450);
+		setBounds(250, 225, 1000, 508);
 		setResizable(false);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
