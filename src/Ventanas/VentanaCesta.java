@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 
 public class VentanaCesta extends JFrame {
 	private JTextField txtListaDeLa;
+	
 	public VentanaCesta() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -45,7 +46,14 @@ public class VentanaCesta extends JFrame {
 		panelCentro.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		txtListaDeLa = new JTextField();
-		txtListaDeLa.setText("lista de la compra");
+		String texto = "Lista de la compra\n";
+		double total = 0;
+		for(Producto p: VentanaInicioSesion.carrito) {
+			texto = texto + p;
+			total = total + p.getPrecio();
+		}
+		texto = texto + total + " €\n";
+		txtListaDeLa.setText(texto);
 		panelCentro.add(txtListaDeLa);
 		txtListaDeLa.setColumns(10);
 		

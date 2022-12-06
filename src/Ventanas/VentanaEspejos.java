@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,12 +21,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Clases.BaseDatos;
+import Clases.Espejo;
 import Clases.Principal;
 import Clases.Producto;
+import Clases.TipoEspejo;
 
 public class VentanaEspejos extends JFrame{
 
@@ -39,6 +43,10 @@ public class VentanaEspejos extends JFrame{
 	private JTextField txtReloj;
 	private JButton btnAgregar;
 	private JButton btnEspejoCircular;
+	private JRadioButton rbEspejoRectangular;
+	private JRadioButton rbEspejoCuadrado;
+	private JRadioButton rbEspejoOvalado;
+	private JRadioButton rbEspejoCircular;
 	public VentanaEspejos(String nombreProducto) {
 		
 		setBounds(250, 225, 1000, 508);
@@ -93,8 +101,26 @@ public class VentanaEspejos extends JFrame{
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
 		
-		JButton btnEspejoRectangular = new JButton("EspejoRectangular");
+		//DUDA
+		/*JButton btnEspejoRectangular = new JButton("EspejoRectangular");
+		btnEspejoRectangular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Producto> a = BaseDatos.obtenerProductoTipo(con,"ESPEJO");
+				for(Producto p: a) {
+					try {
+						BaseDatos.restarUnidadesAProducto(con, nombreProducto, p.getStock());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		panel_2.add(btnEspejoRectangular);
+		*/
+		rbEspejoRectangular = new JRadioButton("Espejo Rectangular");
+		panel_2.add(rbEspejoRectangular);
+		
 		
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3);
@@ -108,8 +134,11 @@ public class VentanaEspejos extends JFrame{
 		JPanel panel_6 = new JPanel();
 		panel_1.add(panel_6);
 		
-		JButton btnEspejoCuadrado = new JButton("EspejoCuadrado");
-		panel_6.add(btnEspejoCuadrado);
+		/*JButton btnEspejoCuadrado = new JButton("EspejoCuadrado");
+		panel_6.add(btnEspejoCuadrado);*/
+		rbEspejoCuadrado = new JRadioButton("Espejo Cuadrado");
+		panel_6.add(rbEspejoCuadrado);
+		
 		
 		JPanel panel_7 = new JPanel();
 		panel_1.add(panel_7);
@@ -147,8 +176,12 @@ public class VentanaEspejos extends JFrame{
 		JPanel panel_8 = new JPanel();
 		panel_4.add(panel_8);
 		
-		btnEspejoCircular = new JButton("EspejoCircular");
-		panel_8.add(btnEspejoCircular);
+		/*btnEspejoCircular = new JButton("EspejoCircular");
+		panel_8.add(btnEspejoCircular);*/
+		
+		rbEspejoOvalado = new JRadioButton("Espejo Ovalado");
+		panel_8.add(rbEspejoOvalado);
+	
 		
 		JPanel panel_9 = new JPanel();
 		panel_4.add(panel_9);
@@ -162,8 +195,11 @@ public class VentanaEspejos extends JFrame{
 		JPanel panel_10 = new JPanel();
 		panel_5.add(panel_10);
 		
-		JButton btnOvalado = new JButton("EspejoOvalado");
-		panel_10.add(btnOvalado);
+		/*JButton btnOvalado = new JButton("EspejoOvalado");
+		panel_10.add(btnOvalado);*/
+		
+		rbEspejoCircular = new JRadioButton("Espejo Circular");
+		panel_10.add(rbEspejoCircular);
 		
 		JPanel panel_11 = new JPanel();
 		panel_5.add(panel_11);
@@ -209,43 +245,45 @@ public class VentanaEspejos extends JFrame{
 			}
 		});
 		
-		//Este boton debe recibir las peticiones de los otros botones para que pueda funcionar, no se si me explico
+
 		btnAgregar.addActionListener(new ActionListener() {
+			
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				Cliente c = listaClientes.getSelectedValue();
-				Vehiculo v = listaVehiculos.getSelectedValue();
-				if(c == null || v == null) {
-					JOptionPane.showMessageDialog(null, "Primero tienes que seleccionar un cliente y un vehículo");
-				}else {
-					Date d = new Date(System.currentTimeMillis());
-					String [] fila = {c.getDni(),v.getMatricula(),sdf.format(d)};
-					modeloTablaAlquileres.addRow(fila);
-				}
-				
-				
-				try {
-					PrintWriter pw = new PrintWriter(new FileOutputStream("ficheros/Personas.txt", true));
-					Date fechaSistema = new Date(System.currentTimeMillis());
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-					pw.println(sdf.format(fechaSistema));
-					
-					for(int i = 0; i</*lista de productos elegidos*/; i++) {
-						String nombre = listaProductos.getText();
-						String tipo = listaProductos.getText();
-						String marca = listaProductos.getText();
-						double precio = listaProductos.getText();
-						pw.println(nombre+""+tipo+""+marca+""+precio);
+				if(rbEspejoCuadrado.isSelected()) {
+					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.CUADRADO.toString());
+					if(al.size()>0) {
+						VentanaInicioSesion.carrito.add(al.get(0));
+						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), al.get(0).getStock());
+						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
 					}
-					pw.flush();
-					pw.close();
-				}catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
-				
+				if(rbEspejoRectangular.isSelected()) {
+					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.RECTANGULAR.toString());
+					if(al.size()>0) {
+						VentanaInicioSesion.carrito.add(al.get(0));
+						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
+						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+					}
+				}
+				if(rbEspejoOvalado.isSelected()) {
+					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.OVALADO.toString());
+					if(al.size()>0) {
+						VentanaInicioSesion.carrito.add(al.get(0));
+						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
+						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+					}
+				}
+				if(rbEspejoCircular.isSelected()) {
+					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.CIRCULAR.toString());
+					if(al.size()>0) {
+						VentanaInicioSesion.carrito.add(al.get(0));
+						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
+						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+					}
+				}
 			}
 		});
-
 		
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
