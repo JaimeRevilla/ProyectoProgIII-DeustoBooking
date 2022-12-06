@@ -130,7 +130,7 @@ public class VentanaPrincipal extends JFrame {
 					
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaMuebleCasa v1 = new VentanaMuebleCasa();
+				VentanaEspejos v1 = new VentanaEspejos("MUEBLE CASA");
 			}
 		});
 		
@@ -146,7 +146,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaSillas v1 = new VentanaSillas();
+				VentanaEspejos v1 = new VentanaEspejos("SILLAS");
 			}
 		});
 
@@ -154,7 +154,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaTv v1 = new VentanaTv();
+				VentanaEspejos v1 = new VentanaEspejos("TV");
 			}
 		});
 
@@ -162,7 +162,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaSofas v1 = new VentanaSofas();
+				VentanaEspejos v1 = new VentanaEspejos("SOFAS");
 			}
 		});
 
@@ -170,7 +170,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaCamas v1 = new VentanaCamas();
+				VentanaEspejos v1 = new VentanaEspejos("CAMAS");
 			}
 		});
 		
