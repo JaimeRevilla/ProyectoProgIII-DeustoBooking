@@ -42,6 +42,8 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel panelNorteFecha;
 	private JPanel panelNorteCentro;
 	private JPanel panelNorteCarrito;
+	private JButton btnContabilidad;
+	private JButton btnStock;
 	public VentanaPrincipal() {
 		vent = this;
 		
@@ -64,16 +66,18 @@ public class VentanaPrincipal extends JFrame {
 		panelNorteCentro = new JPanel();
 		panelNorte.add(panelNorteCentro);
 		
-		lblMenu = new JLabel("MENU PRINCIPAL");
+		lblMenu = new JLabel("MENU PRINCIPAL ADMIN");
 		panelNorteCentro.add(lblMenu);
 		
 		panelNorteCarrito = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelNorteCarrito.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
 		
 		JButton btnimgcarrito = new JButton("CARRITO");
 		panelNorteCarrito.add(btnimgcarrito);
 		
-		btnLog = new JButton("Log");
+		btnLog = new JButton("LOG");
 		panelNorteCarrito.add(btnLog);
 		
 		btnLog.addActionListener(new ActionListener() {
@@ -94,6 +98,12 @@ public class VentanaPrincipal extends JFrame {
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
+		
+		btnStock = new JButton("STOCK");
+		panelSur.add(btnStock);
+		
+		btnContabilidad = new JButton("CONTABILIDAD");
+		panelSur.add(btnContabilidad);
 		
 		JButton btnsalir = new JButton("SALIR");
 		panelSur.add(btnsalir);
