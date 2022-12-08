@@ -216,8 +216,8 @@ public class BaseDatos {
 	 * @param Connection con, el dni del usuario : recibimos la conexion con la base de datos y el dni del usuario
 	 * @return No devuelve nada
 	 */
-	public static void eleminarCarrito(Connection con, String dni) {
-		String sent = "DELETE FROM Carrito WHERE dni ='"+dni+"'";
+	public static void eleminarCarrito(Connection con) {
+		String sent = "DELETE FROM Carrito ";
 		Statement stmt = null;
 		
 		try {
@@ -225,7 +225,7 @@ public class BaseDatos {
 			stmt.executeUpdate(sent);
 
 		} catch (SQLException e) {
-			System.err.println(String.format("ERROR AL BORRAR LOS DATOS DEL CARRITO", e.getMessage()));
+			
 			e.printStackTrace();
 		}finally {
 			if (stmt != null) {
@@ -453,34 +453,30 @@ public class BaseDatos {
 		}return precio;	
 	}
 	
-	public static ArrayList<Producto> obtenerCarrito(Connection con){
-		ArrayList<Producto> carrito = new ArrayList<>();
-		String sent = "SELECT * FROM Carrito";
-		Statement st;
+	public static ArrayList<Carrito> obtenerListaCarrito(Connection con){
+		ArrayList<Carrito> carrito = new ArrayList<>();
+		
 		try {
-			st = con.createStatement();
-			ResultSet rs = st.executeQuery(sent);
-			while(rs.next()) {
-				//String dni = rs.getString("dniUsu");
-				int cod = Integer.parseInt(rs.getString("codProd"));
-				String nom = rs.getString("nomProd");
-				String tipo = rs.getString("tipoProd");
-				String marca = rs.getString("marcaProd");
-				String tam = rs.getString("tamanyoProd");
-				double prec = Double.parseDouble(rs.getString("precioProd"));
-				int stock = Integer.parseInt(rs.getString("stock"));
-				Producto p = new Producto (cod, nom, tipo, marca, tam, prec, stock);
-				carrito.add(p);
+			Statement stm = con.createStatement();
+			String sql = "SELECT * FROM Carrito";
+			ResultSet rst = stm.executeQuery(sql);
+			while (rst.next()) {
+				String dni = rst.getString("dniUsu");
+				int cod = Integer.parseInt(rst.getString("codProd"));
+				String nom = rst.getString("nomProd");
+				String tipo = rst.getString("tipoProd");
+				String marca = rst.getString("marcaProd");
+				String tam = rst.getString("tamanyoProd");
+				double prec = Double.parseDouble(rst.getString("precioProd"));
+				Carrito c = new Carrito(dni, cod, nom, tipo, marca,tam, prec);
+				carrito.add(c);
 			}
-			rs.close();
-			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return carrito;
-		
 	}
+	
 
 }

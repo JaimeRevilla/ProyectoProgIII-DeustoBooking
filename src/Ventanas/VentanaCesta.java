@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.CardLayout;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -21,9 +22,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument.Content;
 
 import Clases.BaseDatos;
+import Clases.Carrito;
 import Clases.Producto;
 
 import java.awt.event.ActionListener;
@@ -37,11 +41,11 @@ import java.awt.event.ActionEvent;
 
 public class VentanaCesta extends JFrame {
 	private JTextField txtListaDeLa;
-	private JTable tabla;
-	private DefaultTableModel modelo;
-	private JScrollPane panelScroll;
-	private Connection con;
 	
+	private Connection con;
+	private DefaultTableModel model;
+	private JTable tablaCesta;
+	private JScrollPane scrollTabla;
 	public VentanaCesta() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -68,19 +72,6 @@ public class VentanaCesta extends JFrame {
 		panelCentro.add(txtListaDeLa);
 		txtListaDeLa.setColumns(10);
 		
-		modelo = new DefaultTableModel();
-		String [] titulos = {"Codigo", "Nombre", "Tipo", "Marca", "Tamaño", "Precio","Stock"};
-		modelo.setColumnIdentifiers(titulos);
-		VentanaInicioSesion.carrito = BaseDatos.obtenerCarrito(con);
-		for (Producto c : VentanaInicioSesion.carrito) {
-			Object [] datos = {c.getCod(), c.getNombre(), c.getTipo(), c.getMarca(), c.getTamanyo(), c.getPrecio(), c.getStock()};
-			modelo.addRow(datos);
- 		}
-		tabla = new JTable(modelo);
-		panelScroll = new JScrollPane(tabla);
-		panelCentro.add(panelScroll);
-		
-		
 		JPanel panelCentroEste = new JPanel();
 		getContentPane().add(panelCentroEste, BorderLayout.EAST);
 		panelCentroEste.setLayout(new GridLayout(0, 1, 0, 0));
@@ -100,6 +91,21 @@ public class VentanaCesta extends JFrame {
 		
 		JButton btnatras = new JButton("ATRAS");
 		panelSur.add(btnatras);
+		
+		
+		ArrayList<Carrito> carritos = BaseDatos.obtenerListaCarrito(con);
+		model = new DefaultTableModel();
+		String [] titulos = {"DNI", "CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO"};
+		model.setColumnIdentifiers(titulos);
+		for(Carrito c: carritos) {
+			Object [] datos = {c.getDni(), c.getCod(), c.getNom(), c.getTipo(), c.getMarca(), c.getTamanyo(), c.getPrecio()};
+			model.addRow(datos);
+		}
+		tablaCesta = new JTable(model);		
+		
+		scrollTabla = new JScrollPane(tablaCesta);
+		
+		panelCentro.add(scrollTabla, BorderLayout.CENTER);
 		
 		btnFactura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -84,6 +84,7 @@ public class VentanaInicioSesion extends JFrame {
 						if(u.getContrasenia().equals(contrasenia)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
 							VentanaInicioSesion.dni = dni;
+							BaseDatos.eleminarCarrito(con);
 						}else {
 							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
