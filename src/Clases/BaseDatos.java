@@ -453,6 +453,34 @@ public class BaseDatos {
 		}return precio;	
 	}
 	
-	
+	public static ArrayList<Producto> obtenerCarrito(Connection con){
+		ArrayList<Producto> carrito = new ArrayList<>();
+		String sent = "SELECT * FROM Carrito";
+		Statement st;
+		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery(sent);
+			while(rs.next()) {
+				//String dni = rs.getString("dniUsu");
+				int cod = Integer.parseInt(rs.getString("codProd"));
+				String nom = rs.getString("nomProd");
+				String tipo = rs.getString("tipoProd");
+				String marca = rs.getString("marcaProd");
+				String tam = rs.getString("tamanyoProd");
+				double prec = Double.parseDouble(rs.getString("precioProd"));
+				int stock = Integer.parseInt(rs.getString("stock"));
+				Producto p = new Producto (cod, nom, tipo, marca, tam, prec, stock);
+				carrito.add(p);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return carrito;
+		
+	}
 
 }

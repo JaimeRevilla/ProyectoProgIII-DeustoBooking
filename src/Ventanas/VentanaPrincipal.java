@@ -42,8 +42,6 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel panelNorteFecha;
 	private JPanel panelNorteCentro;
 	private JPanel panelNorteCarrito;
-	private JButton btnContabilidad;
-	private JButton btnStock;
 	public VentanaPrincipal() {
 		vent = this;
 		
@@ -66,7 +64,7 @@ public class VentanaPrincipal extends JFrame {
 		panelNorteCentro = new JPanel();
 		panelNorte.add(panelNorteCentro);
 		
-		lblMenu = new JLabel("MENU PRINCIPAL ADMIN");
+		lblMenu = new JLabel("MENU PRINCIPAL");
 		panelNorteCentro.add(lblMenu);
 		
 		panelNorteCarrito = new JPanel();
@@ -98,12 +96,6 @@ public class VentanaPrincipal extends JFrame {
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
-		
-		btnStock = new JButton("STOCK");
-		panelSur.add(btnStock);
-		
-		btnContabilidad = new JButton("CONTABILIDAD");
-		panelSur.add(btnContabilidad);
 		
 		JButton btnsalir = new JButton("SALIR");
 		panelSur.add(btnsalir);

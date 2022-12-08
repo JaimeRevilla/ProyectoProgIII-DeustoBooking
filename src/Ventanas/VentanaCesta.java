@@ -14,17 +14,22 @@ import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.CardLayout;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
+import Clases.BaseDatos;
 import Clases.Producto;
 
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
@@ -32,10 +37,16 @@ import java.awt.event.ActionEvent;
 
 public class VentanaCesta extends JFrame {
 	private JTextField txtListaDeLa;
+	private JTable tabla;
+	private DefaultTableModel modelo;
+	private JScrollPane panelScroll;
+	private Connection con;
 	
 	public VentanaCesta() {
 		
 		setBounds(250, 225, 1000, 508);
+		
+		con = BaseDatos.initBD("data/DeustoIkea.db");
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -56,6 +67,19 @@ public class VentanaCesta extends JFrame {
 		txtListaDeLa.setText(texto);
 		panelCentro.add(txtListaDeLa);
 		txtListaDeLa.setColumns(10);
+		
+		modelo = new DefaultTableModel();
+		String [] titulos = {"Codigo", "Nombre", "Tipo", "Marca", "Tamaño", "Precio","Stock"};
+		modelo.setColumnIdentifiers(titulos);
+		VentanaInicioSesion.carrito = BaseDatos.obtenerCarrito(con);
+		for (Producto c : VentanaInicioSesion.carrito) {
+			Object [] datos = {c.getCod(), c.getNombre(), c.getTipo(), c.getMarca(), c.getTamanyo(), c.getPrecio(), c.getStock()};
+			modelo.addRow(datos);
+ 		}
+		tabla = new JTable(modelo);
+		panelScroll = new JScrollPane(tabla);
+		panelCentro.add(panelScroll);
+		
 		
 		JPanel panelCentroEste = new JPanel();
 		getContentPane().add(panelCentroEste, BorderLayout.EAST);
