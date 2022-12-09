@@ -142,17 +142,13 @@ public class VentanaInicioSesion extends JFrame {
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		/*JPanel panel_2 = new JPanel();
+		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(100, 149, 237));
-		panelCentro.add(panel_2);*/
+		panelCentro.add(panel_2);
 		
-		
-		/*JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("imagenes/kisspng-computer-icons-user-user-icon-5b27870a870209.962036551529317130553.png"));
-		panel_2.add(lblNewLabel_1);*/
-		JPanel panel2 = new PanelConFondo((new ImageIcon("imagenes/login.png").getImage()));
-		panel2.setBackground(new Color(100, 149, 237));
-		panelCentro.add(panel2);
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("imagenes/login.png"));
+		panel_2.add(lblNewLabel_1);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(100, 149, 237));

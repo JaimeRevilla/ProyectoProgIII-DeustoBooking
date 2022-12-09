@@ -42,16 +42,15 @@ public class VentanaInicial extends JFrame {
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 1, 0, 0));
 		
+
 		/*JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panelCentro.add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
 		
 		JLabel imagen = new JLabel("");
-		imagen.setAlignmentX(CENTER_ALIGNMENT);
 		imagen.setIcon(new ImageIcon("imagenes/ikea.gif"));
-		panel.add(imagen, BorderLayout.CENTER);
-		*/
+		panel.add(imagen);*/
+		
 		JPanel panel = new PanelConFondo((new ImageIcon("imagenes/ikea.gif").getImage()));
 		panelCentro.add(panel);
 		
