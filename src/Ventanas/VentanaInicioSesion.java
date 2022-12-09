@@ -85,6 +85,7 @@ public class VentanaInicioSesion extends JFrame {
 							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
 							VentanaInicioSesion.dni = dni;
 							BaseDatos.eleminarCarrito(con);
+							dispose();
 						}else {
 							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
@@ -149,7 +150,7 @@ public class VentanaInicioSesion extends JFrame {
 		/*JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon("imagenes/kisspng-computer-icons-user-user-icon-5b27870a870209.962036551529317130553.png"));
 		panel_2.add(lblNewLabel_1);*/
-		JPanel panel2 = new PanelConFondo((new ImageIcon("imagenes/kisspng-computer-icons-user-user-icon-5b27870a870209.962036551529317130553.png").getImage()));
+		JPanel panel2 = new PanelConFondo((new ImageIcon("imagenes/login.png").getImage()));
 		panel2.setBackground(new Color(100, 149, 237));
 		panelCentro.add(panel2);
 		

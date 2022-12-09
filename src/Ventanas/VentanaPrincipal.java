@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
 
 
 public class VentanaPrincipal extends JFrame {
@@ -56,6 +57,8 @@ public class VentanaPrincipal extends JFrame {
 		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		panelNorteFecha = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelNorteFecha.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelNorte.add(panelNorteFecha);
 		
 		lblFecha = new JLabel("");
@@ -105,21 +108,39 @@ public class VentanaPrincipal extends JFrame {
 		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
 		
 		btnMuebleCasa = new JButton("MUEBLE CASA");
+		btnMuebleCasa.setIcon(new ImageIcon("imagenes/mueble.png"));
+		btnMuebleCasa.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnMuebleCasa.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnMuebleCasa);
 		
 		btnEspejos = new JButton("ESPEJOS");
+		btnEspejos.setIcon(new ImageIcon("imagenes/espejo.png"));
+		btnEspejos.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnEspejos.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnEspejos);
 		
 		btnSillas = new JButton("SILLAS");
+		btnSillas.setIcon(new ImageIcon("imagenes/silla.png"));
+		btnSillas.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSillas.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnSillas);
 		
 		btnTv = new JButton("TV");
+		btnTv.setIcon(new ImageIcon("imagenes/tv.com.png"));
+		btnTv.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnTv.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnTv);
 		
 		btnSofas = new JButton("SOFAS");
+		btnSofas.setIcon(new ImageIcon("imagenes/sofa.png"));
+		btnSofas.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSofas.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnSofas);
 		
 		btnCamas = new JButton("CAMAS");
+		btnCamas.setIcon(new ImageIcon("imagenes/cama.com.png"));
+		btnCamas.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCamas.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnCamas);
 		
 		JPanel panelCentroOeste = new JPanel();

@@ -97,6 +97,7 @@ public class VentanaRegis extends JFrame {
 						BaseDatos.insertarUsuario(con, nombre, dni, mail, domicilio, contrasenia, 0);
 						JOptionPane.showMessageDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.DEFAULT_OPTION);
 						System.out.println("El usuario ha sido registrado correctamente!");
+						dispose();
 					}else {
 						JOptionPane.showMessageDialog(null,"Registro realizado es incorrecta! \n Existe ya un usuario", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 						System.out.println("El usuario no ha sido registrado correctamente! Existe un usuario con el mismo dni");
@@ -153,7 +154,7 @@ public class VentanaRegis extends JFrame {
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("imagenes/Cronograma_02registroEmpresas.png"));	
+		imagen.setIcon(new ImageIcon("imagenes/regis.png"));	
 		panel_1.add(imagen);
 		
 		JPanel panel = new JPanel();
