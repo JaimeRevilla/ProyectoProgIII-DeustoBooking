@@ -453,6 +453,7 @@ public class BaseDatos {
 		}return precio;	
 	}
 	
+	
 	public static ArrayList<Carrito> obtenerListaCarrito(Connection con, String Udni){
 		ArrayList<Carrito> carrito = new ArrayList<>();
 		
@@ -477,18 +478,52 @@ public class BaseDatos {
 		}
 		return carrito;
 	}
+	
+
+	
 	public static void eliminarFila(Connection con, String dni) {
 		try {
 			Statement stm = con.createStatement();
 			String sent = "DELETE * FROM Carrito WHERE dniUsu = '"+ dni +"'";
+			stm.executeUpdate(sent);
 			stm.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
-
+	
+	/**
+	 * METODO PARA ELIMINAR DE LA TABLA pedido EL PRODUCTO EL CUAL TIENE EL CODIGO DADO POR PARAMETRO
+	 * @param con --> Conexi�n con la BD
+	 * @param codigo --> Codigo del producto a eliminar
+	 */
+	public static void eliminarFilaPorCodigoProd(Connection con, String tipo) {
+		String sent = "DELETE FROM Carrito WHERE tipoProd ='"+tipo+"'";
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			stmt.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }

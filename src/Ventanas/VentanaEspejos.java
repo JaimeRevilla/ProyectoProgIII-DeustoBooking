@@ -47,6 +47,9 @@ public class VentanaEspejos extends JFrame{
 	private JRadioButton rbEspejoCuadrado;
 	private JRadioButton rbEspejoOvalado;
 	private JRadioButton rbEspejoCircular;
+	public static int cod;
+
+	public static String tipoEspejo;
 	public VentanaEspejos(String nombreProducto) {
 		
 		setBounds(250, 225, 1000, 508);

@@ -42,7 +42,7 @@ public class VentanaInicioSesion extends JFrame {
 	private Connection connection;
 	public static  ArrayList<Producto> carrito ;
 	public static HashMap<String, ArrayList<Producto>> mapa;
-	
+	public static String n;
 	public VentanaInicioSesion() {
 		carrito = new ArrayList<>();
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");

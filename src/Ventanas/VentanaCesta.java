@@ -35,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
@@ -105,25 +106,57 @@ public class VentanaCesta extends JFrame {
 		
 		scrollTabla = new JScrollPane(tablaCesta);
 		
+//		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
+//		btnBorrarProducto.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				if(tablaCesta.getSelectedRow()>=0) {
+//					model = (DefaultTableModel)tablaCesta.getModel();
+//					model.removeRow(tablaCesta.getSelectedRow());	
+//					BaseDatos.eliminarFila(con, VentanaInicioSesion.dni);
+//				}else {
+//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");				
+//				}
+////				ArrayList<Producto> p = VentanaInicioSesion.carrito;
+////				int row = tablaCesta.getSelectedRow();
+////				String celda = tablaCesta.getModel().getValueAt(row, 0).toString();
+////				if(!(row == 0)) {
+////					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
+////				}else {
+////					tablaCesta.remove(row);
+////				}
+//				}
+//		});
+		
 		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
 		btnBorrarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tablaCesta.getSelectedRow()>=0) {
-					model = (DefaultTableModel)tablaCesta.getModel();
-					model.removeRow(tablaCesta.getSelectedRow());	
-					BaseDatos.eliminarFila(con, VentanaInicioSesion.dni);
-				}else {
-					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");				}
-//				ArrayList<Producto> p = VentanaInicioSesion.carrito;
-//				int row = tablaCesta.getSelectedRow();
-//				String celda = tablaCesta.getModel().getValueAt(row, 0).toString();
-//				if(!(row == 0)) {
-//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
-//				}else {
-//					tablaCesta.remove(row);
-//				}
+				int fila = tablaCesta.getSelectedRow();
+				String valor = tablaCesta.getValueAt(fila, 3).toString();
+				try {
+					if(tablaCesta.getSelectedRow()>=0) {
+						model = (DefaultTableModel)tablaCesta.getModel();
+						model.removeRow(tablaCesta.getSelectedRow());	
+						BaseDatos.eliminarFilaPorCodigoProd(con, valor);
+						BaseDatos.obtenerListaCarrito(con, VentanaEspejos.tipoEspejo);
+						System.out.println("Se esta eliminando el producto");
+					}else {
+						JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
+					}
+				}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
 				}
+				
+//				if (tablaCesta.getSelectedRow()>=0) {
+//					model = (DefaultTableModel)tablaCesta.getModel();
+//					model.removeRow(tablaCesta.getSelectedRow());	
+//					//Producto p = VentanaInicioSesion.mapa.get(VentanaInicioSesion.dni).get(model.getRowCount());
+//					BaseDatos.eliminarFilaPorCodigoProd(con, VentanaEspejos.cod);
+//				}else {
+//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");				
+//				}
+			}
 		});
+		
 		panelCentroEste.add(btnBorrarProducto);
 		
 		panelCentro.add(scrollTabla, BorderLayout.CENTER);
