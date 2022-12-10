@@ -46,6 +46,7 @@ public class VentanaCesta extends JFrame {
 	private DefaultTableModel model;
 	private JTable tablaCesta;
 	private JScrollPane scrollTabla;
+	
 	public VentanaCesta() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -79,8 +80,7 @@ public class VentanaCesta extends JFrame {
 		JButton btnNewButton = new JButton("REALIZAR COMPRA");
 		panelCentroEste.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("precio total");
-		panelCentroEste.add(lblNewLabel);
+		
 		
 		JButton btnFactura = new JButton("FACTURA");
 		
@@ -104,6 +104,27 @@ public class VentanaCesta extends JFrame {
 		tablaCesta = new JTable(model);		
 		
 		scrollTabla = new JScrollPane(tablaCesta);
+		
+		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
+		btnBorrarProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tablaCesta.getSelectedRow()>=0) {
+					model = (DefaultTableModel)tablaCesta.getModel();
+					model.removeRow(tablaCesta.getSelectedRow());	
+					BaseDatos.eliminarFila(con, VentanaInicioSesion.dni);
+				}else {
+					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");				}
+//				ArrayList<Producto> p = VentanaInicioSesion.carrito;
+//				int row = tablaCesta.getSelectedRow();
+//				String celda = tablaCesta.getModel().getValueAt(row, 0).toString();
+//				if(!(row == 0)) {
+//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
+//				}else {
+//					tablaCesta.remove(row);
+//				}
+				}
+		});
+		panelCentroEste.add(btnBorrarProducto);
 		
 		panelCentro.add(scrollTabla, BorderLayout.CENTER);
 		

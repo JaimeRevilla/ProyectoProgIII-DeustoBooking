@@ -477,6 +477,18 @@ public class BaseDatos {
 		}
 		return carrito;
 	}
+	public static void eliminarFila(Connection con, String dni) {
+		try {
+			Statement stm = con.createStatement();
+			String sent = "DELETE * FROM Carrito WHERE dniUsu = '"+ dni +"'";
+			stm.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 
 }
