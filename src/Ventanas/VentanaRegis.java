@@ -20,9 +20,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import Clases.BaseDatos;
+import Clases.Producto;
 
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
@@ -97,6 +100,7 @@ public class VentanaRegis extends JFrame {
 						BaseDatos.insertarUsuario(con, nombre, dni, mail, domicilio, contrasenia, 0);
 						JOptionPane.showMessageDialog(null,"Registro realizado correctamente!", "REGISTRO REALIZADO", JOptionPane.DEFAULT_OPTION);
 						System.out.println("El usuario ha sido registrado correctamente!");
+						VentanaInicioSesion.mapa.put(dni, new ArrayList<Producto>());
 						dispose();
 					}else {
 						JOptionPane.showMessageDialog(null,"Registro realizado es incorrecta! \n Existe ya un usuario", "ERROR", JOptionPane.INFORMATION_MESSAGE);

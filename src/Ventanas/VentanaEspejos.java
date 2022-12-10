@@ -30,6 +30,8 @@ import Clases.Espejo;
 import Clases.Principal;
 import Clases.Producto;
 import Clases.TipoEspejo;
+import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
 
 public class VentanaEspejos extends JFrame{
 
@@ -39,8 +41,6 @@ public class VentanaEspejos extends JFrame{
 	private JTextField txtTelevisiones;
 	private JTextField txtSofas;
 	private JTextField txtCamas;
-	private JTextField txtMenuPrincipal;
-	private JTextField txtReloj;
 	private JButton btnAgregar;
 	private JButton btnEspejoCircular;
 	private JRadioButton rbEspejoRectangular;
@@ -62,21 +62,38 @@ public class VentanaEspejos extends JFrame{
 		
 		JPanel panelNorte = new JPanel();
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
-		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
+		panelNorte.setLayout(new GridLayout(1, 3, 0, 0));
 		
-		txtReloj = new JTextField();
-		txtReloj.setText("FECHA");
-		panelNorte.add(txtReloj);
-		txtReloj.setColumns(10);
+		JPanel panelNorteFecha = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelNorteFecha.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelNorte.add(panelNorteFecha);
 		
-		txtMenuPrincipal = new JTextField();
-		txtMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtMenuPrincipal.setText("MENU "+nombreProducto);
-		panelNorte.add(txtMenuPrincipal);
-		txtMenuPrincipal.setColumns(10);
+		JLabel lblFecha = new JLabel("");
+		panelNorteFecha.add(lblFecha);
 		
-		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panelNorte.add(btnCarrito);
+		JPanel panelNorteCentro = new JPanel();
+		panelNorte.add(panelNorteCentro);
+		
+		JLabel lblMenu = new JLabel("MENU PRINCIPAL");
+		panelNorteCentro.add(lblMenu);
+		
+		JPanel panel_14 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_14.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.RIGHT);
+		panelNorte.add(panel_14);
+		
+		JButton btnCarrito = new JButton("");
+		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
+		panel_14.add(btnCarrito);
+		
+		btnCarrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
@@ -237,14 +254,6 @@ public class VentanaEspejos extends JFrame{
 		JComboBox comboBox_1 = new JComboBox();
 		panelCentroOeste.add(comboBox_1);
 		
-		btnCarrito.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
-		
 
 		btnAgregar.addActionListener(new ActionListener() {
 			
@@ -256,6 +265,7 @@ public class VentanaEspejos extends JFrame{
 						VentanaInicioSesion.carrito.add(al.get(0));
 						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), al.get(0).getStock());
 						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
 					}
 				}
 				if(rbEspejoRectangular.isSelected()) {
@@ -264,6 +274,7 @@ public class VentanaEspejos extends JFrame{
 						VentanaInicioSesion.carrito.add(al.get(0));
 						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
 						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
 					}
 				}
 				if(rbEspejoOvalado.isSelected()) {
@@ -272,6 +283,7 @@ public class VentanaEspejos extends JFrame{
 						VentanaInicioSesion.carrito.add(al.get(0));
 						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
 						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
 					}
 				}
 				if(rbEspejoCircular.isSelected()) {
@@ -280,6 +292,7 @@ public class VentanaEspejos extends JFrame{
 						VentanaInicioSesion.carrito.add(al.get(0));
 						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
 						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
+						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
 					}
 				}
 			}
@@ -290,6 +303,33 @@ public class VentanaEspejos extends JFrame{
 				dispose();
 			}
 		});
+		
+		/*HILO DE FECHA*/
+		
+		Runnable r1 = new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+					long milis = System.currentTimeMillis();
+					Date fecha = new Date(milis);
+					String f = sdf.format(fecha);
+					lblFecha.setText("Fecha Actual: " + f);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					lblFecha.setText("");
+				}
+				
+				
+			}
+		};
+		Thread t1 = new Thread(r1);
+		t1.start();
 		
 		setVisible(true);
 

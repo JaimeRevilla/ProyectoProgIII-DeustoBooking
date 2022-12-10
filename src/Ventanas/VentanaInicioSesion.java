@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -40,10 +41,13 @@ public class VentanaInicioSesion extends JFrame {
 	public static String dni;
 	private Connection connection;
 	public static  ArrayList<Producto> carrito ;
+	public static HashMap<String, ArrayList<Producto>> mapa;
 	
 	public VentanaInicioSesion() {
 		carrito = new ArrayList<>();
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
+		
+		mapa = new HashMap<>();
 		
 		BaseDatos.crearTablasUsuario(con);
 		setBounds(250, 225, 1000, 508);
@@ -84,7 +88,9 @@ public class VentanaInicioSesion extends JFrame {
 						if(u.getContrasenia().equals(contrasenia)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
 							VentanaInicioSesion.dni = dni;
-							BaseDatos.eleminarCarrito(con);
+							/*if(!mapa.containsKey(dni)) {
+								BaseDatos.eleminarCarrito(con);
+							}*/
 							dispose();
 						}else {
 							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);

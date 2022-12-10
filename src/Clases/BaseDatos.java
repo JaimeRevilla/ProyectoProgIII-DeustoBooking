@@ -453,12 +453,12 @@ public class BaseDatos {
 		}return precio;	
 	}
 	
-	public static ArrayList<Carrito> obtenerListaCarrito(Connection con){
+	public static ArrayList<Carrito> obtenerListaCarrito(Connection con, String Udni){
 		ArrayList<Carrito> carrito = new ArrayList<>();
 		
 		try {
 			Statement stm = con.createStatement();
-			String sql = "SELECT * FROM Carrito";
+			String sql = "SELECT * FROM Carrito WHERE dni='"+Udni+"'";
 			ResultSet rst = stm.executeQuery(sql);
 			while (rst.next()) {
 				String dni = rst.getString("dniUsu");

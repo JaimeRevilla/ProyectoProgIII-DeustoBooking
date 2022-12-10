@@ -93,7 +93,7 @@ public class VentanaCesta extends JFrame {
 		panelSur.add(btnatras);
 		
 		
-		ArrayList<Carrito> carritos = BaseDatos.obtenerListaCarrito(con);
+		ArrayList<Carrito> carritos = BaseDatos.obtenerListaCarrito(con, VentanaInicioSesion.dni);
 		model = new DefaultTableModel();
 		String [] titulos = {"DNI", "CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO"};
 		model.setColumnIdentifiers(titulos);
