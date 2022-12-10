@@ -458,7 +458,7 @@ public class BaseDatos {
 		
 		try {
 			Statement stm = con.createStatement();
-			String sql = "SELECT * FROM Carrito WHERE dni='"+Udni+"'";
+			String sql = "SELECT * FROM Carrito WHERE dniUsu='"+Udni+"'";
 			ResultSet rst = stm.executeQuery(sql);
 			while (rst.next()) {
 				String dni = rst.getString("dniUsu");
