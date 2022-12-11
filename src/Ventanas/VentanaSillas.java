@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 
 public class VentanaSillas extends JFrame{
 	private JTextField txtMuebleCasa;
@@ -22,9 +23,9 @@ public class VentanaSillas extends JFrame{
 	private JTextField txtTelevisiones;
 	private JTextField txtSofas;
 	private JTextField txtCamas;
-	private JTextField txtMenuPrincipal;
 	private JTextField txtReloj;
 	private JButton btnAgregar;
+	private JLabel lblNewLabel;
 	public VentanaSillas() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -42,11 +43,8 @@ public class VentanaSillas extends JFrame{
 		panelNorte.add(txtReloj);
 		txtReloj.setColumns(10);
 		
-		txtMenuPrincipal = new JTextField();
-		txtMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtMenuPrincipal.setText("MENU SILLAS");
-		panelNorte.add(txtMenuPrincipal);
-		txtMenuPrincipal.setColumns(10);
+		lblNewLabel = new JLabel("MENU SILLAS");
+		panelNorte.add(lblNewLabel);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
 		panelNorte.add(btnCarrito);

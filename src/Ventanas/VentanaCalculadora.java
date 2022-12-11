@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class VentanaCalculadora extends JFrame{
+	private final JPanel panel_6 = new JPanel();
 	
 public VentanaCalculadora() {
 		
@@ -27,9 +29,16 @@ public VentanaCalculadora() {
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(5, 1, 0, 0));
+		panel_1.add(panel_6);
+		
+		JLabel lblNewLabel = new JLabel("CALCULATOR");
+		panel_6.add(lblNewLabel);
+		
+		JPanel panel_7 = new JPanel();
+		panel_6.add(panel_7);
 		
 		JTextArea textArea = new JTextArea();
-		panel_1.add(textArea);
+		panel_7.add(textArea);
 		
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);

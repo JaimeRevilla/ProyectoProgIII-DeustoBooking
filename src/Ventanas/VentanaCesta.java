@@ -90,6 +90,15 @@ public class VentanaCesta extends JFrame {
 		panelCentro.add(txtListaDeLa);
 		txtListaDeLa.setColumns(10);
 		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.NORTH);
+		
+		JPanel panel_1 = new JPanel();
+		panel.add(panel_1);
+		
+		JLabel lblNewLabel = new JLabel("MENU CARRITO");
+		panel_1.add(lblNewLabel);
+		
 		JPanel panelCentroEste = new JPanel();
 		getContentPane().add(panelCentroEste, BorderLayout.EAST);
 		panelCentroEste.setLayout(new GridLayout(0, 1, 0, 0));

@@ -78,7 +78,7 @@ public class VentanaEspejos extends JFrame{
 		JPanel panelNorteCentro = new JPanel();
 		panelNorte.add(panelNorteCentro);
 		
-		JLabel lblMenu = new JLabel("MENU PRINCIPAL");
+		JLabel lblMenu = new JLabel("MENU ESPEJOS");
 		panelNorteCentro.add(lblMenu);
 		
 		JPanel panel_14 = new JPanel();
