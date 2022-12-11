@@ -39,10 +39,11 @@ public class VentanaInicioSesion extends JFrame {
 	private JTextField txtDni;
 	private JPasswordField txtContr;
 	public static String dni;
+	public static String dniA;
 	private Connection connection;
 	public static  ArrayList<Producto> carrito ;
 	public static HashMap<String, ArrayList<Producto>> mapa;
-	public static String n;
+	private static boolean admin = false;
 	public VentanaInicioSesion() {
 		carrito = new ArrayList<>();
 		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
@@ -72,28 +73,37 @@ public class VentanaInicioSesion extends JFrame {
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton_1 = new JButton("LOG IN");
+		
 		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				String dniA = txtDni.getText();
+				String erDniA = "[A][D][M][I][N]";
 				String contraseniaA = txtContr.getText();
+				String erContrA = "[A][D][M][I][N]";
 				
 				String dni = txtDni.getText();
 				String erDni = "[0-9]{3}[A-Z]";
 				String contrasenia = txtContr.getText();
 				String erContr = "[0-9]{3}";
 				
-				if(dniA.equals("ADMIN") && contraseniaA.equals("ADMIN")) {
-					VentanaPrincipalAdmin v = new VentanaPrincipalAdmin();
-				}
-				
-				if(Pattern.matches(erDni, dni) && Pattern.matches(erContr, contrasenia)) {
-					//Comprobamos si el usuario esta registrado
+				if(Pattern.matches(erDniA, dniA) && Pattern.matches(erContrA, contraseniaA)) {
+					 BaseDatos.obtenerAdmin(con, dniA);
+					 JOptionPane.showMessageDialog(null, "Bienvenido ADMIN", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
+					 VentanaInicial.dniA = dniA;
+					 VentanaPrincipalAdmin.dniA = dniA;
+					 admin = true;
+					 dispose();
+				}else if(Pattern.matches(erDni, dni) && Pattern.matches(erContr, contrasenia)) {
 					Usuario u = new Usuario();
 					u = BaseDatos.obtenerUsuario(con, dni);
 					if(u != null) {
 						if(u.getContrasenia().equals(contrasenia)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
-							VentanaInicioSesion.dni = dni;
+							//VentanaInicioSesion.dni = dni;
+							VentanaInicial.dni = dni;
+							VentanaPrincipal.dni = dni;
 							dispose();
 						}else {
 							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -107,6 +117,43 @@ public class VentanaInicioSesion extends JFrame {
 				}
 				txtDni.setText("");
 				txtContr.setText("");
+				
+				
+//				TENIAMOS ANTES
+//				if(dniA.equals("ADMIN") && contraseniaA.equals("ADMIN")) {
+//					VentanaPrincipalAdmin v = new VentanaPrincipalAdmin();
+//				}
+//				
+//				String dni = txtDni.getText();
+//				String erDni = "[0-9]{3}[A-Z]";
+//				String contrasenia = txtContr.getText();
+//				String erContr = "[0-9]{3}";
+				
+//				if(Pattern.matches(erDni, dni) && Pattern.matches(erContr, contrasenia)) {
+//					//Comprobamos si el usuario esta registrado
+//					Usuario u = new Usuario();
+//					u = BaseDatos.obtenerUsuario(con, dni);
+////					if(dni.equals("ADMIN") && contrasenia.equals("ADMIN")) {
+////						JOptionPane.showMessageDialog(null, "Bienvenido ADMIN", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
+////						VentanaPrincipalAdmin.dniA = dni;
+////					}
+//					if(u != null) {
+//						if(u.getContrasenia().equals(contrasenia)) {
+//							JOptionPane.showMessageDialog(null, "Bienvenido", "SESIÓN INICIADA", JOptionPane.DEFAULT_OPTION);
+//							VentanaInicioSesion.dni = dni;
+//							dispose();
+//						}else {
+//							JOptionPane.showMessageDialog(null, "La contraseña es erronea!", "ERROR", JOptionPane.ERROR_MESSAGE);
+//						}
+//					}else {
+//						JOptionPane.showMessageDialog(null, "No existe un usuario para ese DNI! \n Vuelve a introducirlo ó deberas de registrar! ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+//					}
+//				}else {
+//					JOptionPane.showMessageDialog(null, "Los datos no cumplen los requisitos", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+//					
+//				}
+//				txtDni.setText("");
+//				txtContr.setText("");
 				
 //				/*
 //				if(Pattern.matches(refexContrasenia, contrasenia)) {
@@ -206,7 +253,9 @@ public class VentanaInicioSesion extends JFrame {
 		
 
 	}
-	
+	public static boolean getAdmin() {
+		return admin;
+	}
 	
 
 	public static void main(String[] args) {

@@ -31,6 +31,9 @@ public class VentanaPrincipalAdmin extends JFrame{
 	private JPanel panelNorteFecha;
 	private JPanel panelNorteCentro;
 	private JPanel panelNorteCarrito;
+	public static String dniA;
+	private JButton btnStock;
+	private JButton btnContabilidad;
 	
 	public VentanaPrincipalAdmin() {
 		vent = this;
@@ -54,7 +57,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 		panelNorteCentro = new JPanel();
 		panelNorte.add(panelNorteCentro);
 		
-		lblMenu = new JLabel("MENU PRINCIPAL");
+		lblMenu = new JLabel("MENU ADMIN");
 		panelNorteCentro.add(lblMenu);
 		
 		panelNorteCarrito = new JPanel();
@@ -87,8 +90,26 @@ public class VentanaPrincipalAdmin extends JFrame{
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
+		btnContabilidad = new JButton("CONTABILIDAD");
+		btnContabilidad.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaContabilidad v1 = new VentanaContabilidad ();
+			}
+		});
+		panelSur.add(btnContabilidad);
+		
 		JButton btnsalir = new JButton("SALIR");
 		panelSur.add(btnsalir);
+		
+		btnStock = new JButton("STOCK");
+		btnStock.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaStock v1 = new VentanaStock();
+			}
+		});
+		panelSur.add(btnStock);
 		
 		JPanel panelCentro = new JPanel();
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
@@ -209,7 +230,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
+					VentanaPrincipalAdmin frame = new VentanaPrincipalAdmin();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

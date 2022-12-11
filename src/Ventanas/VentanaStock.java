@@ -49,7 +49,8 @@ public class VentanaStock extends JFrame{
 		
 		JPanel panelCentro = new JPanel();
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
-
+		
+		setVisible(true);
 	}
 	
 	public static void main(String[] args) {

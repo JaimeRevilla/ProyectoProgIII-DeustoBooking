@@ -18,7 +18,7 @@ public class Usuario {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
-		this.email = email; //FALTA :metodo para autorellenar el email insertado
+		this.email = email; //FALTA :metodo para autorellenar el email 
 		this.domicilio = domicilio;
 		this.contrasenia = contrasenia;
 		this.permisos = permisos;

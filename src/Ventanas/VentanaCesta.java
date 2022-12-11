@@ -55,12 +55,12 @@ public class VentanaCesta extends JFrame {
 	private JTextField txtListaDeLa;
 	
 	private Connection con;
-	private DefaultTableModel model;
+	public static DefaultTableModel model;
 	private JTable tablaCesta;
 	private JScrollPane scrollTabla;
 
 	private JList<Carrito> listaFactura;
-	private DefaultListModel<Carrito> modelLista;
+	private static DefaultListModel<Carrito> modelLista;
 	private JScrollPane panelLista;
 	
 	
@@ -110,7 +110,7 @@ public class VentanaCesta extends JFrame {
 		panelSur.add(btnatras);
 		
 		
-		ArrayList<Carrito> carritos = BaseDatos.obtenerListaCarrito(con, VentanaInicioSesion.dni);
+		ArrayList<Carrito> carritos = BaseDatos.obtenerListaCarrito(con, VentanaInicial.dni);
 		model = new DefaultTableModel();
 		String [] titulos = {"DNI", "CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO"};
 		model.setColumnIdentifiers(titulos);
@@ -145,10 +145,11 @@ public class VentanaCesta extends JFrame {
 		
 		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
 		btnBorrarProducto.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				int fila = tablaCesta.getSelectedRow();
 					if(tablaCesta.getSelectedRow()>=0) {
-						String valor = tablaCesta.getValueAt(fila, 0).toString();
+						String valor = tablaCesta.getValueAt(fila, 3).toString();
 						model = (DefaultTableModel)tablaCesta.getModel();
 						model.removeRow(tablaCesta.getSelectedRow());	
 						BaseDatos.eliminarFilaPorCodigoProd(con, valor);
@@ -176,7 +177,7 @@ public class VentanaCesta extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Factura();
+				factura();
 				
 			}
 		});
@@ -188,8 +189,8 @@ public class VentanaCesta extends JFrame {
 		btnFactura.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaFactura v1 = new VentanaFactura();
 				cargarFichero();
+				VentanaFactura v1 = new VentanaFactura();
 			}
 		});
 		
@@ -205,8 +206,8 @@ public class VentanaCesta extends JFrame {
 
 	}
 	
-	private void Factura() {
-		try (PrintWriter pw = new PrintWriter(new FileOutputStream("Factura"+VentanaInicioSesion.dni+".txt"));){
+	public static void factura() {
+		try (PrintWriter pw = new PrintWriter(new FileOutputStream("Factura"+VentanaInicial.dni+".txt"));){
 			Date fechaSistema = new Date(System.currentTimeMillis());
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			pw.println(sdf.format(fechaSistema));
@@ -219,7 +220,7 @@ public class VentanaCesta extends JFrame {
 				String tam = (String) model.getValueAt(i, 5);
 				double precio = (double) model.getValueAt(i, 6);
 				pw.println(dni+";"+cod+";"+nom+";"+tipo+";"+marca+";"+tam+";"+precio);
-				System.out.println(String.format("El fichero se ha creado correctamente para el:%s",VentanaInicioSesion.dni));
+				System.out.println(String.format("El fichero se ha creado correctamente para el:%s",VentanaInicial.dni));
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println(String.format("Error cesta:%s",e.getMessage()));
@@ -255,8 +256,8 @@ public class VentanaCesta extends JFrame {
 //	
 //	}
 	
-	private void cargarFichero() {
-		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicioSesion.dni+".txt"));){
+	public static void cargarFichero() {
+		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicial.dni+".txt"));){
 			String linea = br.readLine();
 			while(linea!=null) {
 				String [] dato = linea.split(";");

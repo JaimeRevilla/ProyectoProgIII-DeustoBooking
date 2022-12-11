@@ -28,6 +28,8 @@ import javax.swing.ImageIcon;
 
 
 public class VentanaInicial extends JFrame {
+	public static String dni;
+	public static String dniA;
 	public VentanaInicial() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -98,9 +100,20 @@ public class VentanaInicial extends JFrame {
 		JButton btnMenuPrincipal = new JButton("MENU PRINCIPAL");
 		btnMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 10));
 		panel_5.add(btnMenuPrincipal);
+		
 		btnMenuPrincipal.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				if(VentanaInicioSesion.dni == null && !VentanaInicioSesion.getAdmin()) {
+					VentanaInicioSesion.dni = VentanaInicial.dni;
+					VentanaPrincipal v1 = new VentanaPrincipal();
+					System.out.println("Usuario");
+					
+				}else if(VentanaInicioSesion.dniA == null) {
+					VentanaInicioSesion.dniA = VentanaInicial.dniA;
+					VentanaPrincipalAdmin v1 = new VentanaPrincipalAdmin();
+					System.out.println("ADMIN");
+				}
 			}
 		});
 		

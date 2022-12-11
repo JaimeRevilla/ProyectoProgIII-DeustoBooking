@@ -29,6 +29,7 @@ public class VentanaContabilidad extends JFrame{
 		
 		JButton btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
@@ -36,12 +37,18 @@ public class VentanaContabilidad extends JFrame{
 		panelSur.add(btnAtras);
 		
 		JButton btnCalculadora = new JButton("CALCULADORA");
+		btnCalculadora.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCalculadora vC = new VentanaCalculadora();
+			}
+		});
 		panelSur.add(btnCalculadora);
 		
 		JPanel panelCentro = new JPanel();
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		
-
+		setVisible(true);
 	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

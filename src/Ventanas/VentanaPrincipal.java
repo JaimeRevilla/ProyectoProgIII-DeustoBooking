@@ -43,6 +43,8 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel panelNorteFecha;
 	private JPanel panelNorteCentro;
 	private JPanel panelNorteCarrito;
+	public static String dni;
+	private JButton btnNewButton;
 	public VentanaPrincipal() {
 		vent = this;
 		
@@ -99,6 +101,9 @@ public class VentanaPrincipal extends JFrame {
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
+		
+		btnNewButton = new JButton("A");
+		
 		
 		JButton btnsalir = new JButton("SALIR");
 		panelSur.add(btnsalir);
@@ -204,7 +209,6 @@ public class VentanaPrincipal extends JFrame {
 				System.exit(0);;
 			}
 		});
-		
 		/*HILO DE FECHA*/
 		
 		Runnable r1 = new Runnable() {

@@ -525,8 +525,8 @@ public class BaseDatos {
 		}
 	}
 	
-	public static void obtenerAdmin(Connection con) {
-		String sent = "SELECT * FROM Usuario WHERE dni = 'ADMIN'";
+	public static void obtenerAdmin(Connection con, String dniA) {
+		String sent = "SELECT * FROM Usuario WHERE dni = '"+dniA+"'";
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();

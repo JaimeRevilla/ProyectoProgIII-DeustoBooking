@@ -48,7 +48,8 @@ public class VentanaFactura extends JFrame{
 		listaFactura = new JList<>(model);
 		panelLista = new JScrollPane(listaFactura);
 		panelLista.add(listaFactura);
-		cargarFichero();
+		//cargarFichero();
+		VentanaCesta.cargarFichero();
 		
 		JPanel panelNorte = new JPanel();
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
@@ -66,25 +67,25 @@ public class VentanaFactura extends JFrame{
 		setVisible(true);
 	}
 
-	private void cargarFichero() {
-		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicioSesion.dni+".txt"));){
-			String linea = br.readLine();
-			while(linea!=null) {
-				String [] dato = linea.split(";");
-				Carrito ca = new Carrito(dato[0],Integer.parseInt((String)dato[1]),dato[2],dato[3],dato[4],dato[5],Double.parseDouble((String)dato[6]));
-				System.out.println(ca);
-				model.addElement(ca);
-				linea = br.readLine();
-				System.out.println(linea);
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println(String.format("Error Factura:%s",e.getMessage()));
-			e.printStackTrace();
-		} catch (IOException e1) {
-			System.out.println(String.format("Error Factura1:%s",e1.getMessage()));
-			e1.printStackTrace();
-		}
-	}
+//	private void cargarFichero() {
+//		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicioSesion.dni+".txt"));){
+//			String linea = br.readLine();
+//			while(linea!=null) {
+//				String [] dato = linea.split(";");
+//				Carrito ca = new Carrito(dato[0],Integer.parseInt((String)dato[1]),dato[2],dato[3],dato[4],dato[5],Double.parseDouble((String)dato[6]));
+//				System.out.println(ca);
+//				model.addElement(ca);
+//				linea = br.readLine();
+//				System.out.println(linea);
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println(String.format("Error Factura:%s",e.getMessage()));
+//			e.printStackTrace();
+//		} catch (IOException e1) {
+//			System.out.println(String.format("Error Factura1:%s",e1.getMessage()));
+//			e1.printStackTrace();
+//		}
+//	}
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
