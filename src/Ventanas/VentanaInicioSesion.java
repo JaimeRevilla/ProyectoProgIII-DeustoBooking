@@ -74,11 +74,17 @@ public class VentanaInicioSesion extends JFrame {
 		JButton btnNewButton_1 = new JButton("LOG IN");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String dniA = txtDni.getText();
+				String contraseniaA = txtContr.getText();
 				
 				String dni = txtDni.getText();
 				String erDni = "[0-9]{3}[A-Z]";
 				String contrasenia = txtContr.getText();
 				String erContr = "[0-9]{3}";
+				
+				if(dniA.equals("ADMIN") && contraseniaA.equals("ADMIN")) {
+					VentanaPrincipalAdmin v = new VentanaPrincipalAdmin();
+				}
 				
 				if(Pattern.matches(erDni, dni) && Pattern.matches(erContr, contrasenia)) {
 					//Comprobamos si el usuario esta registrado

@@ -525,5 +525,17 @@ public class BaseDatos {
 		}
 	}
 	
+	public static void obtenerAdmin(Connection con) {
+		String sent = "SELECT * FROM Usuario WHERE dni = 'ADMIN'";
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }
