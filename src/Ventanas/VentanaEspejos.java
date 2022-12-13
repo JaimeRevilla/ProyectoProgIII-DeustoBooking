@@ -35,12 +35,6 @@ import javax.swing.ImageIcon;
 
 public class VentanaEspejos extends JFrame{
 
-	private JTextField txtMuebleCasa;
-	private JTextField txtEspejos;
-	private JTextField txtSillas;
-	private JTextField txtTelevisiones;
-	private JTextField txtSofas;
-	private JTextField txtCamas;
 	private JButton btnAgregar;
 	private JButton btnEspejoCircular;
 	private JRadioButton rbEspejoRectangular;
@@ -48,7 +42,8 @@ public class VentanaEspejos extends JFrame{
 	private JRadioButton rbEspejoOvalado;
 	private JRadioButton rbEspejoCircular;
 	public static int cod;
-
+	public static String nombre;
+	
 	public static String tipoEspejo;
 	public VentanaEspejos(String nombreProducto) {
 		

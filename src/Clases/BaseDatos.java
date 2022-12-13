@@ -391,6 +391,7 @@ public class BaseDatos {
 	 * @return --> El stock restante (Unidades restantes)
 	 */
 	public static int obtenerStockProducto(Connection con, String nom) {
+		
 		String sent = "SELECT * FROM Producto WHERE nombre = '"+nom+"'";
 		Statement stmt = null;
 		int stock = 0;
