@@ -63,7 +63,7 @@ public class VentanaCesta extends JFrame {
 	private static DefaultListModel<Carrito> modelLista;
 	private JScrollPane panelLista;
 	
-	
+	//public static ArrayList<Carrito> carrito;
 	public VentanaCesta() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -131,54 +131,21 @@ public class VentanaCesta extends JFrame {
 		
 		scrollTabla = new JScrollPane(tablaCesta);
 		
-//		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
-//		btnBorrarProducto.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				if(tablaCesta.getSelectedRow()>=0) {
-//					model = (DefaultTableModel)tablaCesta.getModel();
-//					model.removeRow(tablaCesta.getSelectedRow());	
-//					BaseDatos.eliminarFila(con, VentanaInicioSesion.dni);
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");				
-//				}
-////				ArrayList<Producto> p = VentanaInicioSesion.carrito;
-////				int row = tablaCesta.getSelectedRow();
-////				String celda = tablaCesta.getModel().getValueAt(row, 0).toString();
-////				if(!(row == 0)) {
-////					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
-////				}else {
-////					tablaCesta.remove(row);
-////				}
-//				}
-//		});
-		
 		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
 		btnBorrarProducto.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int fila = tablaCesta.getSelectedRow();
-					if(tablaCesta.getSelectedRow()>=0) {
-						String valor = tablaCesta.getValueAt(fila, 3).toString();
-						model = (DefaultTableModel)tablaCesta.getModel();
-						model.removeRow(tablaCesta.getSelectedRow());	
-						BaseDatos.eliminarFilaPorCodigoProd(con, valor);
-						BaseDatos.obtenerListaCarrito(con, VentanaEspejos.tipoEspejo);
-						System.out.println("Se esta eliminando el producto");
-					}else {
-						JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
-					}
-//				}catch(Exception ex) {
-//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
-//				}
-				
-//				if (tablaCesta.getSelectedRow()>=0) {
-//					model = (DefaultTableModel)tablaCesta.getModel();
-//					model.removeRow(tablaCesta.getSelectedRow());	
-//					//Producto p = VentanaInicioSesion.mapa.get(VentanaInicioSesion.dni).get(model.getRowCount());
-//					BaseDatos.eliminarFilaPorCodigoProd(con, VentanaEspejos.cod);
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");				
-//				}
+				if(tablaCesta.getSelectedRow()>=0) {
+					String valor = tablaCesta.getValueAt(fila, 3).toString();
+					model = (DefaultTableModel)tablaCesta.getModel();
+					model.removeRow(tablaCesta.getSelectedRow());	
+					BaseDatos.eliminarFilaPorCodigoProd(con, valor);
+					BaseDatos.obtenerListaCarrito(con, VentanaEspejos.tipoEspejo);
+					System.out.println("Se esta eliminando el producto");
+				}else {
+					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
+				}
 			}
 		});
 		
@@ -198,10 +165,11 @@ public class VentanaCesta extends JFrame {
 		btnFactura.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cargarFichero();
-				VentanaFactura v1 = new VentanaFactura();
+				VentanaFactura v1 = new VentanaFactura(cargarFichero());
+				
 			}
 		});
+	
 		
 		btnatras.addActionListener(new ActionListener() {
 			
@@ -236,46 +204,30 @@ public class VentanaCesta extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
-//	private void Factura() {
-//		ObjectOutputStream oos = null;
-//		
-//		try {
-//			FileOutputStream fos = new FileOutputStream(VentanaInicioSesion.dni+".txt");
-//			BufferedOutputStream bos = new BufferedOutputStream(fos);
-//			oos = new ObjectOutputStream(bos);
-//			
-//			for (Producto p : VentanaInicioSesion.carrito) {
-//				oos.writeObject(p);
-//			}
-//			
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if(oos!=null) {
-//				try {
-//					oos.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	
-//	}
-	
-	public static void cargarFichero() {
-		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicial.dni+".txt"));){
+	public static ArrayList<Carrito> cargarFichero() {
+		ArrayList<Carrito> carrito = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicioSesion.dni+".txt"));){
 			String linea = br.readLine();
+			linea = br.readLine();
 			while(linea!=null) {
+				
 				String [] dato = linea.split(";");
-				Carrito ca = new Carrito(dato[0],Integer.parseInt((String)dato[1]),dato[2],dato[3],dato[4],dato[5],Double.parseDouble((String)dato[6]));
-				System.out.println(ca);
-				modelLista.addElement(ca);
+				for(String s: dato) {
+					System.out.println(s);
+				}
+				String dni = dato[0];
+				int cod = Integer.parseInt(dato[1]);
+				String nom = dato[2];
+				String tipo = dato[3];
+				String marca = dato[4];
+				String tam = dato[5];
+				double prec = Double.parseDouble(dato[6]);
+				Carrito ca = new Carrito(dni, cod, nom, tipo, marca, tam, prec);
+				carrito.add(ca);
 				linea = br.readLine();
 				System.out.println(linea);
 			}
+			
 		} catch (FileNotFoundException e) {
 			System.out.println(String.format("Error Factura:%s",e.getMessage()));
 			e.printStackTrace();
@@ -283,10 +235,11 @@ public class VentanaCesta extends JFrame {
 			System.out.println(String.format("Error Factura1:%s",e1.getMessage()));
 			e1.printStackTrace();
 		}
+		return carrito;
 	}
-	
-	
+
 	//Crear un metodo de cargar csv para que se pueda añadir a la Jlist de la cesta del usuario que se haya registrado
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

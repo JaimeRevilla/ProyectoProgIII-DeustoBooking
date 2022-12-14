@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -65,8 +66,9 @@ public class VentanaPrincipalAdmin extends JFrame{
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
 		
-		JButton btnimgcarrito = new JButton("CARRITO");
-		panelNorteCarrito.add(btnimgcarrito);
+		JButton btnCarrito = new JButton();
+		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
+		panelNorteCarrito.add(btnCarrito);
 		
 		btnLog = new JButton("LOG");
 		panelNorteCarrito.add(btnLog);
@@ -79,7 +81,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			}
 		});
 		
-		btnimgcarrito.addActionListener(new ActionListener() {
+		btnCarrito.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

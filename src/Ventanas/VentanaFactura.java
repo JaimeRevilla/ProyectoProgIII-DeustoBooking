@@ -22,16 +22,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaFactura extends JFrame{
 	private JList<Carrito> listaFactura;
 	private DefaultListModel<Carrito> model;
 	private JScrollPane panelLista;
+	public static ArrayList<Carrito> carrito;
 	
 	
-	public VentanaFactura() {
-		
+	public VentanaFactura(ArrayList<Carrito> carrito) {
+		this.carrito = carrito;
 		setBounds(250, 225, 1000, 508);
 		
 		JPanel panelSur = new JPanel();
@@ -41,16 +43,13 @@ public class VentanaFactura extends JFrame{
 		
 		panelSur.add(btnAtras);
 		
-		JPanel panelCentro = new JPanel();
-		getContentPane().add(panelCentro, BorderLayout.CENTER);
-
 		model = new DefaultListModel<>();
 		listaFactura = new JList<>(model);
 		panelLista = new JScrollPane(listaFactura);
-		panelLista.add(listaFactura);
-		//cargarFichero();
-		VentanaCesta.cargarFichero();
+		cargarModelo();
 		
+		getContentPane().add(panelLista, BorderLayout.CENTER);
+
 		JPanel panelNorte = new JPanel();
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		
@@ -68,13 +67,30 @@ public class VentanaFactura extends JFrame{
 	}
 
 //	private void cargarFichero() {
+//		System.out.println("error1");
+//		ArrayList<Carrito> car = new ArrayList<>();
+//		System.out.println("error2");
 //		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicioSesion.dni+".txt"));){
+//			System.out.println("error3");
 //			String linea = br.readLine();
 //			while(linea!=null) {
+//				
+//			
 //				String [] dato = linea.split(";");
-//				Carrito ca = new Carrito(dato[0],Integer.parseInt((String)dato[1]),dato[2],dato[3],dato[4],dato[5],Double.parseDouble((String)dato[6]));
-//				System.out.println(ca);
-//				model.addElement(ca);
+//				
+//				String dni = dato[0];
+//				int cod = Integer.parseInt(dato[1]);
+//				String nom = dato[2];
+//				String tipo = dato[3];
+//				String marca = dato[4];
+//				String tam = dato[5];
+//				double prec = Double.parseDouble(dato[6]);
+//				System.out.println("error6");
+//				//Carrito ca = new Carrito(dni, cod, nom, tipo, marca, tam, prec);
+//				car.add(new Carrito(dni, cod, nom, tipo, marca, tam, prec));
+//				//model.addElement(ca);
+//				//car.add(ca);
+//				System.out.println(car.get(0));
 //				linea = br.readLine();
 //				System.out.println(linea);
 //			}
@@ -86,17 +102,12 @@ public class VentanaFactura extends JFrame{
 //			e1.printStackTrace();
 //		}
 //	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaFactura frame = new VentanaFactura();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//	
+	private void cargarModelo() {
+		model.removeAllElements();
+		for(Carrito c: carrito) {
+			model.addElement(c);
+		}
 	}
+	
 }

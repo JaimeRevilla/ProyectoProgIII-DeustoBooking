@@ -77,8 +77,9 @@ public class VentanaPrincipal extends JFrame {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
 		
-		JButton btnimgcarrito = new JButton("CARRITO");
-		panelNorteCarrito.add(btnimgcarrito);
+		JButton btnCarrito = new JButton();
+		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
+		panelNorteCarrito.add(btnCarrito);
 		
 		btnLog = new JButton("LOG");
 		panelNorteCarrito.add(btnLog);
@@ -91,7 +92,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		
-		btnimgcarrito.addActionListener(new ActionListener() {
+		btnCarrito.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
