@@ -81,7 +81,8 @@ public class VentanaPrincipal extends JFrame {
 		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
 		panelNorteCarrito.add(btnCarrito);
 		
-		btnLog = new JButton("LOG");
+		btnLog = new JButton("");
+		btnLog.setIcon(new ImageIcon("imagenes/btnlogin.png"));
 		panelNorteCarrito.add(btnLog);
 		
 		btnLog.addActionListener(new ActionListener() {
