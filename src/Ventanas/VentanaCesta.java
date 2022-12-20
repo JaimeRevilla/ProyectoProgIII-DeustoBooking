@@ -109,7 +109,8 @@ public class VentanaCesta extends JFrame {
 		JButton btnNewButton = new JButton("REALIZAR COMPRA");
 		panelCentroEste.add(btnNewButton);
 		
-		
+		JButton btnAnadir = new JButton("Añadir");
+		JButton btnEliminar = new JButton("Eliminar");
 		
 		JButton btnFactura = new JButton("VER FACTURA");
 		
@@ -179,6 +180,18 @@ public class VentanaCesta extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+			}
+		});
+		
+		tablaCesta.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				if(value instanceof JButton) {
+					JButton btn = (JButton) value;
+				}
+				return c;
 			}
 		});
 		
