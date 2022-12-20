@@ -18,6 +18,7 @@ import java.awt.CardLayout;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -74,11 +75,8 @@ public class VentanaCesta extends JFrame {
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelCentro = new JPanel();
+		JSplitPane panelCentro = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true);
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		txtListaDeLa = new JTextField();
 		String texto = "Lista de la compra\n";
 		double total = 0;
 		for(Producto p: VentanaInicioSesion.carrito) {
@@ -86,8 +84,13 @@ public class VentanaCesta extends JFrame {
 			total = total + p.getPrecio();
 		}
 		texto = texto + total + " €\n";
+		
+		JPanel panel_2 = new JPanel();
+		panelCentro.add(panel_2);
+		
+		txtListaDeLa = new JTextField();
+		panel_2.add(txtListaDeLa);
 		txtListaDeLa.setText(texto);
-		panelCentro.add(txtListaDeLa);
 		txtListaDeLa.setColumns(10);
 		
 		JPanel panel = new JPanel();
@@ -160,7 +163,7 @@ public class VentanaCesta extends JFrame {
 		
 		panelCentroEste.add(btnBorrarProducto);
 		
-		panelCentro.add(scrollTabla, BorderLayout.CENTER);
+		panelCentro.add(scrollTabla);
 		
 		btnFactura.addActionListener(new ActionListener() {
 			@Override
