@@ -45,6 +45,7 @@ public class VentanaEspejos extends JFrame{
 	public static String nombre;
 	
 	public static String tipoEspejo;
+	
 	public VentanaEspejos(String nombreProducto) {
 		
 		setBounds(250, 225, 1000, 508);
@@ -73,7 +74,7 @@ public class VentanaEspejos extends JFrame{
 		JPanel panelNorteCentro = new JPanel();
 		panelNorte.add(panelNorteCentro);
 		
-		JLabel lblMenu = new JLabel("MENU ESPEJOS");
+		JLabel lblMenu = new JLabel("MENU "+nombreProducto);
 		panelNorteCentro.add(lblMenu);
 		
 		JPanel panel_14 = new JPanel();

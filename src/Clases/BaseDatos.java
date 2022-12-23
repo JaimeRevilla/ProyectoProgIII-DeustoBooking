@@ -73,7 +73,7 @@ public class BaseDatos {
 	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
 	 */
 	public static boolean crearTablasProducto(Connection con) {
-		String sql = "CREATE TABLE IF NOT EXISTS Producto (cod int, nombre String, tipo String, marca String, tamanyo String, precio double, stock int)";
+		String sql = "CREATE TABLE IF NOT EXISTS Producto (cod int, nombre String, tipo String, marca String, tamanyo String, precio double, stock int, ruta String)";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
@@ -539,4 +539,21 @@ public class BaseDatos {
 		
 	}
 	
+	public static String getRuta(Connection con, String nombre) {
+		String sent = "SELECT * FROM Producto WHERE nombre = '"+nombre+"'";
+		Statement stmt = null;
+		String ruta="";
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if(rs.next()) {
+				ruta = rs.getString("ruta");	
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ruta;
+	}
 }

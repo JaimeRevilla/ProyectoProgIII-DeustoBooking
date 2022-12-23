@@ -15,6 +15,9 @@ public class PanelConFondo extends JPanel{
 		setLayout(new BorderLayout());
 	}
 	
+	public void setImagen(Image i) {
+		imagen = i;
+	}
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D gr = (Graphics2D)g;

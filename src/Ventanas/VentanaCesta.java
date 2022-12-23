@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 
 import java.awt.CardLayout;
 import javax.swing.JPasswordField;
@@ -35,6 +36,8 @@ import Clases.Carrito;
 import Clases.Producto;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -60,9 +63,7 @@ public class VentanaCesta extends JFrame {
 	private JTable tablaCesta;
 	private JScrollPane scrollTabla;
 
-	private JList<Carrito> listaFactura;
-	private static DefaultListModel<Carrito> modelLista;
-	private JScrollPane panelLista;
+	private PanelConFondo panelFoto;
 	
 	//public static ArrayList<Carrito> carrito;
 	public VentanaCesta() {
@@ -85,13 +86,8 @@ public class VentanaCesta extends JFrame {
 		}
 		texto = texto + total + " €\n";
 		
-		JPanel panel_2 = new JPanel();
-		panelCentro.add(panel_2);
-		
-		txtListaDeLa = new JTextField();
-		panel_2.add(txtListaDeLa);
-		txtListaDeLa.setText(texto);
-		txtListaDeLa.setColumns(10);
+		panelFoto = new PanelConFondo(null);
+		panelCentro.add(panelFoto);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.NORTH);
@@ -177,6 +173,44 @@ public class VentanaCesta extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+			}
+		});
+		
+		tablaCesta.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int fila = tablaCesta.rowAtPoint(e.getPoint());
+				String nombre = (String)model.getValueAt(fila, 2);
+				String ruta = BaseDatos.getRuta(con, nombre);
+				ImageIcon i = new ImageIcon(ruta);
+				panelFoto.setImagen(i.getImage());
+				panelFoto.repaint();
 			}
 		});
 		
