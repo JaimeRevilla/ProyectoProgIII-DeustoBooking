@@ -35,7 +35,7 @@ public class Principal {
 		BaseDatos.insertarUsuario(con, "ADMIN", "000A", "ADMIN@mail.com", "mostoles", "000A", 1);
 		
 		//INSERCCION DE PRODUCTOS
-		Producto producto = new Producto(0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50, 2);
+		Producto producto = new Producto(0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50, 2, null);
 		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("Insertando producto 1 ...");
 		System.out.println(String.format("Datos del producto insertado: %s", "Producto 1 (" + producto.getCod() + " " + " " + 
@@ -52,9 +52,9 @@ public class Principal {
 							producto.getNombre() + " " + producto.getTipo() + " " + 
 							producto.getMarca() + " " + producto.getTamanyo() + " " + producto.getPrecio() + " " + producto.getStock() + ")"));
 		
-		BaseDatos.insertarProducto(con, 0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50, 2);
-		BaseDatos.insertarProducto(con, 1, "Cama1", "LITERA", "IKEA", "200x200", 100.50, 12);
-		BaseDatos.insertarProducto(con, 2, "Espejo1", "CIRCULAR", "IKEA", "50x100", 50.50, 20);
+		BaseDatos.insertarProducto(con, 0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50, 2, "");
+		BaseDatos.insertarProducto(con, 1, "Cama1", "LITERA", "IKEA", "200x200", 100.50, 12, "");
+		BaseDatos.insertarProducto(con, 2, "Espejo1", "CIRCULAR", "IKEA", "50x100", 50.50, 20, "");
 		
 		//INSERCCION DE CARRITO
 		System.out.println("----------------------------------------------------------------------");

@@ -128,8 +128,8 @@ public class BaseDatos {
 	 * @param Connection con, datos del producto: recibimos la conexion con la base de datos y los datos del producto
 	 * @return No devuelve nada
 	 */
-	public static void insertarProducto(Connection con,   int cod,  String nombre,  String tipo,  String marca,  String tamanyo,  double precio,  int stock) {
-		String sql = "INSERT INTO Producto VALUES('"+cod+"','"+nombre+"','"+tipo+"','"+marca+"','"+tamanyo+"',"+precio+",'"+stock+"')";
+	public static void insertarProducto(Connection con,   int cod,  String nombre,  String tipo,  String marca,  String tamanyo,  double precio,  int stock, String ruta) {
+		String sql = "INSERT INTO Producto VALUES('"+cod+"','"+nombre+"','"+tipo+"','"+marca+"','"+tamanyo+"',"+precio+",'"+stock+"','"+ruta+"')";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
@@ -355,7 +355,8 @@ public class BaseDatos {
 				String tam = rs.getString("tamanyo");
 				int stock = rs.getInt("stock");
 				int cod = rs.getInt("cod");
-				p = new Producto(cod, nombre, tipo, marca, tam, precio, stock);
+				String ruta = rs.getString("ruta");
+				p = new Producto(cod, nombre, tipo, marca, tam, precio, stock, ruta);
 				a.add(p);
 			}
 			rs.close();
@@ -383,7 +384,6 @@ public class BaseDatos {
 		}
 		
 	}
-	
 	/**
 	 * METODO PARA OBTENER EL STOCK RESTANTE DE UN PRODUCTO DE LA tienda CUYO NOMBRE ES EL DADO POR P�RAMETRO
 	 * @param con --> Conexi�n con la BD
@@ -550,6 +550,7 @@ public class BaseDatos {
 				ruta = rs.getString("ruta");	
 			}
 			rs.close();
+			stmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

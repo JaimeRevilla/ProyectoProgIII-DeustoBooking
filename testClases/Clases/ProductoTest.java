@@ -27,7 +27,7 @@ public class ProductoTest {
 
 	@Before
 	public void setUp() throws Exception {
-		producto = new Producto(codigo, nombre, tipo, marca, tamanyo, precio, stock);
+		producto = new Producto(codigo, nombre, tipo, marca, tamanyo, precio, stock, null);
 	}
 
 	@After

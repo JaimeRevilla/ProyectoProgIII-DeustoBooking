@@ -5,9 +5,9 @@ public class Armarios extends Producto {
 	private TipoArmario tipoArmario;
 	private int numEstanterias;
 	
-	public Armarios(int cod, String nombre, String tipo, String marca, String tamanyo, double precio, int stock,
+	public Armarios(int cod, String nombre, String tipo, String marca, String tamanyo, double precio, int stock, String ruta,
 			TipoArmario tipoArmario, int numEstanterias) {
-		super(cod, nombre, tipo, marca, tamanyo, precio, stock);
+		super(cod, nombre, tipo, marca, tamanyo, precio, stock, ruta);
 		this.numEstanterias = numEstanterias;
 		this.tipoArmario = tipoArmario;
 	}

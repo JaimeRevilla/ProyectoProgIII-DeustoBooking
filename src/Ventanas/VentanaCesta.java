@@ -207,7 +207,9 @@ public class VentanaCesta extends JFrame {
 				// TODO Auto-generated method stub
 				int fila = tablaCesta.rowAtPoint(e.getPoint());
 				String nombre = (String)model.getValueAt(fila, 2);
+				System.out.println(nombre);
 				String ruta = BaseDatos.getRuta(con, nombre);
+				System.out.println(ruta);
 				ImageIcon i = new ImageIcon(ruta);
 				panelFoto.setImagen(i.getImage());
 				panelFoto.repaint();

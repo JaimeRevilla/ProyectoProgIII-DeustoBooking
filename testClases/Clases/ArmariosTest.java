@@ -14,7 +14,7 @@ public class ArmariosTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		armarios = new Armarios(0, null, null, null, null, 0.0, 0, TipoArmario.ROBLE, numEstanterias);
+		armarios = new Armarios(0, null, null, null, null, 0.0, 0, null, TipoArmario.ROBLE, numEstanterias);
 	}
 
 	@After

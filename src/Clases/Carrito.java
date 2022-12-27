@@ -20,7 +20,7 @@ public class Carrito {
 		this.tamanyo = tamanyo;
 		this.precio = precio;
 	}
-	
+
 	public String getMarca() {
 		return marca;
 	}

@@ -8,10 +8,10 @@ public class Producto {
 	private String tamanyo;
 	private double precio;
 	private int stock;
-	//private string Foto;
+	private String ruta;
 	
 		
-	public Producto(int cod, String nombre, String tipo, String marca, String tamanyo, double precio, int stock) {
+	public Producto(int cod, String nombre, String tipo, String marca, String tamanyo, double precio, int stock, String ruta) {
 		super();
 		this.cod = cod;
 		this.nombre = nombre;
@@ -20,8 +20,17 @@ public class Producto {
 		this.tamanyo = tamanyo;
 		this.precio = precio;
 		this.stock = stock;
+		this.ruta = ruta;
 	}
 	
+	public String getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(String ruta) {
+		this.ruta = ruta;
+	}
+
 	public int getCod() {
 		return cod;
 	}

@@ -14,7 +14,7 @@ public class EspejoTest {
 
 	@Before
 	public void setUp() throws Exception {
-		espejo = new Espejo(0, null, null, null, null, 0, 0, null, marco);
+		espejo = new Espejo(0, null, null, null, null, 0, 0, null, null, marco);
 	}
 
 	@After

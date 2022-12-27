@@ -4,9 +4,9 @@ public class Espejo extends Producto{
 	private TipoEspejo tipoEspejo;
 	private boolean marco;
 	
-	public Espejo(int cod, String nombre, String tipo, String marca, String tamanyo, double precio, int stock,
+	public Espejo(int cod, String nombre, String tipo, String marca, String tamanyo, double precio, int stock, String ruta,
 			TipoEspejo tipoEspejo, boolean marco) {
-		super(cod, nombre, tipo, marca, tamanyo, precio, stock);
+		super(cod, nombre, tipo, marca, tamanyo, precio, stock, ruta);
 		this.marco = false;
 		this.tipoEspejo = tipoEspejo;
 	}
