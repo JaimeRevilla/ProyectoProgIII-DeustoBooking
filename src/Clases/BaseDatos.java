@@ -575,7 +575,7 @@ public class BaseDatos {
 	}
 	
 	public static String getRuta(Connection con, String nombre) {
-		String sent = "SELECT * FROM Producto WHERE nombre = '"+nombre+"'";
+		String sent = "SELECT ruta FROM Producto WHERE nombre = '"+nombre+"'";
 		Statement stmt = null;
 		String ruta="";
 		try {

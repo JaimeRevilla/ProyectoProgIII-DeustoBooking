@@ -165,9 +165,9 @@ public class VentanaEspejos extends JFrame{
 		int stock1 = BaseDatos.obtenerStockProducto(con, "Espejo4");
 		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Espejo4");
 		if (stock1 == 0) {
-			lblEspejoRectangular.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+			lblEspejoRectangular.setText("Espejos circulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
-			lblEspejoRectangular.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock1 + " unidades    " + "Precio: " + precio1 + " euros");
+			lblEspejoRectangular.setText("Espejos circulares" + ": " + "Unidades restantes: " + stock1 + " unidades    " + "Precio: " + precio1 + " euros");
 			
 		}
 		int stock2 = BaseDatos.obtenerStockProducto(con, "Espejo2");
@@ -226,9 +226,9 @@ public class VentanaEspejos extends JFrame{
 		int stock3 = BaseDatos.obtenerStockProducto(con, "Espejo1");
 		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Espejo1");
 		if (stock3 == 0) {
-			lblEspejoCircular.setText("Espejos circulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
+			lblEspejoCircular.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
-			lblEspejoCircular.setText("Espejos ciculares" + ": " + "Unidades restantes: " + stock3 + " unidades    " + "Precio: " + precio3 + " euros");
+			lblEspejoCircular.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock3 + " unidades    " + "Precio: " + precio3 + " euros");
 			
 		}
 		

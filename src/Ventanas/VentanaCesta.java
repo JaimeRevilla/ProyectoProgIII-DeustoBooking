@@ -222,6 +222,7 @@ public class VentanaCesta extends JFrame {
 				String ruta = BaseDatos.getRuta(con, nombre);
 				System.out.println(ruta);
 				ImageIcon i = new ImageIcon(ruta);
+				System.out.println(i);
 				panelFoto.setImagen(i.getImage());
 				panelFoto.repaint();
 			}
