@@ -8,6 +8,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -39,9 +43,11 @@ public class VentanaSillas extends JFrame{
 	private JButton btnAgregar;
 	private JLabel lblNewLabel;
 	private JPanel panelCentral;
+	
 	private JTable tablaSillas;
 	public static DefaultTableModel modelSill;
 	private JScrollPane scrSillas;
+	
 	public VentanaSillas() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -111,17 +117,40 @@ public class VentanaSillas extends JFrame{
 		JSpinner spnCant = new JSpinner();
 		ArrayList<Producto> sillas = BaseDatos.obtenerProducto(con, "silla");
 		System.out.println(sillas);
-		modelSill = new DefaultTableModel();
+
 		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};
+		modelSill = new DefaultTableModel();
 		modelSill.setColumnIdentifiers(titulos);
 		for(Producto p: sillas) {
 			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), spnCant, btnAgregar};
 			modelSill.addRow(datos);
 		}
-		tablaSillas = new JTable(modelSill);
 		
-		//scrSillas = new JScrollPane(tablaSillas);
+		
+		//DUDA
+		//TableCellRenderer tableRenderer;
+		//tablaSillas = new JTable(new JTableButtonModel());
+		//tableRenderer = tablaSillas.getDefaultRenderer(JButton.class);
+		//tablaSillas.setDefaultRenderer(JButton.class,  new JTableButtonRenderer(tableRenderer));
+		tablaSillas = new JTable(modelSill);
+		scrSillas = new JScrollPane(tablaSillas);
+		
 		panelCentral.add(tablaSillas);
+		
+		tablaSillas.addMouseListener(new MouseAdapter() {
+		
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int fila = tablaSillas.rowAtPoint(e.getPoint());
+				int columna = tablaSillas.columnAtPoint(e.getPoint());
+				if (columna == 10) { //La del botón
+					//Código relacionado con la acción del botón
+					System.out.println("ESTOY DENTRO PERROS ");
+				}
+		
+			}
+		});
 		
 		
 //		tablaSillas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
@@ -138,13 +167,51 @@ public class VentanaSillas extends JFrame{
 //			}
 //		});
 		
-		
+		panelCentral.add(scrSillas, BorderLayout.CENTER);
 		
 		setVisible(true);
 
 
 	}
 	
+	//DUDA
+//	class JTableButtonRenderer implements TableCellRenderer {
+//		   private TableCellRenderer defaultRenderer;
+//		   public JTableButtonRenderer(TableCellRenderer renderer) {
+//		      defaultRenderer = renderer;
+//		   }
+//		   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//		      if(value instanceof Component)
+//		         return (Component)value;
+//		         return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//		   }
+//	}
+//	
+//	
+//	class JTableButtonModel extends AbstractTableModel {
+//		private Object[][] rows = {{"CODIGO"},{"TIPO"},{"MARCA"},{"TAMANYO"},{"PRECIO"},{"STOCK"},{"IMAGEN"},{"CANTIDAD"},{"AÑADIR"}};
+//		private String[] columns = {"AÑadir","CANTIDAD","MARCA","TAMANYO","PRECIO","STOCK","IMAGEN","CANTIDAD","AÑADIR"};
+//		
+//		public String getColumnName(int column) {
+//			return columns[column];
+//		}
+//		public int getRowCount() {
+//			return rows.length;
+//		}
+//		public int getColumnCount() {
+//		      return columns.length;
+//		}
+//		public Object getValueAt(int row, int column) {
+//			return rows[row][column];
+//		}
+//		public boolean isCellEditable(int row, int column) {
+//			return false;
+//		}
+//		public Class getColumnClass(int column) {
+//		      return getValueAt(0, column).getClass();
+//		}
+//	}
+
 	
 
 	public static void main(String[] args) {
