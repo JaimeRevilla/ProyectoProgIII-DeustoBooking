@@ -2,33 +2,52 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import Clases.BaseDatos;
+import Clases.Carrito;
+import Clases.Producto;
+
 import javax.swing.JLabel;
+import javax.swing.JTable;
 
 public class VentanaSillas extends JFrame{
-	private JTextField txtMuebleCasa;
-	private JTextField txtEspejos;
-	private JTextField txtSillas;
-	private JTextField txtTelevisiones;
-	private JTextField txtSofas;
-	private JTextField txtCamas;
+	
+	private Connection con;
+
 	private JTextField txtReloj;
 	private JButton btnAgregar;
 	private JLabel lblNewLabel;
+	private JPanel panelCentral;
+	private JTable tablaSillas;
+	public static DefaultTableModel modelSill;
+	private JScrollPane scrSillas;
 	public VentanaSillas() {
 		
 		setBounds(250, 225, 1000, 508);
+		
+		con = BaseDatos.initBD("data/DeustoIkea.db");
+
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -58,46 +77,12 @@ public class VentanaSillas extends JFrame{
 		btnAgregar = new JButton("AGREGAR A CARRITO");
 		panelSur.add(btnAgregar);
 		
-		JPanel panelCentro = new JPanel();
-		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
+		panelCentral = new JPanel();
 		
-		txtMuebleCasa = new JTextField();
-		txtMuebleCasa.setText("\"\"");
-		panelCentro.add(txtMuebleCasa);
-		txtMuebleCasa.setColumns(10);
 		
-		txtEspejos = new JTextField();
-		txtEspejos.setText("\"\"");
-		panelCentro.add(txtEspejos);
-		txtEspejos.setColumns(10);
 		
-		txtSillas = new JTextField();
-		txtSillas.setText("\"\"");
-		panelCentro.add(txtSillas);
-		txtSillas.setColumns(10);
 		
-		txtTelevisiones = new JTextField();
-		txtTelevisiones.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTelevisiones.setText("\"\"");
-		panelCentro.add(txtTelevisiones);
-		txtTelevisiones.setColumns(10);
-		
-		txtSofas = new JTextField();
-		txtSofas.setText("\"\"");
-		panelCentro.add(txtSofas);
-		txtSofas.setColumns(10);
-		
-		txtCamas = new JTextField();
-		txtCamas.setText("\"\"");
-		panelCentro.add(txtCamas);
-		txtCamas.setColumns(10);
-		
-		JPanel panelCentroOeste = new JPanel();
-		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		panelCentroOeste.add(comboBox_1);
+		getContentPane().add(panelCentral, BorderLayout.CENTER);
 		
 		btnCarrito.addActionListener(new ActionListener() {
 			
@@ -120,9 +105,47 @@ public class VentanaSillas extends JFrame{
 			}
 		});
 		
+		
+		
+		JButton btnAgregar = new JButton("añadir");
+		JSpinner spnCant = new JSpinner();
+		ArrayList<Producto> sillas = BaseDatos.obtenerProducto(con, "silla");
+		System.out.println(sillas);
+		modelSill = new DefaultTableModel();
+		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};
+		modelSill.setColumnIdentifiers(titulos);
+		for(Producto p: sillas) {
+			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), spnCant, btnAgregar};
+			modelSill.addRow(datos);
+		}
+		tablaSillas = new JTable(modelSill);
+		
+		//scrSillas = new JScrollPane(tablaSillas);
+		panelCentral.add(tablaSillas);
+		
+		
+//		tablaSillas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+//			
+//			@Override
+//			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+//					int row, int column) {
+//				if (row == table.getModel().getRowCount()) {
+//		            return new JButton("Agregar");
+//		        } else {
+//		            setBackground(new Color(0xffffff));
+//		            return this;
+//		        }
+//			}
+//		});
+		
+		
+		
 		setVisible(true);
 
+
 	}
+	
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

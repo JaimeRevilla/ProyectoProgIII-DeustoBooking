@@ -367,6 +367,41 @@ public class BaseDatos {
 		return a;	
 	}
 	
+	
+	/**
+	 * Método para buscar los datos de un  Producto si el nombre recibido es el mismo que buscamos en la BBDD
+	 * @param Connection con, el nombre de tipo String : recibimos la conexion con la base de datos y el nombre de tipo String
+	 * @return Devuelve la lista de productos
+	 */
+	public static ArrayList<Producto> obtenerProducto(Connection con, String nombre){
+		ArrayList<Producto> a = new ArrayList<>();
+		String sent = "SELECT * FROM Producto WHERE nombre = '" + nombre + "'";
+		System.out.println(sent);
+		Statement stmt = null;
+		Producto p = null;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sent);
+			if (rs.next()) {
+				String nombres = rs.getString("nombre");
+				String marca = rs.getString("marca");
+				String tipo = rs.getString("tipo");
+				double precio = rs.getDouble("precio");
+				String tam = rs.getString("tamanyo");
+				int stock = rs.getInt("stock");
+				int cod = rs.getInt("cod");
+				String ruta = rs.getString("ruta");
+				p = new Producto(cod, nombres, tipo, marca, tam, precio, stock, ruta);
+				a.add(p);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
+			e.printStackTrace();
+		}
+		return a;	
+	}
+	
 	/**
 	 * Método para restar el stock dadas por parametro al producto de productocuto cuyo nombre es el dado por parametro
 	 * @param con, nom, unidades: coneixion con la BaseDatos, el nombre del producto y el unidades a restar

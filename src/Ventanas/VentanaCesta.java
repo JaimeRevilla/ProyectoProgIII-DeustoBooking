@@ -64,6 +64,10 @@ public class VentanaCesta extends JFrame {
 	private JScrollPane scrollTabla;
 
 	private PanelConFondo panelFoto;
+	private JTable tablaFotos;
+	public static DefaultTableModel modeloFotos;
+
+
 	
 	//public static ArrayList<Carrito> carrito;
 	public VentanaCesta() {
@@ -88,6 +92,13 @@ public class VentanaCesta extends JFrame {
 		
 		panelFoto = new PanelConFondo(null);
 		panelCentro.add(panelFoto);
+		
+		
+		modeloFotos = new DefaultTableModel();
+		tablaFotos = new JTable(modeloFotos);
+		panelFoto.add(tablaFotos);
+		
+		
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.NORTH);

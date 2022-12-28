@@ -154,7 +154,78 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		
 		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.addItem("TODO");
+		comboBox_1.addItem("MUEBLE CASA");
+		comboBox_1.addItem("ESPEJOS");
+		comboBox_1.addItem("SILLAS");
+		comboBox_1.addItem("TV");
+		comboBox_1.addItem("SOFAS");
+		comboBox_1.addItem("CAMAS");
+
 		panelCentroOeste.add(comboBox_1);
+		comboBox_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String itemSeleccionado = (String)comboBox_1.getSelectedItem();
+				if ("MUEBLE CASA".equals(itemSeleccionado)) {
+					btnEspejos.setVisible(false);
+					btnSillas.setVisible(false);
+					btnTv.setVisible(false);
+					btnSofas.setVisible(false);
+					btnCamas.setVisible(false);
+					btnMuebleCasa.setVisible(true);
+				} else if ("ESPEJOS".equals(itemSeleccionado)) {
+					btnMuebleCasa.setVisible(false);
+					btnSillas.setVisible(false);
+					btnTv.setVisible(false);
+					btnSofas.setVisible(false);
+					btnCamas.setVisible(false);
+					btnEspejos.setVisible(true);
+
+				} else if ("SILLAS".equals(itemSeleccionado)) {
+					btnEspejos.setVisible(false);
+					btnMuebleCasa.setVisible(false);
+					btnTv.setVisible(false);
+					btnSofas.setVisible(false);
+					btnCamas.setVisible(false);
+					btnSillas.setVisible(true);
+
+				} else if ("TV".equals(itemSeleccionado)) {
+					btnEspejos.setVisible(false);
+					btnSillas.setVisible(false);
+					btnMuebleCasa.setVisible(false);
+					btnSofas.setVisible(false);
+					btnCamas.setVisible(false);
+					btnTv.setVisible(true);
+
+				} else if ("SOFAS".equals(itemSeleccionado)) {
+					btnEspejos.setVisible(false);
+					btnSillas.setVisible(false);
+					btnTv.setVisible(false);
+					btnMuebleCasa.setVisible(false);
+					btnCamas.setVisible(false);
+					btnSofas.setVisible(true);
+
+				} else if ("CAMAS".equals(itemSeleccionado)) {
+					btnEspejos.setVisible(false);
+					btnSillas.setVisible(false);
+					btnTv.setVisible(false);
+					btnSofas.setVisible(false);
+					btnMuebleCasa.setVisible(false);
+					btnCamas.setVisible(true);
+
+				}else if ("TODO".equals(itemSeleccionado)) {
+					btnEspejos.setVisible(true);
+					btnSillas.setVisible(true);
+					btnTv.setVisible(true);
+					btnSofas.setVisible(true);
+					btnMuebleCasa.setVisible(true);
+					btnCamas.setVisible(true);
+				}
+			}
+				
+		});
+		
 		
 		btnMuebleCasa.addActionListener(new ActionListener() {
 					
@@ -176,7 +247,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("SILLAS");
+				VentanaSillas v3 = new VentanaSillas();
 			}
 		});
 
