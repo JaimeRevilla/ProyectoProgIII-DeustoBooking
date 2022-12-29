@@ -339,18 +339,19 @@ public class BaseDatos {
 	 * @param Connection con, el tipo de tipo String : recibimos la conexion con la base de datos y el tipo de tipo String
 	 * @return Devuelve la lista de productos
 	 */
-	public static ArrayList<Producto> obtenerProductoTipo(Connection con, String tipo){
+	public static ArrayList<Producto> obtenerProductoTipo(Connection con, String ti){
 		ArrayList<Producto> a = new ArrayList<>();
-		String sent = "SELECT * FROM Producto WHERE tipo = '" + tipo + "'";
+		String sent = "SELECT * FROM Producto WHERE tipo = '" + ti + "'";
 		System.out.println(sent);
 		Statement stmt = null;
 		Producto p = null;
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sent);
-			if (rs.next()) {
+			while (rs.next()) {
 				String nombre = rs.getString("nombre");
 				String marca = rs.getString("marca");
+				String tipo = rs.getString("tipo");
 				double precio = rs.getDouble("precio");
 				String tam = rs.getString("tamanyo");
 				int stock = rs.getInt("stock");
@@ -574,8 +575,8 @@ public class BaseDatos {
 		
 	}
 	
-	public static String getRuta(Connection con, String nombre) {
-		String sent = "SELECT ruta FROM Producto WHERE nombre = '"+nombre+"'";
+	public static String getRuta(Connection con, String tipo) {
+		String sent = "SELECT ruta FROM Producto WHERE tipo = '"+tipo+"'";
 		Statement stmt = null;
 		String ruta="";
 		try {

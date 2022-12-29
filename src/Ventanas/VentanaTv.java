@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -65,10 +68,13 @@ public class VentanaTv extends JFrame{
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		txtReloj = new JTextField();
-		txtReloj.setText("FECHA");
-		panelNorte.add(txtReloj);
-		txtReloj.setColumns(10);
+		JPanel panelNorteFecha = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelNorteFecha.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelNorte.add(panelNorteFecha);
+		
+		JLabel lblFecha = new JLabel("");
+		panelNorteFecha.add(lblFecha);
 		
 		lblNewLabel = new JLabel("MENU TVs");
 		panelNorte.add(lblNewLabel);
@@ -171,6 +177,34 @@ public class VentanaTv extends JFrame{
 //		});
 		
 		panelCentral.add(scrTV, BorderLayout.CENTER);
+
+		/*HILO DE FECHA*/
+		
+		Runnable r1 = new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+					long milis = System.currentTimeMillis();
+					Date fecha = new Date(milis);
+					String f = sdf.format(fecha);
+					lblFecha.setText("Fecha Actual: " + f);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					lblFecha.setText("");
+				}
+				
+				
+			}
+		};
+		Thread t1 = new Thread(r1);
+		t1.start();
+		
 		
 		setVisible(true);
 

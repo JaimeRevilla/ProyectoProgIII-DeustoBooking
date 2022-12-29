@@ -213,9 +213,9 @@ public class VentanaCesta extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				int fila = tablaCesta.rowAtPoint(e.getPoint());
-				String nombre = (String)model.getValueAt(fila, 2);
-				System.out.println(nombre);
-				String ruta = BaseDatos.getRuta(con, nombre);
+				String tipo = (String)model.getValueAt(fila, 3);
+				System.out.println(tipo);
+				String ruta = BaseDatos.getRuta(con, tipo);
 				System.out.println(ruta);
 				ImageIcon i = new ImageIcon(ruta);
 				System.out.println(i);

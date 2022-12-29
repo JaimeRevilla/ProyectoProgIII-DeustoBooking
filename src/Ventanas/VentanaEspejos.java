@@ -162,16 +162,16 @@ public class VentanaEspejos extends JFrame{
 		JLabel lblEspejoCuadrado = new JLabel("EspejoCuadrado:");
 		panel_7.add(lblEspejoCuadrado);
 		
-		int stock1 = BaseDatos.obtenerStockProducto(con, "Espejo4");
-		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Espejo4");
+		int stock1 = BaseDatos.obtenerStockProducto(con, "Espejo");
+		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
 		if (stock1 == 0) {
 			lblEspejoRectangular.setText("Espejos circulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
 			lblEspejoRectangular.setText("Espejos circulares" + ": " + "Unidades restantes: " + stock1 + " unidades    " + "Precio: " + precio1 + " euros");
 			
 		}
-		int stock2 = BaseDatos.obtenerStockProducto(con, "Espejo2");
-		double precio2 = BaseDatos.obtenerPrecioProducto(con,"Espejo2");
+		int stock2 = BaseDatos.obtenerStockProducto(con, "Espejo");
+		double precio2 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
 		if (stock1 == 0) {
 			lblEspejoCuadrado.setText("Espejos cuadrados" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
@@ -223,8 +223,8 @@ public class VentanaEspejos extends JFrame{
 		JLabel lblEspejoOvalado = new JLabel("EspejoOvalado:");
 		panel_11.add(lblEspejoOvalado);
 		
-		int stock3 = BaseDatos.obtenerStockProducto(con, "Espejo1");
-		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Espejo1");
+		int stock3 = BaseDatos.obtenerStockProducto(con, "Espejo");
+		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
 		if (stock3 == 0) {
 			lblEspejoCircular.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
@@ -232,8 +232,8 @@ public class VentanaEspejos extends JFrame{
 			
 		}
 		
-		int stock4 = BaseDatos.obtenerStockProducto(con, "Espejo3");
-		double precio4 = BaseDatos.obtenerPrecioProducto(con,"Espejo3");
+		int stock4 = BaseDatos.obtenerStockProducto(con, "Espejo");
+		double precio4 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
 		if (stock4 == 0) {
 			lblEspejoOvalado.setText("Espejos ovalado" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
 		}else {
