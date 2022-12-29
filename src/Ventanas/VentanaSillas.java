@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,6 +39,7 @@ import javax.swing.JTable;
 public class VentanaSillas extends JFrame{
 	
 	private Connection con;
+	
 
 	private JTextField txtReloj;
 	private JButton btnAgregar;
@@ -116,6 +118,7 @@ public class VentanaSillas extends JFrame{
 		JButton btnAgregar = new JButton("añadir");
 		JSpinner spnCant = new JSpinner();
 		ArrayList<Producto> sillas = BaseDatos.obtenerProducto(con, "silla");
+		
 		System.out.println(sillas);
 
 		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};

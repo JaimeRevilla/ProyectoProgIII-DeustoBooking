@@ -382,7 +382,7 @@ public class BaseDatos {
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sent);
-			if (rs.next()) {
+			while (rs.next()) {
 				String nombres = rs.getString("nombre");
 				String marca = rs.getString("marca");
 				String tipo = rs.getString("tipo");
@@ -396,7 +396,7 @@ public class BaseDatos {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
+			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL PRODUCTO", e.getMessage()));
 			e.printStackTrace();
 		}
 		return a;	

@@ -94,10 +94,6 @@ public class VentanaCesta extends JFrame {
 		panelCentro.add(panelFoto);
 		
 		
-		modeloFotos = new DefaultTableModel();
-		tablaFotos = new JTable(modeloFotos);
-		panelFoto.add(tablaFotos);
-		
 		
 		
 		JPanel panel = new JPanel();

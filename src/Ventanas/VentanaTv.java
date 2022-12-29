@@ -2,33 +2,60 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import Clases.BaseDatos;
+import Clases.Carrito;
+import Clases.Producto;
+
 import javax.swing.JLabel;
+import javax.swing.JTable;
 
 public class VentanaTv extends JFrame{
-	private JTextField txtMuebleCasa;
-	private JTextField txtEspejos;
-	private JTextField txtSillas;
-	private JTextField txtTelevisiones;
-	private JTextField txtSofas;
-	private JTextField txtCamas;
+	
+	private Connection con;
+	
+
 	private JTextField txtReloj;
 	private JButton btnAgregar;
 	private JLabel lblNewLabel;
+	private JPanel panelCentral;
+	
+	private JTable tablaTV;
+	public static DefaultTableModel modelTV;
+	private JScrollPane scrTV;
+	
 	public VentanaTv() {
 		
 		setBounds(250, 225, 1000, 508);
+		
+		con = BaseDatos.initBD("data/DeustoIkea.db");
+
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -43,7 +70,7 @@ public class VentanaTv extends JFrame{
 		panelNorte.add(txtReloj);
 		txtReloj.setColumns(10);
 		
-		lblNewLabel = new JLabel("MENU TV");
+		lblNewLabel = new JLabel("MENU TVs");
 		panelNorte.add(lblNewLabel);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
@@ -58,46 +85,12 @@ public class VentanaTv extends JFrame{
 		btnAgregar = new JButton("AGREGAR A CARRITO");
 		panelSur.add(btnAgregar);
 		
-		JPanel panelCentro = new JPanel();
-		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
+		panelCentral = new JPanel();
 		
-		txtMuebleCasa = new JTextField();
-		txtMuebleCasa.setText("\"\"");
-		panelCentro.add(txtMuebleCasa);
-		txtMuebleCasa.setColumns(10);
 		
-		txtEspejos = new JTextField();
-		txtEspejos.setText("\"\"");
-		panelCentro.add(txtEspejos);
-		txtEspejos.setColumns(10);
 		
-		txtSillas = new JTextField();
-		txtSillas.setText("\"\"");
-		panelCentro.add(txtSillas);
-		txtSillas.setColumns(10);
 		
-		txtTelevisiones = new JTextField();
-		txtTelevisiones.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTelevisiones.setText("\"\"");
-		panelCentro.add(txtTelevisiones);
-		txtTelevisiones.setColumns(10);
-		
-		txtSofas = new JTextField();
-		txtSofas.setText("\"\"");
-		panelCentro.add(txtSofas);
-		txtSofas.setColumns(10);
-		
-		txtCamas = new JTextField();
-		txtCamas.setText("\"\"");
-		panelCentro.add(txtCamas);
-		txtCamas.setColumns(10);
-		
-		JPanel panelCentroOeste = new JPanel();
-		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		panelCentroOeste.add(comboBox_1);
+		getContentPane().add(panelCentral, BorderLayout.CENTER);
 		
 		btnCarrito.addActionListener(new ActionListener() {
 			
@@ -119,9 +112,110 @@ public class VentanaTv extends JFrame{
 				dispose();
 			}
 		});
+		
+		
+		
+		JButton btnAgregar = new JButton("añadir");
+		JSpinner spnCant = new JSpinner();
+		ArrayList<Producto> tvs = BaseDatos.obtenerProducto(con, "Tv");
+		
+		System.out.println(tvs);
+
+		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};
+		modelTV = new DefaultTableModel();
+		modelTV.setColumnIdentifiers(titulos);
+		for(Producto p: tvs) {
+			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), spnCant, btnAgregar};
+			modelTV.addRow(datos);
+		}
+		
+		
+		//DUDA
+		//TableCellRenderer tableRenderer;
+		//tablaSillas = new JTable(new JTableButtonModel());
+		//tableRenderer = tablaSillas.getDefaultRenderer(JButton.class);
+		//tablaSillas.setDefaultRenderer(JButton.class,  new JTableButtonRenderer(tableRenderer));
+		tablaTV = new JTable(modelTV);
+		scrTV = new JScrollPane(tablaTV);
+		
+		panelCentral.add(tablaTV);
+		
+		tablaTV.addMouseListener(new MouseAdapter() {
+		
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int fila = tablaTV.rowAtPoint(e.getPoint());
+				int columna = tablaTV.columnAtPoint(e.getPoint());
+				if (columna == 10) { //La del botón
+					//Código relacionado con la acción del botón
+					System.out.println("ESTOY DENTRO PERROS ");
+				}
+		
+			}
+		});
+		
+		
+//		tablaSillas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+//			
+//			@Override
+//			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+//					int row, int column) {
+//				if (row == table.getModel().getRowCount()) {
+//		            return new JButton("Agregar");
+//		        } else {
+//		            setBackground(new Color(0xffffff));
+//		            return this;
+//		        }
+//			}
+//		});
+		
+		panelCentral.add(scrTV, BorderLayout.CENTER);
+		
 		setVisible(true);
 
+
 	}
+	
+	//DUDA
+//	class JTableButtonRenderer implements TableCellRenderer {
+//		   private TableCellRenderer defaultRenderer;
+//		   public JTableButtonRenderer(TableCellRenderer renderer) {
+//		      defaultRenderer = renderer;
+//		   }
+//		   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//		      if(value instanceof Component)
+//		         return (Component)value;
+//		         return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//		   }
+//	}
+//	
+//	
+//	class JTableButtonModel extends AbstractTableModel {
+//		private Object[][] rows = {{"CODIGO"},{"TIPO"},{"MARCA"},{"TAMANYO"},{"PRECIO"},{"STOCK"},{"IMAGEN"},{"CANTIDAD"},{"AÑADIR"}};
+//		private String[] columns = {"AÑadir","CANTIDAD","MARCA","TAMANYO","PRECIO","STOCK","IMAGEN","CANTIDAD","AÑADIR"};
+//		
+//		public String getColumnName(int column) {
+//			return columns[column];
+//		}
+//		public int getRowCount() {
+//			return rows.length;
+//		}
+//		public int getColumnCount() {
+//		      return columns.length;
+//		}
+//		public Object getValueAt(int row, int column) {
+//			return rows[row][column];
+//		}
+//		public boolean isCellEditable(int row, int column) {
+//			return false;
+//		}
+//		public Class getColumnClass(int column) {
+//		      return getValueAt(0, column).getClass();
+//		}
+//	}
+
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

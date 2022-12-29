@@ -1,49 +1,61 @@
 package Ventanas;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import java.awt.Component;
-import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.regex.Pattern;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
+import Clases.BaseDatos;
+import Clases.Carrito;
+import Clases.Producto;
 
-public class VentanaMuebleCasa extends JFrame {
-	private JTextField txtMuebleCasa;
-	private JTextField txtEspejos;
-	private JTextField txtSillas;
-	private JTextField txtTelevisiones;
-	private JTextField txtSofas;
-	private JTextField txtCamas;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+
+public class VentanaMuebleCasa extends JFrame{
+	
+	private Connection con;
+	
+
+	private JTextField txtReloj;
 	private JButton btnAgregar;
-	private JLabel lblMenucasa;
-	private JLabel lblFecha;
-	private JPanel panelNorteFecha;
-	private JPanel panelNorteCentro;
-	private JPanel panelNorteCarrito;
+	private JLabel lblNewLabel;
+	private JPanel panelCentral;
+	
+	private JTable tablaArmarios;
+	public static DefaultTableModel modelArmarios;
+	private JScrollPane scrArmarios;
+	
 	public VentanaMuebleCasa() {
 		
 		setBounds(250, 225, 1000, 508);
+		
+		con = BaseDatos.initBD("data/DeustoIkea.db");
+
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -53,83 +65,40 @@ public class VentanaMuebleCasa extends JFrame {
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		panelNorteFecha = new JPanel();
-		panelNorte.add(panelNorteFecha);
+		txtReloj = new JTextField();
+		txtReloj.setText("FECHA");
+		panelNorte.add(txtReloj);
+		txtReloj.setColumns(10);
 		
-		lblFecha = new JLabel("FECHA");
-		panelNorteFecha.add(lblFecha);
-		
-		panelNorteCentro = new JPanel();
-		panelNorte.add(panelNorteCentro);
-		
-		lblMenucasa = new JLabel("MENU MUEBLES DE CASA");
-		panelNorteCentro.add(lblMenucasa);
-		
-		panelNorteCarrito = new JPanel();
-		panelNorte.add(panelNorteCarrito);
+		lblNewLabel = new JLabel("MENU ARMARIOS");
+		panelNorte.add(lblNewLabel);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panelNorteCarrito.add(btnCarrito);
-		
-		
-		btnCarrito.addActionListener(new ActionListener() {
-					
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
+		panelNorte.add(btnCarrito);
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
-		
 		panelSur.add(btnAtras);
 		
 		btnAgregar = new JButton("AGREGAR A CARRITO");
 		panelSur.add(btnAgregar);
 		
-		JPanel panelCentro = new JPanel();
-		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
+		panelCentral = new JPanel();
 		
-		txtMuebleCasa = new JTextField();
-		txtMuebleCasa.setText("\"\"");
-		panelCentro.add(txtMuebleCasa);
-		txtMuebleCasa.setColumns(10);
 		
-		txtEspejos = new JTextField();
-		txtEspejos.setText("\"\"");
-		panelCentro.add(txtEspejos);
-		txtEspejos.setColumns(10);
 		
-		txtSillas = new JTextField();
-		txtSillas.setText("\"\"");
-		panelCentro.add(txtSillas);
-		txtSillas.setColumns(10);
 		
-		txtTelevisiones = new JTextField();
-		txtTelevisiones.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTelevisiones.setText("\"\"");
-		panelCentro.add(txtTelevisiones);
-		txtTelevisiones.setColumns(10);
+		getContentPane().add(panelCentral, BorderLayout.CENTER);
 		
-		txtSofas = new JTextField();
-		txtSofas.setText("\"\"");
-		panelCentro.add(txtSofas);
-		txtSofas.setColumns(10);
-		
-		txtCamas = new JTextField();
-		txtCamas.setText("\"\"");
-		panelCentro.add(txtCamas);
-		txtCamas.setColumns(10);
-		
-		JPanel panelCentroOeste = new JPanel();
-		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		panelCentroOeste.add(comboBox_1);
+		btnCarrito.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
 		
 		
 		btnAgregar.addActionListener(new ActionListener() {
@@ -144,35 +113,109 @@ public class VentanaMuebleCasa extends JFrame {
 			}
 		});
 		
-		/*HILO DE FECHA*/
-		Runnable r1 = new Runnable() {
+		
+		
+		JButton btnAgregar = new JButton("añadir");
+		JSpinner spnCant = new JSpinner();
+		ArrayList<Producto> armarios = BaseDatos.obtenerProducto(con, "Armario");
+		
+		System.out.println(armarios);
 
+		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};
+		modelArmarios = new DefaultTableModel();
+		modelArmarios.setColumnIdentifiers(titulos);
+		for(Producto p: armarios) {
+			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), spnCant, btnAgregar};
+			modelArmarios.addRow(datos);
+		}
+		
+		
+		//DUDA
+		//TableCellRenderer tableRenderer;
+		//tablaSillas = new JTable(new JTableButtonModel());
+		//tableRenderer = tablaSillas.getDefaultRenderer(JButton.class);
+		//tablaSillas.setDefaultRenderer(JButton.class,  new JTableButtonRenderer(tableRenderer));
+		tablaArmarios = new JTable(modelArmarios);
+		scrArmarios = new JScrollPane(tablaArmarios);
+		
+		panelCentral.add(tablaArmarios);
+		
+		tablaArmarios.addMouseListener(new MouseAdapter() {
+		
 			@Override
-			public void run() {
-				while (true) {
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-					long milis = System.currentTimeMillis();
-					Date fecha = new Date(milis);
-					String f = sdf.format(fecha);
-					lblFecha.setText("Fecha Actual: " + f);
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					lblFecha.setText("");
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int fila = tablaArmarios.rowAtPoint(e.getPoint());
+				int columna = tablaArmarios.columnAtPoint(e.getPoint());
+				if (columna == 10) { //La del botón
+					//Código relacionado con la acción del botón
+					System.out.println("ESTOY DENTRO PERROS ");
 				}
-				
-				
+		
 			}
-		};
-		Thread t1 = new Thread(r1);
-		t1.start();
+		});
+		
+		
+//		tablaSillas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+//			
+//			@Override
+//			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+//					int row, int column) {
+//				if (row == table.getModel().getRowCount()) {
+//		            return new JButton("Agregar");
+//		        } else {
+//		            setBackground(new Color(0xffffff));
+//		            return this;
+//		        }
+//			}
+//		});
+		
+		panelCentral.add(scrArmarios, BorderLayout.CENTER);
 		
 		setVisible(true);
 
+
 	}
+	
+	//DUDA
+//	class JTableButtonRenderer implements TableCellRenderer {
+//		   private TableCellRenderer defaultRenderer;
+//		   public JTableButtonRenderer(TableCellRenderer renderer) {
+//		      defaultRenderer = renderer;
+//		   }
+//		   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//		      if(value instanceof Component)
+//		         return (Component)value;
+//		         return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//		   }
+//	}
+//	
+//	
+//	class JTableButtonModel extends AbstractTableModel {
+//		private Object[][] rows = {{"CODIGO"},{"TIPO"},{"MARCA"},{"TAMANYO"},{"PRECIO"},{"STOCK"},{"IMAGEN"},{"CANTIDAD"},{"AÑADIR"}};
+//		private String[] columns = {"AÑadir","CANTIDAD","MARCA","TAMANYO","PRECIO","STOCK","IMAGEN","CANTIDAD","AÑADIR"};
+//		
+//		public String getColumnName(int column) {
+//			return columns[column];
+//		}
+//		public int getRowCount() {
+//			return rows.length;
+//		}
+//		public int getColumnCount() {
+//		      return columns.length;
+//		}
+//		public Object getValueAt(int row, int column) {
+//			return rows[row][column];
+//		}
+//		public boolean isCellEditable(int row, int column) {
+//			return false;
+//		}
+//		public Class getColumnClass(int column) {
+//		      return getValueAt(0, column).getClass();
+//		}
+//	}
+
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -186,5 +229,4 @@ public class VentanaMuebleCasa extends JFrame {
 			}
 		});
 	}
-
 }

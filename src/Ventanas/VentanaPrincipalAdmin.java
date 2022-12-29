@@ -164,10 +164,10 @@ public class VentanaPrincipalAdmin extends JFrame{
 		panelCentroOeste.add(comboBox_1);
 		
 		btnMuebleCasa.addActionListener(new ActionListener() {
-					
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("MUEBLE CASA");
+				VentanaMuebleCasa v1 = new VentanaMuebleCasa();
 			}
 		});
 		
@@ -175,7 +175,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("ESPEJO");
+				VentanaEspejos v2 = new VentanaEspejos("espejos");
 			}
 		});
 		
@@ -183,7 +183,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("SILLAS");
+				VentanaSillas v3 = new VentanaSillas();
 			}
 		});
 
@@ -191,7 +191,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("TV");
+				VentanaTv v4 = new VentanaTv();
 			}
 		});
 
@@ -199,7 +199,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("SOFAS");
+				VentanaSofas v5 = new VentanaSofas();
 			}
 		});
 
@@ -207,7 +207,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v1 = new VentanaEspejos("CAMAS");
+				VentanaCamas v6 = new VentanaCamas();
 			}
 		});
 		
