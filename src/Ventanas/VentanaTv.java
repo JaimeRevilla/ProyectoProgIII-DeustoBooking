@@ -144,7 +144,6 @@ public class VentanaTv extends JFrame{
 		tablaTV = new JTable(modelTV);
 		scrTV = new JScrollPane(tablaTV);
 		
-		panelCentral.add(tablaTV);
 		
 		tablaTV.addMouseListener(new MouseAdapter() {
 		

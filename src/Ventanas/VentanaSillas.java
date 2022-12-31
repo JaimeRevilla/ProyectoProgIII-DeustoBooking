@@ -120,48 +120,49 @@ public class VentanaSillas extends JFrame{
 		});
 		
 		
-		
-		JButton btnAgregar = new JButton("añadir");
-		JSpinner spnCant = new JSpinner();
+//		COMENTADO
+//		JButton btnAgregar = new JButton("añadir");
+//		JSpinner spnCant = new JSpinner();
 		ArrayList<Producto> sillas = BaseDatos.obtenerProducto(con, "silla");
 		
 		System.out.println(sillas);
 
-		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};
+		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "", ""};
 		modelSill = new DefaultTableModel();
 		modelSill.setColumnIdentifiers(titulos);
 		for(Producto p: sillas) {
-			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), spnCant, btnAgregar};
+			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), "Cantidad", "Añadir"};
 			modelSill.addRow(datos);
 		}
 		
 		
 		//DUDA
-		//TableCellRenderer tableRenderer;
-		//tablaSillas = new JTable(new JTableButtonModel());
-		//tableRenderer = tablaSillas.getDefaultRenderer(JButton.class);
-		//tablaSillas.setDefaultRenderer(JButton.class,  new JTableButtonRenderer(tableRenderer));
+//		TableCellRenderer tableRenderer;
+//		tablaSillas = new JTable(new JTableButtonModel());
+//		tableRenderer = tablaSillas.getDefaultRenderer(JButton.class);
+//		tablaSillas.setDefaultRenderer(JButton.class,  new JTableButtonRenderer(tableRenderer));
 		tablaSillas = new JTable(modelSill);
 		scrSillas = new JScrollPane(tablaSillas);
 		
-		panelCentral.add(tablaSillas);
-		
-		tablaSillas.addMouseListener(new MouseAdapter() {
-		
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				int fila = tablaSillas.rowAtPoint(e.getPoint());
-				int columna = tablaSillas.columnAtPoint(e.getPoint());
-				if (columna == 10) { //La del botón
-					//Código relacionado con la acción del botón
-					System.out.println("ESTOY DENTRO PERROS ");
-				}
-		
-			}
-		});
 		
 		
+		
+		
+//		tablaSillas.addMouseListener(new MouseAdapter() {
+//		
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				int fila = tablaSillas.rowAtPoint(e.getPoint());
+//				int columna = tablaSillas.columnAtPoint(e.getPoint());
+//				if (columna == 10) { //La del botón
+//					//Código relacionado con la acción del botón
+//				}
+//		
+//			}
+//		});
+//		
+//		
 //		tablaSillas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 //			
 //			@Override

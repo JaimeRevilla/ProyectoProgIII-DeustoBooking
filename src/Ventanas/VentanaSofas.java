@@ -144,7 +144,6 @@ public class VentanaSofas extends JFrame{
 		tablaSofas = new JTable(modelSofa);
 		scrSofa = new JScrollPane(tablaSofas);
 		
-		panelCentral.add(tablaSofas);
 		
 		tablaSofas.addMouseListener(new MouseAdapter() {
 		

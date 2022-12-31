@@ -144,7 +144,6 @@ public class VentanaMuebleCasa extends JFrame{
 		tablaArmarios = new JTable(modelArmarios);
 		scrArmarios = new JScrollPane(tablaArmarios);
 		
-		panelCentral.add(tablaArmarios);
 		
 		tablaArmarios.addMouseListener(new MouseAdapter() {
 		

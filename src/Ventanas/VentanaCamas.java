@@ -145,7 +145,6 @@ public class VentanaCamas extends JFrame{
 		tablaCamas = new JTable(modelCamas);
 		scrCamas = new JScrollPane(tablaCamas);
 		
-		panelCentral.add(tablaCamas);
 		
 		tablaCamas.addMouseListener(new MouseAdapter() {
 		
