@@ -44,7 +44,6 @@ public class VentanaSillas extends JFrame{
 	private Connection con;
 	
 
-	private JTextField txtReloj;
 	private JButton btnAgregar;
 	private JLabel lblNewLabel;
 	private JPanel panelCentral;

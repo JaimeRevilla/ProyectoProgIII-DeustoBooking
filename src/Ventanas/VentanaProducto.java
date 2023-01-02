@@ -41,13 +41,15 @@ public class VentanaProducto extends JFrame{
 	
 	private Connection con;
 	
-	private PanelConFondo panelFoto;
-	private JTable tablaFotos;
-	public static DefaultTableModel modeloFotos;
-	
-	private DefaultTableModel modelProducto;
+	private DefaultTableModel modeloProducto;
 	private JTable tablaProducto;
 	private JScrollPane scrProducto;
+	
+	
+	private PanelConFondo panelFoto;
+	public static DefaultTableModel modeloFotos;
+	
+	
 
 	public VentanaProducto() {
 		
@@ -59,12 +61,6 @@ public class VentanaProducto extends JFrame{
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		
-		JSplitPane panelCentro = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true);
-		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		
-		panelFoto = new PanelConFondo(null);
-		panelCentro.add(panelFoto);
 		
 		JPanel panelNorte = new JPanel();
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
@@ -93,39 +89,36 @@ public class VentanaProducto extends JFrame{
 		JButton btnAtras = new JButton("ATRAS");
 		panelSur.add(btnAtras);
 		
+		JPanel panelCentro = new JPanel();
+		getContentPane().add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		
+		panelCentro.add(scrProducto);
+		scrProducto.add(tablaProducto);
+		
+		panelFoto = new PanelConFondo(null);
+		panelCentro.add(panelFoto);
+		
 		
 //		JButton btnAñadir = new JButton("AÑADIR");
 		JSpinner spCantidad = new JSpinner();
 		
-		modelProducto = new DefaultTableModel();
-		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
-		modelProducto.setColumnIdentifiers(titulos);
 		ArrayList<Producto> productos = BaseDatos.obtenerProducto(con, "Producto");
+		
+		
+		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
+		modeloProducto = new DefaultTableModel();
+		modeloProducto.setColumnIdentifiers(titulos);
 		for(Producto p : productos) {
 			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), spCantidad, new JButton("AÑADIR")};
-			modelProducto.addRow(datos);
+			modeloProducto.addRow(datos);
 		}
 		
-		tablaProducto = new JTable(modelProducto);
+		tablaProducto = new JTable(modeloProducto);
 		scrProducto = new JScrollPane(tablaProducto);
-		
-		panelCentro.add(scrProducto);
-		
-		
-		
-		tablaProducto.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int fila = tablaProducto.rowAtPoint(e.getPoint());
-				String tipo = (String) modelProducto.getValueAt(fila, 2);
-				String ruta = BaseDatos.getRuta(con, tipo);
-				ImageIcon imagen = new ImageIcon(ruta);
-				panelFoto.setImagen(imagen.getImage());
-				panelFoto.repaint();
 				
-			}
-		});
+		
 		
 		setVisible(true);
 		
