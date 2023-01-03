@@ -43,6 +43,7 @@ public class VentanaSillas extends JFrame{
 	
 	private Connection con;
 	
+	private JPanel panelFoto;
 
 	private JButton btnAgregar;
 	private JLabel lblNewLabel;
@@ -90,7 +91,7 @@ public class VentanaSillas extends JFrame{
 		btnAgregar = new JButton("AGREGAR A CARRITO");
 		panelSur.add(btnAgregar);
 		
-		panelCentral = new JPanel();
+		panelCentral = new JPanel(new GridLayout(2, 1));
 		
 		
 		
@@ -175,8 +176,9 @@ public class VentanaSillas extends JFrame{
 //		        }
 //			}
 //		});
-		
-		panelCentral.add(scrSillas, BorderLayout.CENTER);
+		panelFoto = new JPanel();
+		panelCentral.add(scrSillas);
+		panelCentral.add(panelFoto);
 
 		/*HILO DE FECHA*/
 		
