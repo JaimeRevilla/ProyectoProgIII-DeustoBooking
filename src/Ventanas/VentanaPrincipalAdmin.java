@@ -112,7 +112,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 		btnStock.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaStock v1 = new VentanaStock();
+//				VentanaStock v1 = new VentanaStock();
 			}
 		});
 		panelSur.add(btnStock);
@@ -175,7 +175,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v2 = new VentanaEspejos("espejos");
+				VentanaEspejos v2 = new VentanaEspejos();
 			}
 		});
 		

@@ -86,8 +86,15 @@ public class VentanaSillas extends JFrame{
 		lblNewLabel.setBackground(new Color(100, 149, 237));
 		panelNorte.add(lblNewLabel);
 		
-		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panelNorte.add(btnCarrito);
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(100, 149, 237));
+		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.RIGHT);
+		panelNorte.add(panel_2);
+		
+		JButton btnCarrito_1 = new JButton("");
+		btnCarrito_1.setIcon(new ImageIcon("imagenes/pngegg.png"));
+		panel_2.add(btnCarrito_1);
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
@@ -103,14 +110,6 @@ public class VentanaSillas extends JFrame{
 		
 		
 		getContentPane().add(panelCentral, BorderLayout.CENTER);
-		
-		btnCarrito.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
 		
 
 		

@@ -2,57 +2,65 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import Clases.BaseDatos;
-import Clases.Espejo;
-import Clases.Principal;
+import Clases.Carrito;
 import Clases.Producto;
-import Clases.TipoEspejo;
-import java.awt.FlowLayout;
-import javax.swing.ImageIcon;
+
+import javax.swing.JLabel;
+import javax.swing.JTable;
 
 public class VentanaEspejos extends JFrame{
+	
+	private Connection con;
+	
+	private PanelConFondo panelFoto;
 
 	private JButton btnAgregar;
-	private JButton btnEspejoCircular;
-	private JRadioButton rbEspejoRectangular;
-	private JRadioButton rbEspejoCuadrado;
-	private JRadioButton rbEspejoOvalado;
-	private JRadioButton rbEspejoCircular;
-	public static int cod;
-	public static String nombre;
+	private JLabel lblNewLabel;
+	private JPanel panelCentral;
 	
-	public static String tipoEspejo;
+	private JTable tablaEspejos;
+	public static JTableButtonModel modelespejos;
+	private JScrollPane scrEspejos;
 	
-	public VentanaEspejos(String nombreProducto) {
+	private ArrayList<Producto> al;
+	
+	public VentanaEspejos() {
 		
 		setBounds(250, 225, 1000, 508);
 		
-		Connection con = BaseDatos.initBD("data/DeustoIkea.db");
-		
-		BaseDatos.crearTablasUsuario(con);
+		con = BaseDatos.initBD("data/DeustoIkea.db");
 
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
@@ -60,10 +68,12 @@ public class VentanaEspejos extends JFrame{
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
-		panelNorte.setLayout(new GridLayout(1, 3, 0, 0));
+		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JPanel panelNorteFecha = new JPanel();
+		panelNorteFecha.setBackground(new Color(100, 149, 237));
 		FlowLayout flowLayout = (FlowLayout) panelNorteFecha.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panelNorte.add(panelNorteFecha);
@@ -71,238 +81,95 @@ public class VentanaEspejos extends JFrame{
 		JLabel lblFecha = new JLabel("");
 		panelNorteFecha.add(lblFecha);
 		
-		JPanel panelNorteCentro = new JPanel();
-		panelNorte.add(panelNorteCentro);
+		lblNewLabel = new JLabel("MENU ESPEJOS");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBackground(new Color(100, 149, 237));
+		panelNorte.add(lblNewLabel);
 		
-		JLabel lblMenu = new JLabel("MENU "+nombreProducto);
-		panelNorteCentro.add(lblMenu);
-		
-		JPanel panel_14 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_14.getLayout();
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(100, 149, 237));
+		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		panelNorte.add(panel_14);
+		panelNorte.add(panel_2);
 		
-		JButton btnCarrito = new JButton("");
-		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
-		panel_14.add(btnCarrito);
-		
-		btnCarrito.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
+		JButton btnCarrito_1 = new JButton("");
+		btnCarrito_1.setIcon(new ImageIcon("imagenes/pngegg.png"));
+		panel_2.add(btnCarrito_1);
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
 		panelSur.add(btnAtras);
-		
-		btnAgregar = new JButton("AGREGAR A CARRITO");
-		panelSur.add(btnAgregar);
-		
-		JPanel panelCentro = new JPanel();
-		getContentPane().add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(1, 3, 1,3));
-		
-		JPanel panelCentroIzquierda = new JPanel();
-		panelCentro.add(panelCentroIzquierda);
-		panelCentroIzquierda.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JPanel panel = new JPanel();
-		panelCentroIzquierda.add(panel);
-		
-		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
-		
-		//DUDA
-		/*JButton btnEspejoRectangular = new JButton("EspejoRectangular");
-		btnEspejoRectangular.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<Producto> a = BaseDatos.obtenerProductoTipo(con,"ESPEJO");
-				for(Producto p: a) {
-					try {
-						BaseDatos.restarUnidadesAProducto(con, nombreProducto, p.getStock());
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
-		panel_2.add(btnEspejoRectangular);
-		*/
-		rbEspejoRectangular = new JRadioButton("Espejo Rectangular");
-		panel_2.add(rbEspejoRectangular);
-		
-		
-		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
-		
-		JLabel lblEspejoRectangular = new JLabel("EspejoRectangular:");
-		panel_3.add(lblEspejoRectangular);
-		
-		JPanel panel_1 = new JPanel();
-		panelCentroIzquierda.add(panel_1);
-		
-		JPanel panel_6 = new JPanel();
-		panel_1.add(panel_6);
-		
-		/*JButton btnEspejoCuadrado = new JButton("EspejoCuadrado");
-		panel_6.add(btnEspejoCuadrado);*/
-		rbEspejoCuadrado = new JRadioButton("Espejo Cuadrado");
-		panel_6.add(rbEspejoCuadrado);
-		
-		
-		JPanel panel_7 = new JPanel();
-		panel_1.add(panel_7);
-		
-		JLabel lblEspejoCuadrado = new JLabel("EspejoCuadrado:");
-		panel_7.add(lblEspejoCuadrado);
-		
-		int stock1 = BaseDatos.obtenerStockProducto(con, "Espejo");
-		double precio1 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
-		if (stock1 == 0) {
-			lblEspejoRectangular.setText("Espejos circulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
-		}else {
-			lblEspejoRectangular.setText("Espejos circulares" + ": " + "Unidades restantes: " + stock1 + " unidades    " + "Precio: " + precio1 + " euros");
-			
-		}
-		int stock2 = BaseDatos.obtenerStockProducto(con, "Espejo");
-		double precio2 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
-		if (stock1 == 0) {
-			lblEspejoCuadrado.setText("Espejos cuadrados" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
-		}else {
-			lblEspejoCuadrado.setText("Espejos cuadrados" + ": " + "Unidades restantes: " + stock2 + " unidades    " + "Precio: " + precio2 + " euros");
-			
-		}
-		
-		/**
-		 * ESPEJOS CIRCULARES
-		 */
-		JPanel panelCentroCentroDerecha = new JPanel();
-		panelCentro.add(panelCentroCentroDerecha);
-		panelCentroCentroDerecha.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JPanel panel_4 = new JPanel();
-		panelCentroCentroDerecha.add(panel_4);
-		
-		JPanel panel_8 = new JPanel();
-		panel_4.add(panel_8);
-		
-		/*btnEspejoCircular = new JButton("EspejoCircular");
-		panel_8.add(btnEspejoCircular);*/
-		
-		rbEspejoOvalado = new JRadioButton("Espejo Ovalado");
-		panel_8.add(rbEspejoOvalado);
 	
 		
-		JPanel panel_9 = new JPanel();
-		panel_4.add(panel_9);
 		
-		JLabel lblEspejoCircular = new JLabel("EspejoCircular:");
-		panel_9.add(lblEspejoCircular);
-		
-		JPanel panel_5 = new JPanel();
-		panelCentroCentroDerecha.add(panel_5);
-		
-		JPanel panel_10 = new JPanel();
-		panel_5.add(panel_10);
-		
-		/*JButton btnOvalado = new JButton("EspejoOvalado");
-		panel_10.add(btnOvalado);*/
-		
-		rbEspejoCircular = new JRadioButton("Espejo Circular");
-		panel_10.add(rbEspejoCircular);
-		
-		JPanel panel_11 = new JPanel();
-		panel_5.add(panel_11);
-		
-		JLabel lblEspejoOvalado = new JLabel("EspejoOvalado:");
-		panel_11.add(lblEspejoOvalado);
-		
-		int stock3 = BaseDatos.obtenerStockProducto(con, "Espejo");
-		double precio3 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
-		if (stock3 == 0) {
-			lblEspejoCircular.setText("Espejos rectangulares" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
-		}else {
-			lblEspejoCircular.setText("Espejos rectangulares" + ": " + "Unidades restantes: " + stock3 + " unidades    " + "Precio: " + precio3 + " euros");
-			
-		}
-		
-		int stock4 = BaseDatos.obtenerStockProducto(con, "Espejo");
-		double precio4 = BaseDatos.obtenerPrecioProducto(con,"Espejo");
-		if (stock4 == 0) {
-			lblEspejoOvalado.setText("Espejos ovalado" + ":" + "\n" + "NO HAY NINGUNA UNIDAD EN STOCK");
-		}else {
-			lblEspejoOvalado.setText("Espejos ovalado" + ": " + "Unidades restantes: " + stock4 + " unidades    " + "Precio: " + precio4 + " euros");
-			
-		}
+		panelCentral = new JPanel(new GridLayout(2, 1));
 		
 		
-//		ArrayList<Producto> a = BaseDatos.obtenerProductoTipo(con,"ESPEJO");
-//		for(Producto p: a) {
-//			JLabel l = new JLabel(p.toString());
-//			panelCentro.add(l);
-//		}
-		JPanel panelCentroOeste = new JPanel();
-		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panelCentroOeste.add(comboBox_1);
+		
+		getContentPane().add(panelCentral, BorderLayout.CENTER);
 		
 
-		btnAgregar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(rbEspejoCuadrado.isSelected()) {
-					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.CUADRADO.toString());
-					if(al.size()>0) {
-						VentanaInicioSesion.carrito.add(al.get(0));
-						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), al.get(0).getStock());
-						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
-						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
-					}
-				}
-				if(rbEspejoRectangular.isSelected()) {
-					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.RECTANGULAR.toString());
-					if(al.size()>0) {
-						VentanaInicioSesion.carrito.add(al.get(0));
-						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
-						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
-						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
-					}
-				}
-				if(rbEspejoOvalado.isSelected()) {
-					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.OVALADO.toString());
-					if(al.size()>0) {
-						VentanaInicioSesion.carrito.add(al.get(0));
-						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
-						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
-						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
-					}
-				}
-				if(rbEspejoCircular.isSelected()) {
-					ArrayList<Producto> al = BaseDatos.obtenerProductoTipo(con, TipoEspejo.CIRCULAR.toString());
-					if(al.size()>0) {
-						VentanaInicioSesion.carrito.add(al.get(0));
-						BaseDatos.restarUnidadesAProducto(con, al.get(0).getNombre(), 1);
-						BaseDatos.insertarCarrito(con, VentanaInicioSesion.dni, al.get(0).getCod(), al.get(0).getNombre(), al.get(0).getTipo(), al.get(0).getMarca(), al.get(0).getTamanyo(), al.get(0).getPrecio());
-						VentanaInicioSesion.mapa.put(VentanaInicioSesion.dni, al);
-					}
-				}
-			}
-		});
 		
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
+
+		modelespejos = new JTableButtonModel();
 		
+		
+		tablaEspejos = new JTable(modelespejos);
+		TableCellRenderer tbcr = tablaEspejos.getDefaultRenderer(JButton.class);
+		tablaEspejos.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tbcr));
+		scrEspejos = new JScrollPane(tablaEspejos);
+		panelCentral.add(scrEspejos);
+		
+		JPanel panelAbajo = new JPanel();
+		panelCentral.add(panelAbajo);
+		panelAbajo.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(100, 149, 237));
+		panelAbajo.add(panel);
+		
+		
+		
+		panelFoto = new PanelConFondo(null);
+		panelFoto.setBackground(new Color(100, 149, 237));
+		panelAbajo.add(panelFoto);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(100, 149, 237));
+		panelAbajo.add(panel_1);
+		
+
+		
+		
+		
+		tablaEspejos.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int fila = tablaEspejos.rowAtPoint(e.getPoint());
+				String tipo = (String) modelespejos.getValueAt(fila, 2);
+				String ruta = BaseDatos.getRuta(con, tipo);
+				ImageIcon imagen = new ImageIcon(ruta);
+				panelFoto.setImagen(imagen.getImage());
+				panelFoto.repaint();
+				if(tablaEspejos.columnAtPoint(e.getPoint()) == modelespejos.getColumnCount()-1) {
+					System.out.println(fila);
+					
+					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), al.get(fila).getPrecio());
+				}
+				
+				
+			}
+		});
+
 		/*HILO DE FECHA*/
 		
 		Runnable r1 = new Runnable() {
@@ -329,18 +196,85 @@ public class VentanaEspejos extends JFrame{
 		};
 		Thread t1 = new Thread(r1);
 		t1.start();
+	
 		
 		setVisible(true);
 
+
 	}
+		
+		class JTableButtonRenderer implements TableCellRenderer {
+			private TableCellRenderer defaultRenderer;
+			public JTableButtonRenderer(TableCellRenderer renderer) {
+				defaultRenderer = renderer;
+			}
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				if(value instanceof Component) {
+					return (Component)value;
+			        
+				}
+				return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		}
+		
+		class JTableButtonModel extends AbstractTableModel {
+			private Object[][] rows;
+			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
+			   
+			public String getColumnName(int column) {
+				return columns[column];
+			}
+			public JTableButtonModel() {
+				super();
+				ArrayList<Object[]> alObject = new ArrayList<>();
+				al = BaseDatos.obtenerProducto(con, "Espejo");
+				for(Producto p : al) {
+					JButton btnAnadir = new JButton("AÑADIR");
+						
+					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), 
+									   "spSpinner", btnAnadir};
+					alObject.add(datos);
+				}
+				Object[][] ob1 = new Object[alObject.size()][alObject.get(0).length]; 
+				int ob2 = 0;
+				for(Object[] ob : alObject) {
+					ob1[ob2] = ob; 
+					ob2++;
+				}
+				this.rows =  ob1;
+			}
+			
+			public int getRowCount() {
+				return rows.length;
+			}
+			
+			public int getColumnCount() {
+				return columns.length;
+			}
+			
+			public Object getValueAt(int row, int column) {
+				return rows[row][column];
+			}
+			
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+			
+			public Class getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
+		}
+		
+
+
 
 	
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaEspejos frame = new VentanaEspejos("ESPEJO");
+					VentanaEspejos frame = new VentanaEspejos();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -239,7 +239,7 @@ public class VentanaPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v2 = new VentanaEspejos("espejos");
+				VentanaEspejos v2 = new VentanaEspejos();
 			}
 		});
 		

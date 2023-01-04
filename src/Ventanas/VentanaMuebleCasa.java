@@ -91,8 +91,14 @@ public VentanaMuebleCasa() {
 		lblNewLabel.setBackground(new Color(100, 149, 237));
 		panelNorte.add(lblNewLabel);
 		
-		JButton btnCarrito = new JButton("IMAGEN CARRITO");
-		panelNorte.add(btnCarrito);
+		JPanel panel_2 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.RIGHT);
+		panelNorte.add(panel_2);
+		
+		JButton btnCarrito = new JButton("");
+		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
+		panel_2.add(btnCarrito);
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);

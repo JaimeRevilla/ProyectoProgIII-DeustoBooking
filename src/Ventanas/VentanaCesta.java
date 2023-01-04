@@ -145,7 +145,7 @@ public class VentanaCesta extends JFrame {
 					model = (DefaultTableModel)tablaCesta.getModel();
 					model.removeRow(tablaCesta.getSelectedRow());	
 					BaseDatos.eliminarFilaPorCodigoProd(con, valor);
-					BaseDatos.obtenerListaCarrito(con, VentanaEspejos.tipoEspejo);
+//					BaseDatos.obtenerListaCarrito(con, VentanaEspejos.tipoEspejo);
 					System.out.println("Se esta eliminando el producto");
 				}else {
 					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
