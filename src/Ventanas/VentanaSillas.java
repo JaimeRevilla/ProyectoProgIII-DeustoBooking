@@ -82,6 +82,7 @@ public class VentanaSillas extends JFrame{
 		panelNorteFecha.add(lblFecha);
 		
 		lblNewLabel = new JLabel("MENU SILLAS");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(new Color(100, 149, 237));
 		panelNorte.add(lblNewLabel);
 		

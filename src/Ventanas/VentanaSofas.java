@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -35,6 +36,8 @@ import javax.swing.table.TableCellRenderer;
 import Clases.BaseDatos;
 import Clases.Carrito;
 import Clases.Producto;
+import Ventanas.VentanaSillas.JTableButtonModel;
+import Ventanas.VentanaSillas.JTableButtonRenderer;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -43,15 +46,18 @@ public class VentanaSofas extends JFrame{
 	
 	private Connection con;
 	
+	private PanelConFondo panelFoto;
+
 
 	private JTextField txtReloj;
-	private JButton btnAgregar;
 	private JLabel lblNewLabel;
 	private JPanel panelCentral;
 	
 	private JTable tablaSofas;
-	public static DefaultTableModel modelSofa;
+	public static JTableButtonModel modelSofa;
 	private JScrollPane scrSofa;
+	
+	private ArrayList<Producto> al;
 	
 	public VentanaSofas() {
 		
@@ -65,10 +71,12 @@ public class VentanaSofas extends JFrame{
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JPanel panelNorteFecha = new JPanel();
+		panelNorteFecha.setBackground(new Color(100, 149, 237));
 		FlowLayout flowLayout = (FlowLayout) panelNorteFecha.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panelNorte.add(panelNorteFecha);
@@ -77,6 +85,8 @@ public class VentanaSofas extends JFrame{
 		panelNorteFecha.add(lblFecha);
 		
 		lblNewLabel = new JLabel("MENU SOFAS");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBackground(new Color(100, 149, 237));
 		panelNorte.add(lblNewLabel);
 		
 		JButton btnCarrito = new JButton("IMAGEN CARRITO");
@@ -87,11 +97,10 @@ public class VentanaSofas extends JFrame{
 		
 		JButton btnAtras = new JButton("ATRAS");
 		panelSur.add(btnAtras);
+	
 		
-		btnAgregar = new JButton("AGREGAR A CARRITO");
-		panelSur.add(btnAgregar);
 		
-		panelCentral = new JPanel();
+		panelCentral = new JPanel(new GridLayout(2, 1));
 		
 		
 		
@@ -106,11 +115,6 @@ public class VentanaSofas extends JFrame{
 			}
 		});
 		
-		
-		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
 		
 		btnAtras.addActionListener(new ActionListener() {
@@ -118,64 +122,57 @@ public class VentanaSofas extends JFrame{
 				dispose();
 			}
 		});
-		
-		
-		
-		JButton btnAgregar = new JButton("añadir");
-		JSpinner spnCant = new JSpinner();
-		ArrayList<Producto> sofas = BaseDatos.obtenerProducto(con, "Sofa");
-		
-		System.out.println(sofas);
 
-		String [] titulos = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO", "STOCK", "IMAGEN", "CANTIDAD", "AÑADIR"};
-		modelSofa = new DefaultTableModel();
-		modelSofa.setColumnIdentifiers(titulos);
-		for(Producto p: sofas) {
-			Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), p.getRuta(), spnCant, btnAgregar};
-			modelSofa.addRow(datos);
-		}
+		modelSofa = new JTableButtonModel();
 		
 		
-		//DUDA
-		//TableCellRenderer tableRenderer;
-		//tablaSillas = new JTable(new JTableButtonModel());
-		//tableRenderer = tablaSillas.getDefaultRenderer(JButton.class);
-		//tablaSillas.setDefaultRenderer(JButton.class,  new JTableButtonRenderer(tableRenderer));
 		tablaSofas = new JTable(modelSofa);
+		TableCellRenderer tbcr = tablaSofas.getDefaultRenderer(JButton.class);
+		tablaSofas.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tbcr));
 		scrSofa = new JScrollPane(tablaSofas);
+		panelCentral.add(scrSofa);
+		
+		JPanel panelAbajo = new JPanel();
+		panelCentral.add(panelAbajo);
+		panelAbajo.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(100, 149, 237));
+		panelAbajo.add(panel);
+		
+		
+		
+		panelFoto = new PanelConFondo(null);
+		panelFoto.setBackground(new Color(100, 149, 237));
+		panelAbajo.add(panelFoto);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(100, 149, 237));
+		panelAbajo.add(panel_1);
+		
+
+		
 		
 		
 		tablaSofas.addMouseListener(new MouseAdapter() {
-		
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				int fila = tablaSofas.rowAtPoint(e.getPoint());
-				int columna = tablaSofas.columnAtPoint(e.getPoint());
-				if (columna == 10) { //La del botón
-					//Código relacionado con la acción del botón
-					System.out.println("ESTOY DENTRO PERROS ");
+				String tipo = (String) modelSofa.getValueAt(fila, 2);
+				String ruta = BaseDatos.getRuta(con, tipo);
+				ImageIcon imagen = new ImageIcon(ruta);
+				panelFoto.setImagen(imagen.getImage());
+				panelFoto.repaint();
+				if(tablaSofas.columnAtPoint(e.getPoint()) == modelSofa.getColumnCount()-1) {
+					System.out.println(fila);
+					
+					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), al.get(fila).getPrecio());
 				}
-		
+				
+				
 			}
 		});
-		
-		
-//		tablaSillas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-//			
-//			@Override
-//			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-//					int row, int column) {
-//				if (row == table.getModel().getRowCount()) {
-//		            return new JButton("Agregar");
-//		        } else {
-//		            setBackground(new Color(0xffffff));
-//		            return this;
-//		        }
-//			}
-//		});
-		
-		panelCentral.add(scrSofa, BorderLayout.CENTER);
 
 		/*HILO DE FECHA*/
 		
@@ -203,50 +200,77 @@ public class VentanaSofas extends JFrame{
 		};
 		Thread t1 = new Thread(r1);
 		t1.start();
-		
+	
 		
 		setVisible(true);
 
 
 	}
-	
-	//DUDA
-//	class JTableButtonRenderer implements TableCellRenderer {
-//		   private TableCellRenderer defaultRenderer;
-//		   public JTableButtonRenderer(TableCellRenderer renderer) {
-//		      defaultRenderer = renderer;
-//		   }
-//		   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//		      if(value instanceof Component)
-//		         return (Component)value;
-//		         return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//		   }
-//	}
-//	
-//	
-//	class JTableButtonModel extends AbstractTableModel {
-//		private Object[][] rows = {{"CODIGO"},{"TIPO"},{"MARCA"},{"TAMANYO"},{"PRECIO"},{"STOCK"},{"IMAGEN"},{"CANTIDAD"},{"AÑADIR"}};
-//		private String[] columns = {"AÑadir","CANTIDAD","MARCA","TAMANYO","PRECIO","STOCK","IMAGEN","CANTIDAD","AÑADIR"};
-//		
-//		public String getColumnName(int column) {
-//			return columns[column];
-//		}
-//		public int getRowCount() {
-//			return rows.length;
-//		}
-//		public int getColumnCount() {
-//		      return columns.length;
-//		}
-//		public Object getValueAt(int row, int column) {
-//			return rows[row][column];
-//		}
-//		public boolean isCellEditable(int row, int column) {
-//			return false;
-//		}
-//		public Class getColumnClass(int column) {
-//		      return getValueAt(0, column).getClass();
-//		}
-//	}
+		
+		class JTableButtonRenderer implements TableCellRenderer {
+			private TableCellRenderer defaultRenderer;
+			public JTableButtonRenderer(TableCellRenderer renderer) {
+				defaultRenderer = renderer;
+			}
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				if(value instanceof Component) {
+					return (Component)value;
+			        
+				}
+				return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		}
+		
+		class JTableButtonModel extends AbstractTableModel {
+			private Object[][] rows;
+			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
+			   
+			public String getColumnName(int column) {
+				return columns[column];
+			}
+			public JTableButtonModel() {
+				super();
+				ArrayList<Object[]> alObject = new ArrayList<>();
+				al = BaseDatos.obtenerProducto(con, "Sofa");
+				for(Producto p : al) {
+					JButton btnAnadir = new JButton("AÑADIR");
+						
+					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), 
+									   "spSpinner", btnAnadir};
+					alObject.add(datos);
+				}
+				Object[][] ob1 = new Object[alObject.size()][alObject.get(0).length]; 
+				int ob2 = 0;
+				for(Object[] ob : alObject) {
+					ob1[ob2] = ob; 
+					ob2++;
+				}
+				this.rows =  ob1;
+			}
+			
+			public int getRowCount() {
+				return rows.length;
+			}
+			
+			public int getColumnCount() {
+				return columns.length;
+			}
+			
+			public Object getValueAt(int row, int column) {
+				return rows[row][column];
+			}
+			
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+			
+			public Class getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
+		}
+		
+
+
 
 	
 
