@@ -40,6 +40,7 @@ import Ventanas.VentanaSillas.JTableButtonModel;
 import Ventanas.VentanaSillas.JTableButtonRenderer;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class VentanaCamas extends JFrame{
@@ -86,7 +87,7 @@ public class VentanaCamas extends JFrame{
 		JLabel lblFecha = new JLabel("");
 		panelNorteFecha.add(lblFecha);
 		
-		lblNewLabel = new JLabel("MENU SILLAS");
+		lblNewLabel = new JLabel("MENU SOFAS");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(new Color(100, 149, 237));
 		panelNorte.add(lblNewLabel);
@@ -175,8 +176,9 @@ public class VentanaCamas extends JFrame{
 				panelFoto.repaint();
 				if(tablaCamas.columnAtPoint(e.getPoint()) == modelCamas.getColumnCount()-1) {
 					System.out.println(fila);
-					
-					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), al.get(fila).getPrecio());
+					String o = JOptionPane.showInputDialog(null, "Cantidad requirida: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE);
+					int columna = Integer.parseInt(o);
+					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), columna, al.get(fila).getPrecio());
 				}
 				
 				
@@ -232,7 +234,7 @@ public class VentanaCamas extends JFrame{
 		
 		class JTableButtonModel extends AbstractTableModel {
 			private Object[][] rows;
-			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
+			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", ""};
 			   
 			public String getColumnName(int column) {
 				return columns[column];
@@ -244,8 +246,7 @@ public class VentanaCamas extends JFrame{
 				for(Producto p : al) {
 					JButton btnAnadir = new JButton("AÑADIR");
 						
-					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), 
-									   "spSpinner", btnAnadir};
+					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(),btnAnadir};
 					alObject.add(datos);
 				}
 				Object[][] ob1 = new Object[alObject.size()][alObject.get(0).length]; 

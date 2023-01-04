@@ -38,6 +38,7 @@ import Clases.Carrito;
 import Clases.Producto;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class VentanaEspejos extends JFrame{
@@ -93,6 +94,11 @@ public class VentanaEspejos extends JFrame{
 		panelNorte.add(panel_2);
 		
 		JButton btnCarrito_1 = new JButton("");
+		btnCarrito_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
 		btnCarrito_1.setIcon(new ImageIcon("imagenes/pngegg.png"));
 		panel_2.add(btnCarrito_1);
 		
@@ -162,8 +168,9 @@ public class VentanaEspejos extends JFrame{
 				panelFoto.repaint();
 				if(tablaEspejos.columnAtPoint(e.getPoint()) == modelespejos.getColumnCount()-1) {
 					System.out.println(fila);
-					
-					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), al.get(fila).getPrecio());
+					String o = JOptionPane.showInputDialog(null, "Cantidad requirida: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE);
+					int columna = Integer.parseInt(o);
+					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), columna, al.get(fila).getPrecio());
 				}
 				
 				
@@ -219,7 +226,7 @@ public class VentanaEspejos extends JFrame{
 		
 		class JTableButtonModel extends AbstractTableModel {
 			private Object[][] rows;
-			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
+			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", ""};
 			   
 			public String getColumnName(int column) {
 				return columns[column];
@@ -231,8 +238,7 @@ public class VentanaEspejos extends JFrame{
 				for(Producto p : al) {
 					JButton btnAnadir = new JButton("AÑADIR");
 						
-					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), 
-									   "spSpinner", btnAnadir};
+					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), btnAnadir};
 					alObject.add(datos);
 				}
 				Object[][] ob1 = new Object[alObject.size()][alObject.get(0).length]; 

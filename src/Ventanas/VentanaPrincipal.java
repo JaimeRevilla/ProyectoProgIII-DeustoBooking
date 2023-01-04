@@ -114,7 +114,7 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
 		
-		btnMuebleCasa = new JButton("MUEBLE CASA");
+		btnMuebleCasa = new JButton("ARMARIOS");
 		btnMuebleCasa.setIcon(new ImageIcon("imagenes/mueble.png"));
 		btnMuebleCasa.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnMuebleCasa.setVerticalTextPosition(SwingConstants.BOTTOM);

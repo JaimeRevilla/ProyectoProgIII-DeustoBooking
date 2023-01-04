@@ -59,9 +59,9 @@ public class Principal {
 		//INSERCCION DE CARRITO
 		System.out.println("----------------------------------------------------------------------");
 		System.out.println("Insertando carrito 1 ...");
-		BaseDatos.insertarCarrito(con, "111A", 0, "Armario1", "ABEDUL", "IKEA", "200x200", 200.50);
+		BaseDatos.insertarCarrito(con, "111A", 0, "Armario1", "ABEDUL", "IKEA", "200x200", 0, 200.50);
 		System.out.println("Insertando carrito 2 ...");
-		BaseDatos.insertarCarrito(con, "222B", 1, "Cama1", "LITERA", "IKEA", "200x200", 100.50);
+		BaseDatos.insertarCarrito(con, "222B", 1, "Cama1", "LITERA", "IKEA", "200x200", 0, 100.50);
 		
 		//ELIMINACION DE TUPLAS
 //		System.out.println("-----------------------------------------------------------------------");

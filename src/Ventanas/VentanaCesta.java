@@ -125,10 +125,10 @@ public class VentanaCesta extends JFrame {
 		
 		ArrayList<Carrito> carritos = BaseDatos.obtenerListaCarrito(con, VentanaInicial.dni);
 		model = new DefaultTableModel();
-		String [] titulos = {"DNI", "CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO", "PRECIO"};
+		String [] titulos = {"DNI", "CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMANYO","CANTIDAD", "PRECIO"};
 		model.setColumnIdentifiers(titulos);
 		for(Carrito c: carritos) {
-			Object [] datos = {c.getDni(), c.getCod(), c.getNom(), c.getTipo(), c.getMarca(), c.getTamanyo(), c.getPrecio()};
+			Object [] datos = {c.getDni(), c.getCod(), c.getNom(), c.getTipo(), c.getMarca(), c.getTamanyo(),c.getCantidad(),c.getPrecio()};
 			model.addRow(datos);
 		}
 		tablaCesta = new JTable(model);		
@@ -240,8 +240,9 @@ public class VentanaCesta extends JFrame {
 				String tipo = (String) model.getValueAt(i, 3);
 				String marca = (String) model.getValueAt(i, 4);
 				String tam = (String) model.getValueAt(i, 5);
-				double precio = (double) model.getValueAt(i, 6);
-				pw.println(dni+";"+cod+";"+nom+";"+tipo+";"+marca+";"+tam+";"+precio);
+				int cant =(int)model.getValueAt(i, 6);
+				double precio = (double) model.getValueAt(i, 7);
+				pw.println(dni+";"+cod+";"+nom+";"+tipo+";"+marca+";"+tam+";"+cant+";"+precio);
 				System.out.println(String.format("El fichero se ha creado correctamente para el:%s",VentanaInicial.dni));
 			}
 		} catch (FileNotFoundException e) {
@@ -266,8 +267,9 @@ public class VentanaCesta extends JFrame {
 				String tipo = dato[3];
 				String marca = dato[4];
 				String tam = dato[5];
+				int cant = Integer.parseInt(dato[6]);
 				double prec = Double.parseDouble(dato[6]);
-				Carrito ca = new Carrito(dni, cod, nom, tipo, marca, tam, prec);
+				Carrito ca = new Carrito(dni, cod, nom, tipo, marca, tam,cant, prec);
 				carrito.add(ca);
 				linea = br.readLine();
 				System.out.println(linea);

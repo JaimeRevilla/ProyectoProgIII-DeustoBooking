@@ -93,7 +93,7 @@ public class BaseDatos {
 	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
 	 */
 	public static boolean crearTablasCarrito(Connection con) {
-		String sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, precioProd double)";
+		String sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, cantidad int, precioProd double)";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
@@ -144,8 +144,8 @@ public class BaseDatos {
 	 * @param Connection con, datos del producto: recibimos la conexion con la base de datos y los datos del producto
 	 * @return No devuelve nada
 	 */
-	public static void insertarCarrito(Connection con,   String dniUsu , int codProd, String nomProd, String tipoProd, String marcaProd, String tamanyoProd,double precioProd) {
-		String sql = "INSERT INTO Carrito VALUES('"+dniUsu+"','"+codProd+"','"+nomProd+"','"+tipoProd+"','"+marcaProd+"','"+tamanyoProd+"',"+precioProd+")";
+	public static void insertarCarrito(Connection con,   String dniUsu , int codProd, String nomProd, String tipoProd, String marcaProd, String tamanyoProd,int cantidad,double precioProd) {
+		String sql = "INSERT INTO Carrito VALUES('"+dniUsu+"','"+codProd+"','"+nomProd+"','"+tipoProd+"','"+marcaProd+"','"+tamanyoProd+"','"+cantidad+"',"+precioProd+")";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
@@ -505,8 +505,9 @@ public class BaseDatos {
 				String tipo = rst.getString("tipoProd");
 				String marca = rst.getString("marcaProd");
 				String tam = rst.getString("tamanyoProd");
+				int cant = Integer.parseInt(rst.getString("cantidad"));
 				double prec = Double.parseDouble(rst.getString("precioProd"));
-				Carrito c = new Carrito(dni, cod, nom, tipo, marca,tam, prec);
+				Carrito c = new Carrito(dni, cod, nom, tipo, marca,tam, cant,prec);
 				carrito.add(c);
 			}
 		} catch (SQLException e) {
