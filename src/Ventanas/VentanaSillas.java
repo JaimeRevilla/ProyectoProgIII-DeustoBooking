@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.management.modelmbean.ModelMBeanOperationInfo;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,12 +61,16 @@ public class VentanaSillas extends JFrame{
 	
 	private ArrayList<Producto> al;
 	
+	private tabla_spinner tablaSpinner;
+	private JSpinner spinner;
+	
 	public VentanaSillas() {
 		
 		setBounds(250, 225, 1000, 508);
 		
 		con = BaseDatos.initBD("data/DeustoIkea.db");
 
+		tablaSpinner = new tabla_spinner();
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -167,12 +172,30 @@ public class VentanaSillas extends JFrame{
 				ImageIcon imagen = new ImageIcon(ruta);
 				panelFoto.setImagen(imagen.getImage());
 				panelFoto.repaint();
-				if(tablaSillas.columnAtPoint(e.getPoint()) == modelSill.getColumnCount()-1) {
-					System.out.println(fila);
-					String o = JOptionPane.showInputDialog(null, "Cantidad requirida: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE);
-					int columna = Integer.parseInt(o);
-					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),columna, al.get(fila).getPrecio());
-				}
+					System.out.println("dentro");
+					int columna = 0;
+					System.out.println(columna);
+					if(tablaSillas.columnAtPoint(e.getPoint()) == modelSill.getColumnCount()-1) {
+						System.out.println("if");
+						if(spinner.getComponentCount()>0) {
+							int cantidadBD = spinner.getComponentCount();
+							System.out.println(cantidadBD);
+							BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),cantidadBD, al.get(fila).getPrecio());
+						}else {
+							System.out.println("error");
+						}
+//						int cantidadBD = spinner.getComponentCount();
+//						System.out.println(cantidadBD);
+//						BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),cantidadBD, al.get(fila).getPrecio());
+					}
+//				if(tablaSillas.columnAtPoint(e.getPoint()) == modelSill.getColumnCount()-1) {
+//					System.out.println(fila);
+//					//String o = JOptionPane.showInputDialog(null, "Cantidad requirida: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE);
+////					int cantidad = tablaSillas.columnAtPoint(e.getPoint());
+////					System.out.println(cantidad);
+//					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),0, al.get(fila).getPrecio());
+//					
+//				}
 				
 				
 			}
