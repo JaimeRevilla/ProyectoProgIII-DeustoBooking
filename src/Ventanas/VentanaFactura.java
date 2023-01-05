@@ -65,44 +65,6 @@ public class VentanaFactura extends JFrame{
 		
 		setVisible(true);
 	}
-
-//	private void cargarFichero() {
-//		System.out.println("error1");
-//		ArrayList<Carrito> car = new ArrayList<>();
-//		System.out.println("error2");
-//		try (BufferedReader br = new BufferedReader(new FileReader("Factura"+VentanaInicioSesion.dni+".txt"));){
-//			System.out.println("error3");
-//			String linea = br.readLine();
-//			while(linea!=null) {
-//				
-//			
-//				String [] dato = linea.split(";");
-//				
-//				String dni = dato[0];
-//				int cod = Integer.parseInt(dato[1]);
-//				String nom = dato[2];
-//				String tipo = dato[3];
-//				String marca = dato[4];
-//				String tam = dato[5];
-//				double prec = Double.parseDouble(dato[6]);
-//				System.out.println("error6");
-//				//Carrito ca = new Carrito(dni, cod, nom, tipo, marca, tam, prec);
-//				car.add(new Carrito(dni, cod, nom, tipo, marca, tam, prec));
-//				//model.addElement(ca);
-//				//car.add(ca);
-//				System.out.println(car.get(0));
-//				linea = br.readLine();
-//				System.out.println(linea);
-//			}
-//		} catch (FileNotFoundException e) {
-//			System.out.println(String.format("Error Factura:%s",e.getMessage()));
-//			e.printStackTrace();
-//		} catch (IOException e1) {
-//			System.out.println(String.format("Error Factura1:%s",e1.getMessage()));
-//			e1.printStackTrace();
-//		}
-//	}
-//	
 	private void cargarModelo() {
 		model.removeAllElements();
 		for(Carrito c: carrito) {

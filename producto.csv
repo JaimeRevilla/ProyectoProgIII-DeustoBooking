@@ -1,0 +1,28 @@
+cod;nombre;tipo;marca;tamanyo;precio;stock;ruta
+0;Armario;ROBLE;IKEA;250x58x236 cm;200.5;200;imagenes/armarioRoble.png
+1;Armario;ABEDUL;IKEA;250x58x236 cm;100.5;200;imagenes/armarioAbedul.png
+2;Armario;PINO;IKEA;250x58x236 cm;50.5;200;imagenes/armarioPino.png
+3;Armario;EUCALIPTO;IKEA;250x58x236 cm;25.5;200;imagenes/armarioEucalipto.png
+4;Armario;HAYA;IKEA;250x58x236 cm;190.9;200;imagenes/armarioHaya.png
+5;Cama;LITERA;IKEA;140x190 cm;300.2;200;imagenes/camasLitera.png
+6;Cama;SOFA_CAMA;IKEA;140x190 cm;250.0;200;imagenes/camaSofacama.png
+7;Cama;ACUATICA;IKEA;140x190 cm;600.9;200;imagenes/camaAcuatica.png
+8;Cama;ELECTRICA;IKEA;140x190 cm;900.9;200;imagenes/camaElectrica.png
+9;silla;OFICINA;IKEA;47x51x81 cm;100.5;200;imagenes/sillaOficina.png
+10;silla;REINA;IKEA;47x51x81 cm;150.1;200;imagenes/sillaReina.png
+11;silla;PLEGABLE;IKEA;47x51x81 cm;189.2;200;imagenes/sillaPlegable.png
+12;silla;GAMER;IKEA;47x51x81 cm;300.9;200;imagenes/sillaGamer.png
+13;silla;COCINA;IKEA;47x51x81 cm;20.2;200;imagenes/sillaCocina.png
+14;Espejo;RECTANGULAR;IKEA;160 x 40 cm;200.3;191;imagenes/espejoRectangular.png
+15;Espejo;CUADRADO;IKEA;160 x 40 cm;222.22;-3;imagenes/espejoCuadrado.png
+16;Espejo;OVALADO;IKEA;160 x 40 cm;290.99;196;imagenes/espejoOvalado.png
+17;Espejo;CIRCULAR;IKEA;160 x 40 cm;320.0;197;imagenes/espejoCircular.png
+18;Sofa;BUTACAS;IKEA;1 plaza;500.0;200;imagenes/sofaButaca.png
+19;Sofa;DIVAN;IKEA;4 plazas;600.0;200;imagenes/sofaDivan.png
+20;Sofa;PUF_MODULAR;IKEA;1 plaza;200.5;200;imagenes/sofaPuf.png
+21;Sofa;SILLON;IKEA;2 plazas;400.5;200;imagenes/sofaSillon.png
+22;Tv;CURVA;SAMSUNG;"79""";2000.9;200;imagenes/tvCurva.png
+23;Tv;PLANA;LG;"50""";1000.9;200;imagenes/tvPlana.png
+0;Armario1;ABEDUL;IKEA;200x200;200.5;2;
+1;Cama1;LITERA;IKEA;200x200;100.5;12;
+2;Espejo1;CIRCULAR;IKEA;50x100;50.5;20;

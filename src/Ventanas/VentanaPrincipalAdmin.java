@@ -8,7 +8,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -17,28 +23,45 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+
+import Clases.BaseDatos;
+import Clases.Producto;
+
+import javax.swing.JTextField;
 
 public class VentanaPrincipalAdmin extends JFrame{
 	private JFrame vent;
-	private JButton btnLog;
 	private JLabel lblFecha;
 	private JLabel lblMenu;
-	private JButton btnMuebleCasa;
-	private JButton btnEspejos;
-	private JButton btnSillas;
-	private JButton btnTv;
-	private JButton btnSofas;
-	private JButton btnCamas;
 	private JPanel panelNorteFecha;
 	private JPanel panelNorteCentro;
 	private JPanel panelNorteCarrito;
 	public static String dniA;
-	private JButton btnStock;
 	private JButton btnContabilidad;
+	private JTextField filtro;
+	private JLabel lblProducto;
+	
+	private DefaultTableModel modelProducto;
+	private JTable tablaProducto;
+	private JScrollPane scrollProducto;
+	
+	private ArrayList<Producto> datosProductos;
+	
+	private BaseDatos bd;
+	private Connection con;
 	
 	public VentanaPrincipalAdmin() {
 		vent = this;
+		
+		con = bd.initBD("data/DeustoIkea.db");
 		
 		setBounds(250, 225, 1000, 508);
 		
@@ -61,37 +84,19 @@ public class VentanaPrincipalAdmin extends JFrame{
 		panelNorteCentro = new JPanel();
 		panelNorte.add(panelNorteCentro);
 		
-		lblMenu = new JLabel("MENU ADMIN");
+		lblMenu = new JLabel("STOCK TIENDA");
 		panelNorteCentro.add(lblMenu);
 		
 		panelNorteCarrito = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panelNorteCarrito.getLayout();
-		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
+		panelNorteCarrito.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		JButton btnCarrito = new JButton();
-		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
-		panelNorteCarrito.add(btnCarrito);
+		lblProducto = new JLabel("Introduce producto:");
+		panelNorteCarrito.add(lblProducto);
 		
-		btnLog = new JButton("");
-		btnLog.setIcon(new ImageIcon("imagenes/btnlogin.png"));
-		panelNorteCarrito.add(btnLog);
-		
-		btnLog.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaInicial v1 = new VentanaInicial();
-			}
-		});
-		
-		btnCarrito.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCesta v1 = new VentanaCesta();
-			}
-		});
+		filtro = new JTextField();
+		panelNorteCarrito.add(filtro);
+		filtro.setColumns(20);
 		
 		JPanel panelSur = new JPanel();
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
@@ -108,108 +113,9 @@ public class VentanaPrincipalAdmin extends JFrame{
 		JButton btnsalir = new JButton("SALIR");
 		panelSur.add(btnsalir);
 		
-		btnStock = new JButton("STOCK");
-		btnStock.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				VentanaStock v1 = new VentanaStock();
-			}
-		});
-		panelSur.add(btnStock);
-		
 		JPanel panelCentro = new JPanel();
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
-		
-		btnMuebleCasa = new JButton("MUEBLE CASA");
-		btnMuebleCasa.setIcon(new ImageIcon("imagenes/mueble.png"));
-		btnMuebleCasa.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnMuebleCasa.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panelCentro.add(btnMuebleCasa);
-		
-		btnEspejos = new JButton("ESPEJOS");
-		btnEspejos.setIcon(new ImageIcon("imagenes/espejo.png"));
-		btnEspejos.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnEspejos.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panelCentro.add(btnEspejos);
-		
-		btnSillas = new JButton("SILLAS");
-		btnSillas.setIcon(new ImageIcon("imagenes/silla.png"));
-		btnSillas.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnSillas.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panelCentro.add(btnSillas);
-		
-		btnTv = new JButton("TV");
-		btnTv.setIcon(new ImageIcon("imagenes/tv.com.png"));
-		btnTv.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnTv.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panelCentro.add(btnTv);
-		
-		btnSofas = new JButton("SOFAS");
-		btnSofas.setIcon(new ImageIcon("imagenes/sofa.png"));
-		btnSofas.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnSofas.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panelCentro.add(btnSofas);
-		
-		btnCamas = new JButton("CAMAS");
-		btnCamas.setIcon(new ImageIcon("imagenes/cama.com.png"));
-		btnCamas.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnCamas.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panelCentro.add(btnCamas);
-		
-		JPanel panelCentroOeste = new JPanel();
-		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		panelCentroOeste.add(comboBox_1);
-		
-		btnMuebleCasa.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaMuebleCasa v1 = new VentanaMuebleCasa();
-			}
-		});
-		
-		btnEspejos.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaEspejos v2 = new VentanaEspejos();
-			}
-		});
-		
-		btnSillas.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaSillas v3 = new VentanaSillas();
-			}
-		});
-
-		btnTv.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaTv v4 = new VentanaTv();
-			}
-		});
-
-		btnSofas.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaSofas v5 = new VentanaSofas();
-			}
-		});
-
-		btnCamas.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaCamas v6 = new VentanaCamas();
-			}
-		});
 		
 		btnsalir.addActionListener(new ActionListener() {
 			
@@ -218,6 +124,76 @@ public class VentanaPrincipalAdmin extends JFrame{
 				System.exit(0);;
 			}
 		});
+		
+		modelProducto = new DefaultTableModel();
+		cargarCSV();
+		tablaProducto = new JTable(modelProducto);
+		scrollProducto = new JScrollPane(tablaProducto);
+		panelCentro.add(scrollProducto);
+		
+		//FILTRO PRODUCTO
+		filtro.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				String nombre = filtro.getText();
+				while(modelProducto.getRowCount()>0) {
+					modelProducto.removeRow(0);
+				}
+				for(Producto p: datosProductos) {
+					if(p.getNombre().startsWith(nombre)) {
+						Object [] fila = {p.getCod(),p.getNombre(),p.getTipo(),p.getMarca(),p.getTamanyo(),p.getPrecio(),p.getStock(),p.getRuta()};
+						modelProducto.addRow(fila);
+					}
+				}
+				lblProducto.setText("Número de datos: "+modelProducto.getRowCount());
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				String nombre = filtro.getText();
+				while(modelProducto.getRowCount()>0) {
+					modelProducto.removeRow(0);
+				}
+				for(Producto p: datosProductos) {
+					if(p.getNombre().startsWith(nombre)) {
+						Object [] fila = {p.getCod(),p.getNombre(),p.getTipo(),p.getMarca(),p.getTamanyo(),p.getPrecio(),p.getStock()};
+						modelProducto.addRow(fila);
+					}
+				}
+				lblProducto.setText("Número de datos: "+modelProducto.getRowCount());
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+			}
+		});
+		
+		modelProducto.addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				int fila = e.getFirstRow();
+				int cod = (int) modelProducto.getValueAt(fila, 0);
+				String nom = (String) modelProducto.getValueAt(fila, 1);
+				String tipo = (String) modelProducto.getValueAt(fila, 2);
+				String marca = (String) modelProducto.getValueAt(fila, 3);
+				String tam = (String) modelProducto.getValueAt(fila, 4);
+				double precio = (double) modelProducto.getValueAt(fila, 5);
+				int strock = (int) modelProducto.getValueAt(fila, 6);
+				datosProductos.get(fila).setCod(cod);
+				datosProductos.get(fila).setNombre(nom);
+				datosProductos.get(fila).setTipo(tipo);
+				datosProductos.get(fila).setMarca(marca);
+				datosProductos.get(fila).setTamanyo(tam);
+				datosProductos.get(fila).setPrecio(precio);
+				datosProductos.get(fila).setStock(strock);
+				bd.modificarDato(con,datosProductos.get(fila));
+			}
+		});
+		
+		
 		
 		/*HILO DE FECHA*/
 		
@@ -263,4 +239,26 @@ public class VentanaPrincipalAdmin extends JFrame{
 		});
 	}
 
+	public void cargarCSV() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("producto.csv"));
+			String linea = br.readLine();
+			String [] titulos = linea.split(";");
+			modelProducto.setColumnIdentifiers(titulos);
+			
+			linea = br.readLine();
+			while(linea!=null) {
+				String [] datos = linea.split(";");
+				modelProducto.addRow(datos);
+				linea = br.readLine();
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -594,4 +594,18 @@ public class BaseDatos {
 		}
 		return ruta;
 	}
+	
+	public static void modificarDato(Connection con, Producto p) {
+		String sql = "UPDATE Dato SET cod='"+p.getCod()+"',nombre='"+p.getNombre()+"',tipo='"+p.getTipo()+"',marca='"+p.getMarca()+"',tamanyo='"+p.getTamanyo()+"',precio='"+p.getPrecio()+"',strock='"+p.getStock()+"'";
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
