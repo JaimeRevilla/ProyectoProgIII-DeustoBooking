@@ -596,7 +596,7 @@ public class BaseDatos {
 	}
 	
 	public static void modificarDato(Connection con, Producto p) {
-		String sql = "UPDATE Dato SET cod='"+p.getCod()+"',nombre='"+p.getNombre()+"',tipo='"+p.getTipo()+"',marca='"+p.getMarca()+"',tamanyo='"+p.getTamanyo()+"',precio='"+p.getPrecio()+"',strock='"+p.getStock()+"'";
+		String sql = "UPDATE Producto SET cod='"+p.getCod()+"',nombre='"+p.getNombre()+"',tipo='"+p.getTipo()+"',marca='"+p.getMarca()+"',tamanyo='"+p.getTamanyo()+"',precio='"+p.getPrecio()+"',stock='"+p.getStock()+"'WHERE nombre = '"+p.getNombre()+"'";
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();

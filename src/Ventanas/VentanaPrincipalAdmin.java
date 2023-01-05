@@ -60,9 +60,8 @@ public class VentanaPrincipalAdmin extends JFrame{
 	
 	public VentanaPrincipalAdmin() {
 		vent = this;
-		
-		con = bd.initBD("data/DeustoIkea.db");
-		
+		con = BaseDatos.initBD("data/DeustoIkea.db");
+		datosProductos = new ArrayList<>();
 		setBounds(250, 225, 1000, 508);
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
@@ -127,6 +126,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 		
 		modelProducto = new DefaultTableModel();
 		cargarCSV();
+		cargarArray();
 		tablaProducto = new JTable(modelProducto);
 		scrollProducto = new JScrollPane(tablaProducto);
 		panelCentro.add(scrollProducto);
@@ -146,7 +146,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 						modelProducto.addRow(fila);
 					}
 				}
-				lblProducto.setText("Número de datos: "+modelProducto.getRowCount());
+				lblProducto.setText("Numero productos: "+modelProducto.getRowCount());
 			}
 			
 			@Override
@@ -157,7 +157,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 				}
 				for(Producto p: datosProductos) {
 					if(p.getNombre().startsWith(nombre)) {
-						Object [] fila = {p.getCod(),p.getNombre(),p.getTipo(),p.getMarca(),p.getTamanyo(),p.getPrecio(),p.getStock()};
+						Object [] fila = {p.getCod(),p.getNombre(),p.getTipo(),p.getMarca(),p.getTamanyo(),p.getPrecio(),p.getStock(),p.getRuta()};
 						modelProducto.addRow(fila);
 					}
 				}
@@ -175,21 +175,21 @@ public class VentanaPrincipalAdmin extends JFrame{
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				int fila = e.getFirstRow();
-				int cod = (int) modelProducto.getValueAt(fila, 0);
+				int cod = Integer.parseInt((String)modelProducto.getValueAt(fila, 0));
 				String nom = (String) modelProducto.getValueAt(fila, 1);
 				String tipo = (String) modelProducto.getValueAt(fila, 2);
 				String marca = (String) modelProducto.getValueAt(fila, 3);
 				String tam = (String) modelProducto.getValueAt(fila, 4);
-				double precio = (double) modelProducto.getValueAt(fila, 5);
-				int strock = (int) modelProducto.getValueAt(fila, 6);
+				double precio = Double.parseDouble((String) modelProducto.getValueAt(fila, 5));
+				int stock = Integer.parseInt((String)modelProducto.getValueAt(fila, 6));
 				datosProductos.get(fila).setCod(cod);
 				datosProductos.get(fila).setNombre(nom);
 				datosProductos.get(fila).setTipo(tipo);
 				datosProductos.get(fila).setMarca(marca);
 				datosProductos.get(fila).setTamanyo(tam);
 				datosProductos.get(fila).setPrecio(precio);
-				datosProductos.get(fila).setStock(strock);
-				bd.modificarDato(con,datosProductos.get(fila));
+				datosProductos.get(fila).setStock(stock);
+				BaseDatos.modificarDato(con,datosProductos.get(fila));
 			}
 		});
 		
@@ -226,17 +226,21 @@ public class VentanaPrincipalAdmin extends JFrame{
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPrincipalAdmin frame = new VentanaPrincipalAdmin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	public void cargarArray(){
+		for(int i=0;i<modelProducto.getRowCount();i++) {
+			int cod = Integer.parseInt((String)modelProducto.getValueAt(i, 0));
+			String nom = (String) modelProducto.getValueAt(i, 1);
+			String tipo = (String) modelProducto.getValueAt(i, 2);
+			String marca = (String) modelProducto.getValueAt(i, 3);
+			String tam = (String) modelProducto.getValueAt(i, 4);
+			double precio = Double.parseDouble((String) modelProducto.getValueAt(i, 5));
+			int stock = Integer.parseInt((String)modelProducto.getValueAt(i, 6));
+			String ruta = (String)modelProducto.getValueAt(i, 7);
+
+			Producto p = new Producto(cod, nom, tipo, marca, tam, precio, stock, ruta);
+			datosProductos.add(p);
+		}
 	}
 
 	public void cargarCSV() {
@@ -260,5 +264,17 @@ public class VentanaPrincipalAdmin extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaPrincipalAdmin frame = new VentanaPrincipalAdmin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }
