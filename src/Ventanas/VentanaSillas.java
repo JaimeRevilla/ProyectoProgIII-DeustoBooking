@@ -62,7 +62,7 @@ public class VentanaSillas extends JFrame{
 	private ArrayList<Producto> al;
 	
 	private tabla_spinner tablaSpinner;
-	private JSpinner spinner;
+	
 	
 	public VentanaSillas() {
 		
@@ -177,8 +177,11 @@ public class VentanaSillas extends JFrame{
 					System.out.println(columna);
 					if(tablaSillas.columnAtPoint(e.getPoint()) == modelSill.getColumnCount()-1) {
 						System.out.println("if");
-						if(spinner.getComponentCount()>0) {
-							int cantidadBD = spinner.getComponentCount();
+						JSpinner spinner = (JSpinner)modelSill.getValueAt(fila, 7);
+						System.out.println(spinner.getValue());
+						if(((Integer)spinner.getValue())>0) {
+						//if(spinner >0){
+							int cantidadBD = (Integer)spinner.getValue();
 							System.out.println(cantidadBD);
 							BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),cantidadBD, al.get(fila).getPrecio());
 						}else {
@@ -233,6 +236,7 @@ public class VentanaSillas extends JFrame{
 
 
 	}
+	
 	class tabla_spinner extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
 
 		JSpinner spinner=new JSpinner();
@@ -286,9 +290,10 @@ public class VentanaSillas extends JFrame{
 				al = BaseDatos.obtenerProducto(con, "Silla");
 				for(Producto p : al) {
 					JButton btnAnadir = new JButton("AÑADIR");
-						
+					JSpinner sp = new JSpinner();
+					sp.setValue(3);
 					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), 
-									   0, btnAnadir};
+									   sp, btnAnadir};
 					alObject.add(datos);
 				}
 				Object[][] ob1 = new Object[alObject.size()][alObject.get(0).length]; 
@@ -321,6 +326,8 @@ public class VentanaSillas extends JFrame{
 			public Class getColumnClass(int column) {
 				return getValueAt(0, column).getClass();
 			}
+			
+			
 		}
 		
 
