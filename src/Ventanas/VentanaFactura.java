@@ -24,6 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class VentanaFactura extends JFrame{
 	private JList<Carrito> listaFactura;
@@ -37,6 +38,7 @@ public class VentanaFactura extends JFrame{
 		setBounds(250, 225, 1000, 508);
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
@@ -51,6 +53,7 @@ public class VentanaFactura extends JFrame{
 		getContentPane().add(panelLista, BorderLayout.CENTER);
 
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblFactura_1 = new JLabel("FACTURA");

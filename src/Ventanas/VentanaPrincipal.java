@@ -96,7 +96,7 @@ public class VentanaPrincipal extends JFrame {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
 		
-		btnRecursividad = new JButton("¿Cuanto quieres gastar con x dinero?");
+		btnRecursividad = new JButton("¿Cuanto quieres gastar?");
 		btnRecursividad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
