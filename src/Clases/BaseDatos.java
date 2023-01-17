@@ -129,7 +129,7 @@ public class BaseDatos {
 	 * @return No devuelve nada
 	 */
 	public static void insertarProducto(Connection con,   int cod,  String nombre,  String tipo,  String marca,  String tamanyo,  double precio,  int stock, String ruta) {
-		String sql = "INSERT INTO Producto VALUES('"+cod+"','"+nombre+"','"+tipo+"','"+marca+"','"+tamanyo+"',"+precio+",'"+stock+"','"+ruta+"')";
+		String sql = "INSERT INTO producto VALUES('"+cod+"','"+nombre+"','"+tipo+"','"+marca+"','"+tamanyo+"',"+precio+",'"+stock+"','"+ruta+"')";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
