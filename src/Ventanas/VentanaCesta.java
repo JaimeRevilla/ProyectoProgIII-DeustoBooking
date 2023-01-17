@@ -51,6 +51,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
@@ -67,6 +69,8 @@ public class VentanaCesta extends JFrame {
 	private JTable tablaFotos;
 	public static DefaultTableModel modeloFotos;
 
+	private static Logger logger = Logger.getLogger("VentanaCesta");
+
 
 	
 	//public static ArrayList<Carrito> carrito;
@@ -81,7 +85,6 @@ public class VentanaCesta extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane panelCentro = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true);
-		panelCentro.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		String texto = "Lista de la compra\n";
 		double total = 0;
@@ -92,38 +95,32 @@ public class VentanaCesta extends JFrame {
 		texto = texto + total + " €\n";
 		
 		panelFoto = new PanelConFondo(null);
-		panelFoto.setBackground(new Color(100, 149, 237));
 		panelCentro.add(panelFoto);
 		
 		
 		
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panel, BorderLayout.NORTH);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(100, 149, 237));
 		panel.add(panel_1);
 		
 		JLabel lblNewLabel = new JLabel("MENU CARRITO");
 		panel_1.add(lblNewLabel);
 		
 		JPanel panelCentroEste = new JPanel();
-		panelCentroEste.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelCentroEste, BorderLayout.EAST);
 		panelCentroEste.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon("imagenes/compra.png"));
+		
+		JButton btnNewButton = new JButton("REALIZAR COMPRA");
 		panelCentroEste.add(btnNewButton);
 		
-		JButton btnFactura = new JButton("");
-		btnFactura.setIcon(new ImageIcon("imagenes/factura.png"));
+		JButton btnFactura = new JButton("VER FACTURA");
+		
 		panelCentroEste.add(btnFactura);
 		
 		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnatras = new JButton("ATRAS");
@@ -142,8 +139,7 @@ public class VentanaCesta extends JFrame {
 		
 		scrollTabla = new JScrollPane(tablaCesta);
 		
-		JButton btnBorrarProducto = new JButton("");
-		btnBorrarProducto.setIcon(new ImageIcon("imagenes/borrar.png"));
+		JButton btnBorrarProducto = new JButton("BORRAR PRODUCTO");
 		btnBorrarProducto.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -155,6 +151,8 @@ public class VentanaCesta extends JFrame {
 					BaseDatos.eliminarFilaPorCodigoProd(con, valor);
 //					BaseDatos.obtenerListaCarrito(con, VentanaEspejos.tipoEspejo);
 					System.out.println("Se esta eliminando el producto");
+					logger.log(Level.INFO, "eliminando producto");
+
 				}else {
 					JOptionPane.showMessageDialog(null, "Para eliminar un producto seleccione el producto");
 				}
@@ -166,6 +164,9 @@ public class VentanaCesta extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				factura();
+				logger.log(Level.INFO, "imprimiendo factura");
+
+				
 				
 			}
 		});
@@ -178,6 +179,8 @@ public class VentanaCesta extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaFactura v1 = new VentanaFactura(cargarFichero());
+				logger.log(Level.INFO, "mostrando factura");
+
 				
 			}
 		});
@@ -188,6 +191,8 @@ public class VentanaCesta extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				logger.log(Level.INFO, "volviendo");
+
 			}
 		});
 		

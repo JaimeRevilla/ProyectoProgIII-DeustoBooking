@@ -43,7 +43,7 @@ public class VentanaInicial extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentro = new JPanel();
-		panelCentro.setBackground(new Color(100, 149, 237));
+		panelCentro.setBackground(Color.WHITE);
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 1, 0, 0));
 		
@@ -94,6 +94,7 @@ public class VentanaInicial extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaInicioSesion v1 = new VentanaInicioSesion();
+				logger.log(Level.INFO, "Estamos logeandonos");
 			}
 		});
 		
@@ -112,11 +113,13 @@ public class VentanaInicial extends JFrame {
 					VentanaInicioSesion.dni = VentanaInicial.dni;
 					VentanaPrincipal v1 = new VentanaPrincipal();
 					System.out.println("Usuario");
+					logger.log(Level.INFO, "accediendo al menu");
 					
 				}else if(VentanaInicioSesion.dniA == null) {
 					VentanaInicioSesion.dniA = VentanaInicial.dniA;
 					VentanaPrincipalAdmin v1 = new VentanaPrincipalAdmin();
 					System.out.println("ADMIN");
+					logger.log(Level.INFO, "accediendo a ADMIN");
 				}
 			}
 		});
