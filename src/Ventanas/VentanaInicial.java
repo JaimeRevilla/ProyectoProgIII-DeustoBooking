@@ -22,6 +22,8 @@ import java.awt.Component;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -30,6 +32,7 @@ import javax.swing.ImageIcon;
 public class VentanaInicial extends JFrame {
 	public static String dni;
 	public static String dniA;
+	private static Logger logger = Logger.getLogger("VentanaInicial");
 	public VentanaInicial() {
 		
 		setBounds(250, 225, 1000, 508);
@@ -74,6 +77,7 @@ public class VentanaInicial extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaRegis v1 = new VentanaRegis();
+				logger.log(Level.INFO, "Estamos registrandonos");
 			}
 		});
 		
