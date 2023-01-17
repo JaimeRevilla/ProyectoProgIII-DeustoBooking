@@ -93,7 +93,7 @@ public class BaseDatos {
 	 * @return Devuelve un boolean dependiendo si se ha realizado correctamente(true) o incorrectamente(false)
 	 */
 	public static boolean crearTablasCarrito(Connection con) {
-		String sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, cantidad int, precioProd double)";
+		String sql = "CREATE TABLE IF NOT EXISTS Carrito (dniUsu String, codProd int, nomProd String, tipoProd String, marcaProd String, tamanyoProd String, precioProd double)";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
@@ -144,8 +144,8 @@ public class BaseDatos {
 	 * @param Connection con, datos del producto: recibimos la conexion con la base de datos y los datos del producto
 	 * @return No devuelve nada
 	 */
-	public static void insertarCarrito(Connection con,   String dniUsu , int codProd, String nomProd, String tipoProd, String marcaProd, String tamanyoProd,int cantidad,double precioProd) {
-		String sql = "INSERT INTO Carrito VALUES('"+dniUsu+"','"+codProd+"','"+nomProd+"','"+tipoProd+"','"+marcaProd+"','"+tamanyoProd+"','"+cantidad+"',"+precioProd+")";
+	public static void insertarCarrito(Connection con,   String dniUsu , int codProd, String nomProd, String tipoProd, String marcaProd, String tamanyoProd,double precioProd) {
+		String sql = "INSERT INTO Carrito VALUES('"+dniUsu+"','"+codProd+"','"+nomProd+"','"+tipoProd+"','"+marcaProd+"','"+tamanyoProd+"',"+precioProd+")";
 		try {
 			Statement st = con.createStatement();
 			st.executeUpdate(sql);
@@ -266,6 +266,7 @@ public class BaseDatos {
 	 * @param Connection con, el dni de un usuario : recibimos la conexion con la base de datos y el dni del usuario
 	 * @return Devuelve el usuario buscado
 	 */
+	//recibe le dni de un usuario y devuelve la contraseña que esta almacenada en la bd junto ese dni
 	public static String obtenerContrasena(Connection con, String DNI) {
 		String ret = "";
 		String sent = "SELECT contrasenia FROM Usuario WHERE dni = '"+DNI+"'";
@@ -284,6 +285,9 @@ public class BaseDatos {
 	 * Método para buscar los datos de un usuario si el dni recibido es el mismo que buscamos en la BBDD
 	 * @param Connection con, el dni de un usuario : recibimos la conexion con la base de datos y el dni del usuario
 	 * @return Devuelve el usuario buscado
+	 */
+	/*
+	 *Obtener el usuario que estamos introduciendo los datos en la ventana 
 	 */
 	public static Usuario obtenerUsuario(Connection con, String dni) {
 		String sent = "SELECT * FROM Usuario WHERE dni = '"+dni+"'";
@@ -338,41 +342,6 @@ public class BaseDatos {
 	public static ArrayList<Producto> obtenerProductoTipo(Connection con, String ti){
 		ArrayList<Producto> a = new ArrayList<>();
 		String sent = "SELECT * FROM Producto WHERE tipo = '" + ti + "'";
-		System.out.println(sent);
-		Statement stmt = null;
-		Producto p = null;
-		try {
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sent);
-			while (rs.next()) {
-				String nombre = rs.getString("nombre");
-				String marca = rs.getString("marca");
-				String tipo = rs.getString("tipo");
-				double precio = rs.getDouble("precio");
-				String tam = rs.getString("tamanyo");
-				int stock = rs.getInt("stock");
-				int cod = rs.getInt("cod");
-				String ruta = rs.getString("ruta");
-				p = new Producto(cod, nombre, tipo, marca, tam, precio, stock, ruta);
-				a.add(p);
-			}
-			rs.close();
-		} catch (SQLException e) {
-			System.err.println(String.format("ERROR AL ENCONTRAR LOS DATOS DEL USUARIO", e.getMessage()));
-			e.printStackTrace();
-		}
-		return a;	
-	}
-	
-	/**
-	 * Método para obtener todos los productos que existen, lo llamamos en el metodo recurdivo de la ventana 
-	 * 	principal para que genere combinaciones de productos para poder comprar
-	 * @param con, recibe la connection de la base de datos
-	 * @return devuelve la lista de productos que tenemos
-	 */
-	public static ArrayList<Producto> obtenerProductoRecursividad(Connection con){
-		ArrayList<Producto> a = new ArrayList<>();
-		String sent = "SELECT * FROM Producto";
 		System.out.println(sent);
 		Statement stmt = null;
 		Producto p = null;
@@ -470,6 +439,8 @@ public class BaseDatos {
 			}
 			rs.close();
 			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -502,6 +473,8 @@ public class BaseDatos {
 			}
 			rs.close();
 			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -517,13 +490,7 @@ public class BaseDatos {
 		}return precio;	
 	}
 	
-	/**
-	 * Método para obetener los datos del carrito segun el usuario. Cada usuario tendra un pedido determinado 
-	 * 	con una serie de productos
-	 * @param con recibe la connection de la base de datos
-	 * @param Udni recibe el dni del cliente
-	 * @return la lista de productos del pedido de ese cliente
-	 */
+	
 	public static ArrayList<Carrito> obtenerListaCarrito(Connection con, String Udni){
 		ArrayList<Carrito> carrito = new ArrayList<>();
 		
@@ -538,9 +505,8 @@ public class BaseDatos {
 				String tipo = rst.getString("tipoProd");
 				String marca = rst.getString("marcaProd");
 				String tam = rst.getString("tamanyoProd");
-				int cant = Integer.parseInt(rst.getString("cantidad"));
 				double prec = Double.parseDouble(rst.getString("precioProd"));
-				Carrito c = new Carrito(dni, cod, nom, tipo, marca,tam, cant,prec);
+				Carrito c = new Carrito(dni, cod, nom, tipo, marca,tam, prec);
 				carrito.add(c);
 			}
 		} catch (SQLException e) {
@@ -549,12 +515,9 @@ public class BaseDatos {
 		}
 		return carrito;
 	}
+	
 
-	/**
-	 * Método para eliminar un producto del carrito
-	 * @param con
-	 * @param dni segun el dni que elige ese producto se le eliminara el producto seleccionado
-	 */
+	
 	public static void eliminarFila(Connection con, String dni) {
 		try {
 			Statement stm = con.createStatement();
@@ -599,12 +562,19 @@ public class BaseDatos {
 		}
 	}
 	
-	/**
-	 * Método para obtener la ruta de cada foto
-	 * @param con
-	 * @param tipo recibe el tipo de prodyucto que es, y saca por pantalla la ruta de ese tipo de producto
-	 * @return
-	 */
+	public static void obtenerAdmin(Connection con, String dniA) {
+		String sent = "SELECT * FROM Usuario WHERE dni = '"+dniA+"'";
+		Statement stmt = null;
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static String getRuta(Connection con, String tipo) {
 		String sent = "SELECT ruta FROM Producto WHERE tipo = '"+tipo+"'";
 		Statement stmt = null;
@@ -623,31 +593,4 @@ public class BaseDatos {
 		}
 		return ruta;
 	}
-	
-	//ELIMINAR POR QUE TAMPOCO LO USAMOS, SON METODOS DEL ADMIN
-	public static void modificarDato(Connection con, Producto p) {
-		String sql = "UPDATE Producto SET cod='"+p.getCod()+"',nombre='"+p.getNombre()+"',tipo='"+p.getTipo()+"',marca='"+p.getMarca()+"',tamanyo='"+p.getTamanyo()+"',precio='"+p.getPrecio()+"',stock='"+p.getStock()+"'WHERE nombre = '"+p.getNombre()+"'";
-		Statement stmt = null;
-		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate(sql);
-			stmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	//TENEMOS QUE ELIMINARLO, POR QUE NO LO VAMOS A USAR
-		public static void obtenerAdmin(Connection con, String dniA) {
-			String sent = "SELECT * FROM Usuario WHERE dni = '"+dniA+"'";
-			Statement stmt = null;
-			try {
-				stmt = con.createStatement();
-				stmt.executeUpdate(sent);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
 }
