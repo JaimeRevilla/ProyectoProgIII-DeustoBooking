@@ -40,7 +40,7 @@ public class VentanaInicial extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentro = new JPanel();
-		panelCentro.setBackground(Color.WHITE);
+		panelCentro.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 1, 0, 0));
 		

@@ -68,10 +68,12 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		panelNorteFecha = new JPanel();
+		panelNorteFecha.setBackground(new Color(100, 149, 237));
 		FlowLayout flowLayout_1 = (FlowLayout) panelNorteFecha.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelNorte.add(panelNorteFecha);
@@ -80,12 +82,14 @@ public class VentanaPrincipal extends JFrame {
 		panelNorteFecha.add(lblFecha);
 		
 		panelNorteCentro = new JPanel();
+		panelNorteCentro.setBackground(new Color(100, 149, 237));
 		panelNorte.add(panelNorteCentro);
 		
 		lblMenu = new JLabel("MENU PRINCIPAL");
 		panelNorteCentro.add(lblMenu);
 		
 		panelNorteCarrito = new JPanel();
+		panelNorteCarrito.setBackground(new Color(100, 149, 237));
 		FlowLayout flowLayout = (FlowLayout) panelNorteCarrito.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
@@ -115,6 +119,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		btnNewButton = new JButton("A");
@@ -124,6 +129,7 @@ public class VentanaPrincipal extends JFrame {
 		panelSur.add(btnsalir);
 		
 		JPanel panelCentro = new JPanel();
+		panelCentro.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
 		
@@ -164,6 +170,7 @@ public class VentanaPrincipal extends JFrame {
 		panelCentro.add(btnCamas);
 		
 		JPanel panelCentroOeste = new JPanel();
+		panelCentroOeste.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelCentroOeste, BorderLayout.WEST);
 		
 		JComboBox comboBox_1 = new JComboBox();

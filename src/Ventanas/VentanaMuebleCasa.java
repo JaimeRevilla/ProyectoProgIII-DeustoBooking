@@ -63,6 +63,8 @@ public class VentanaMuebleCasa extends JFrame{
 
 	
 public VentanaMuebleCasa() {
+	getContentPane().setBackground(new Color(100, 149, 237));
+	setBackground(new Color(100, 149, 237));
 		
 		setBounds(250, 225, 1000, 508);
 		
@@ -103,6 +105,7 @@ public VentanaMuebleCasa() {
 		panel_2.add(btnCarrito);
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
@@ -111,6 +114,7 @@ public VentanaMuebleCasa() {
 		
 		
 		panelCentral = new JPanel(new GridLayout(2, 1));
+		panelCentral.setBackground(new Color(100, 149, 237));
 		
 		
 		

@@ -88,9 +88,9 @@ public class VentanaCamas extends JFrame{
 		panelNorteFecha.add(lblFecha);
 		
 		lblNewLabel = new JLabel("MENU SOFAS");
+		panelNorte.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(new Color(100, 149, 237));
-		panelNorte.add(lblNewLabel);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(100, 149, 237));
@@ -103,6 +103,7 @@ public class VentanaCamas extends JFrame{
 		panel_2.add(btnCarrito);
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
@@ -111,6 +112,7 @@ public class VentanaCamas extends JFrame{
 		
 		
 		panelCentral = new JPanel(new GridLayout(2, 1));
+		panelCentral.setBackground(new Color(100, 149, 237));
 		
 		
 		

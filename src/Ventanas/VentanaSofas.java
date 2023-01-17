@@ -106,6 +106,7 @@ public class VentanaSofas extends JFrame{
 		panel_2.add(btnCarrito_1);
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(100, 149, 237));
 		getContentPane().add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtras = new JButton("ATRAS");
@@ -114,6 +115,7 @@ public class VentanaSofas extends JFrame{
 		
 		
 		panelCentral = new JPanel(new GridLayout(2, 1));
+		panelCentral.setBackground(new Color(100, 149, 237));
 		
 		
 		
