@@ -19,9 +19,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+
+import Clases.BaseDatos;
+import Clases.Producto;
+
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -45,10 +54,14 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel panelNorteCarrito;
 	public static String dni;
 	private JButton btnNewButton;
+	
+	static Connection con ;
 	public VentanaPrincipal() {
 		vent = this;
 		
 		setBounds(250, 225, 1000, 508);
+		
+		con = BaseDatos.initBD("data/DeustoIkea.db");
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -312,12 +325,91 @@ public class VentanaPrincipal extends JFrame {
 
 		setVisible(true);
 	}
+	
+	//RECURSIVIDAD
+	/**
+	 * Metodo recursivo
+	 * @param result
+	 * @param elementos
+	 * @param disponible
+	 * @param sobranteMax
+	 * @param temp
+	 */
+	
+	private static void combinacionesR(List<List<Producto>> result, List<Producto> elementos, double disponible,double sobranteMax,List<Producto> temp) {
+		if (disponible < 0) {
+			return; //Sal del método recursivo
+		} else if (disponible < sobranteMax) {
+			Comparator<Producto> comp = (p1, p2) -> { 
+				return Integer.compare(p1.getCod(), p2.getCod()); 
+				};
+		    Collections.sort(temp,comp);
+			if (!result.contains(temp)) {
+		    
+				result.add(new ArrayList<>(temp));        	
+		        
+			}
+		    
+		} else {
+		
+			for(Producto p : elementos) {
+				temp.add(p);
+				combinacionesR(result, elementos, disponible-p.getPrecio(), sobranteMax, temp);
+				temp.remove(temp.size()-1);
+			}
+		}
+	}
+	
+	/**
+	 * Metodo para llamar al metodo recursivo
+	 * @param elementos
+	 * @param disponible
+	 * @param sobranteMax
+	 * @return
+	 */
+	public static List<List<Producto>> combinaciones(List<Producto> elementos, double disponible, double sobranteMax) {
+		List<List<Producto>> result = new ArrayList<>();
+		combinacionesR(result, elementos, disponible, sobranteMax, new ArrayList<>());
+		return result;
+		
+	}
+			
+	
+	public static void mainRecursividad(String[] args) {
+		
+		List<Producto> elementos = new ArrayList<>();
+		//CREAR UN METODO PARA DEVOLVER UNA LISTA DE PRODUCTOS.
+		for(Producto p: BaseDatos.obtenerProductoRecursividad(con)) {
+			elementos.add(p);
+		}
+		while(elementos.size()>10) {
+			elementos.remove(0);
+		}
+		double disponible = 2200;
+		double sobranteMax = 100;
+		
+		List<List<Producto>> result = combinaciones(elementos, disponible, sobranteMax);
+		
+		System.out.println(String.format("Combinaciones de menos de %.2f€ y sobrante máximo de %.2f€", disponible, sobranteMax));
+		
+		result.forEach(r -> System.out.println(r));
+		    	
+		
+		/*Comparator<Flight> compId = (f1, f2) -> { return f1.getCode().compareTo(f2.getCode()); };
+		 * Collections.sort(elementos,compId);
+		 * elementos.forEach(f -> System.out.println(f));
+		 * */
+			
+	}
+
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					VentanaPrincipal frame = new VentanaPrincipal();
+					mainRecursividad(args);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
