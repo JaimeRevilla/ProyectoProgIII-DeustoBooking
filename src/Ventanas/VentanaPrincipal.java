@@ -85,7 +85,8 @@ public class VentanaPrincipal extends JFrame {
 		panelNorteCentro.setBackground(new Color(100, 149, 237));
 		panelNorte.add(panelNorteCentro);
 		
-		lblMenu = new JLabel("MENU PRINCIPAL");
+		lblMenu = new JLabel("");
+		lblMenu.setIcon(new ImageIcon("imagenes/ikeaprincipal.png"));
 		panelNorteCentro.add(lblMenu);
 		
 		panelNorteCarrito = new JPanel();
