@@ -440,7 +440,7 @@ public class BaseDatos {
 	 * @param con, nom, unidades: coneixion con la BaseDatos, el nombre del producto y el unidades a restar
 	 * @throws SQLException, Propaga la excepción
 	 */
-	public static void restarUnidadesAProducto(Connection con, String nom, int unidades)  {
+	public static void restarUnidadesAProducto(Connection con, int unidades,String nom)  {
 		String sent = "UPDATE Producto SET stock = stock - "+unidades+ " where nombre = '"+nom+"'";
 		Statement stmt = null;
 		try {

@@ -56,6 +56,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnNewButton;
 	
 	static Connection con ;
+	private JButton btnRecursividad;
 	public VentanaPrincipal() {
 		vent = this;
 		
@@ -94,6 +95,38 @@ public class VentanaPrincipal extends JFrame {
 		FlowLayout flowLayout = (FlowLayout) panelNorteCarrito.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelNorte.add(panelNorteCarrito);
+		
+		btnRecursividad = new JButton("¿Cuanto quieres gastar con x dinero?");
+		btnRecursividad.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Producto> elementos = new ArrayList<>();
+				//CREAR UN METODO PARA DEVOLVER UNA LISTA DE PRODUCTOS.
+				for(Producto p: BaseDatos.obtenerProductoRecursividad(con)) {
+					elementos.add(p);
+				}
+				while(elementos.size()>10) {
+					elementos.remove(0);
+				}
+				double disponible = Double.parseDouble(JOptionPane.showInputDialog(null, "Cantidad requirida de dinero \n (El importe minimo debe ser más de 500€): ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE));
+				double sobranteMax = Double.parseDouble(JOptionPane.showInputDialog(null, "Cantidad sobrante de dinero: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE));
+				
+				List<List<Producto>> result = combinaciones(elementos, disponible, sobranteMax);
+				VentanaRecursividad v1 = new VentanaRecursividad(combinaciones(elementos, disponible, sobranteMax));
+				
+				System.out.println(String.format("Combinaciones de menos de %.2f€ y sobrante máximo de %.2f€", disponible, sobranteMax));
+				
+				result.forEach(r -> System.out.println(r));
+				    	
+				
+//				/*Comparator<Flight> compId = (f1, f2) -> { return f1.getCode().compareTo(f2.getCode()); };
+//				 * Collections.sort(elementos,compId);
+//				 * elementos.forEach(f -> System.out.println(f));
+//				 * */
+
+			}
+		});
+		panelNorteCarrito.add(btnRecursividad);
 		
 		JButton btnCarrito = new JButton();
 		btnCarrito.setIcon(new ImageIcon("imagenes/pngegg.png"));
@@ -135,12 +168,15 @@ public class VentanaPrincipal extends JFrame {
 		panelCentro.setLayout(new GridLayout(2, 3, 0, 0));
 		
 		btnMuebleCasa = new JButton("ARMARIOS");
+		btnMuebleCasa.setForeground(new Color(0, 0, 0));
+		btnMuebleCasa.setBackground(new Color(255, 255, 255));
 		btnMuebleCasa.setIcon(new ImageIcon("imagenes/mueble.png"));
 		btnMuebleCasa.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnMuebleCasa.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelCentro.add(btnMuebleCasa);
 		
 		btnEspejos = new JButton("ESPEJOS");
+		btnEspejos.setForeground(new Color(0, 0, 0));
 		btnEspejos.setIcon(new ImageIcon("imagenes/espejo.png"));
 		btnEspejos.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnEspejos.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -381,34 +417,7 @@ public class VentanaPrincipal extends JFrame {
 		return result;
 		
 	}
-			
-	
-	public static void mainRecursividad(String[] args) {
-		
-		List<Producto> elementos = new ArrayList<>();
-		//CREAR UN METODO PARA DEVOLVER UNA LISTA DE PRODUCTOS.
-		for(Producto p: BaseDatos.obtenerProductoRecursividad(con)) {
-			elementos.add(p);
-		}
-		while(elementos.size()>10) {
-			elementos.remove(0);
-		}
-		double disponible = 2200;
-		double sobranteMax = 100;
-		
-		List<List<Producto>> result = combinaciones(elementos, disponible, sobranteMax);
-		
-		System.out.println(String.format("Combinaciones de menos de %.2f€ y sobrante máximo de %.2f€", disponible, sobranteMax));
-		
-		result.forEach(r -> System.out.println(r));
-		    	
-		
-		/*Comparator<Flight> compId = (f1, f2) -> { return f1.getCode().compareTo(f2.getCode()); };
-		 * Collections.sort(elementos,compId);
-		 * elementos.forEach(f -> System.out.println(f));
-		 * */
-			
-	}
+
 
 
 
@@ -417,7 +426,7 @@ public class VentanaPrincipal extends JFrame {
 			public void run() {
 				try {
 					VentanaPrincipal frame = new VentanaPrincipal();
-					mainRecursividad(args);
+					//mainRecursividad(args);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

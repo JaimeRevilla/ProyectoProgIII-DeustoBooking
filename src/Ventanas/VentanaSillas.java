@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.management.modelmbean.ModelMBeanOperationInfo;
-import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,9 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import Clases.BaseDatos;
 import Clases.Carrito;
@@ -51,18 +47,16 @@ public class VentanaSillas extends JFrame{
 	
 	private PanelConFondo panelFoto;
 
-	private JButton btnAgregar;
+
+	private JTextField txtReloj;
 	private JLabel lblNewLabel;
 	private JPanel panelCentral;
 	
-	private JTable tablaSillas;
-	public static JTableButtonModel modelSill;
-	private JScrollPane scrSillas;
+	private JTable tablaSilla;
+	public static JTableButtonModel modelSilla;
+	private JScrollPane scrSilla;
 	
 	private ArrayList<Producto> al;
-	
-	private tabla_spinner tablaSpinner;
-	
 	
 	public VentanaSillas() {
 		
@@ -70,7 +64,6 @@ public class VentanaSillas extends JFrame{
 		
 		con = BaseDatos.initBD("data/DeustoIkea.db");
 
-		tablaSpinner = new tabla_spinner();
 		
 		getContentPane().setFont(new Font("Sitka Small", Font.PLAIN, 10));
 		getContentPane().setForeground(new Color(128, 255, 255));
@@ -102,6 +95,11 @@ public class VentanaSillas extends JFrame{
 		panelNorte.add(panel_2);
 		
 		JButton btnCarrito_1 = new JButton("");
+		btnCarrito_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaCesta v1 = new VentanaCesta();
+			}
+		});
 		btnCarrito_1.setIcon(new ImageIcon("imagenes/pngegg.png"));
 		panel_2.add(btnCarrito_1);
 		
@@ -130,17 +128,14 @@ public class VentanaSillas extends JFrame{
 			}
 		});
 
-		modelSill = new JTableButtonModel();
+		modelSilla = new JTableButtonModel();
 		
 		
-		tablaSillas = new JTable(modelSill);
-		TableCellRenderer tbcr = tablaSillas.getDefaultRenderer(JButton.class);
-		tablaSillas.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tbcr));
-		TableColumn tc = tablaSillas.getColumnModel().getColumn(7);
-		tc.setCellEditor(new tabla_spinner());
-		tc.setCellRenderer(new tabla_spinner());
-		scrSillas = new JScrollPane(tablaSillas);
-		panelCentral.add(scrSillas);
+		tablaSilla = new JTable(modelSilla);
+		TableCellRenderer tbcr = tablaSilla.getDefaultRenderer(JButton.class);
+		tablaSilla.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tbcr));
+		scrSilla = new JScrollPane(tablaSilla);
+		panelCentral.add(scrSilla);
 		
 		JPanel panelAbajo = new JPanel();
 		panelCentral.add(panelAbajo);
@@ -164,43 +159,27 @@ public class VentanaSillas extends JFrame{
 		
 		
 		
-		tablaSillas.addMouseListener(new MouseAdapter() {
+		tablaSilla.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int fila = tablaSillas.rowAtPoint(e.getPoint());
-				String tipo = (String) modelSill.getValueAt(fila, 2);
+				int fila = tablaSilla.rowAtPoint(e.getPoint());
+				String tipo = (String) tablaSilla.getValueAt(fila, 2);
 				String ruta = BaseDatos.getRuta(con, tipo);
 				ImageIcon imagen = new ImageIcon(ruta);
 				panelFoto.setImagen(imagen.getImage());
 				panelFoto.repaint();
-					System.out.println("dentro");
-					int columna = 0;
-					System.out.println(columna);
-					if(tablaSillas.columnAtPoint(e.getPoint()) == modelSill.getColumnCount()-1) {
-						System.out.println("if");
-						JSpinner spinner = (JSpinner)modelSill.getValueAt(fila, 7);
-						System.out.println(spinner.getValue());
-						if(((Integer)spinner.getValue())>0) {
-						//if(spinner >0){
-							int cantidadBD = (Integer)spinner.getValue();
-							System.out.println(cantidadBD);
-							BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),cantidadBD, al.get(fila).getPrecio());
-						}else {
-							System.out.println("error");
-						}
-//						int cantidadBD = spinner.getComponentCount();
-//						System.out.println(cantidadBD);
-//						BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),cantidadBD, al.get(fila).getPrecio());
-					}
-//				if(tablaSillas.columnAtPoint(e.getPoint()) == modelSill.getColumnCount()-1) {
-//					System.out.println(fila);
-//					//String o = JOptionPane.showInputDialog(null, "Cantidad requirida: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE);
-////					int cantidad = tablaSillas.columnAtPoint(e.getPoint());
-////					System.out.println(cantidad);
-//					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(),0, al.get(fila).getPrecio());
+				if(tablaSilla.columnAtPoint(e.getPoint()) == tablaSilla.getColumnCount()-1) {
+					System.out.println(fila);
+					String o = JOptionPane.showInputDialog(null, "Cantidad requirida: ", "CANTIDAD", JOptionPane.INFORMATION_MESSAGE);
+					int columna = Integer.parseInt(o);
+					BaseDatos.insertarCarrito(con, VentanaInicial.dni, al.get(fila).getCod(), al.get(fila).getNombre(), al.get(fila).getTipo(), al.get(fila).getMarca(), al.get(fila).getTamanyo(), columna,al.get(fila).getPrecio());
+					BaseDatos.restarUnidadesAProducto(con, fila, o);
+					repaint();
+//					int valor = Integer.valueOf(String.valueOf(tablaSilla.getModel().getValueAt(fila, tablaSilla.getColumnCount()-2)));
 //					
-//				}
+//					tablaSilla.getModel().setValueAt(valor-columna, fila, tablaSilla.getColumnCount()-2);
+				}
 				
 				
 			}
@@ -238,34 +217,8 @@ public class VentanaSillas extends JFrame{
 
 
 	}
-	
-	class tabla_spinner extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
-
-		JSpinner spinner=new JSpinner();
-	    Object valorActual;   
-	    @Override
-	    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-	        return spinner;//y retornamos el label
-	    }
-	    @Override
-	    public Component getTableCellRendererComponent
-	        (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
-	        //si el datos es un objetc osea jlabel
-	        if (value instanceof JSpinner) {
-	            spinner=(JSpinner) value;//lo convertimos a JLabel 
-	            return spinner;//y retornamos el label
-	        }
-
-	        return spinner;
-	    }
-	    @Override
-	    public Object getCellEditorValue() {
-	        return spinner;
-	    }	
-	}
-	
-	class JTableButtonRenderer implements TableCellRenderer {
+		
+		class JTableButtonRenderer implements TableCellRenderer {
 			private TableCellRenderer defaultRenderer;
 			public JTableButtonRenderer(TableCellRenderer renderer) {
 				defaultRenderer = renderer;
@@ -279,9 +232,9 @@ public class VentanaSillas extends JFrame{
 			}
 		}
 		
-	class JTableButtonModel extends AbstractTableModel {
+		class JTableButtonModel extends AbstractTableModel {
 			private Object[][] rows;
-			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", "", ""};
+			private String[] columns = {"CODIGO", "NOMBRE", "TIPO", "MARCA", "TAMAÑO", "PRECIO", "STOCK", ""};
 			   
 			public String getColumnName(int column) {
 				return columns[column];
@@ -292,10 +245,8 @@ public class VentanaSillas extends JFrame{
 				al = BaseDatos.obtenerProducto(con, "Silla");
 				for(Producto p : al) {
 					JButton btnAnadir = new JButton("AÑADIR");
-					JSpinner sp = new JSpinner();
-					sp.setValue(3);
-					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), 
-									   sp, btnAnadir};
+						
+					Object [] datos = {p.getCod(), p.getNombre(), p.getTipo(), p.getMarca(), p.getTamanyo(), p.getPrecio(), p.getStock(), btnAnadir};
 					alObject.add(datos);
 				}
 				Object[][] ob1 = new Object[alObject.size()][alObject.get(0).length]; 
@@ -320,16 +271,12 @@ public class VentanaSillas extends JFrame{
 			}
 			
 			public boolean isCellEditable(int row, int column) {
-				if (column == 7)
-					return true;
 				return false;
 			}
 			
 			public Class getColumnClass(int column) {
 				return getValueAt(0, column).getClass();
 			}
-			
-			
 		}
 		
 
